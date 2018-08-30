@@ -6,7 +6,7 @@
     <artifactId>parent-SBM</artifactId>
     <version>1.0.0</version>
     <modules>
-        <!--<module>shiro-admin</module>-->
+        <module>shiro-admin</module>
     </modules>
 
     <packaging>pom</packaging>

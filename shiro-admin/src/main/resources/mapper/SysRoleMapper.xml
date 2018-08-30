@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.SysRoleMapper">
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.SysRole">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="TINYINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sn" jdbcType="VARCHAR" property="sn"/>
+        <result column="enable" jdbcType="BIT" property="enable"/>
+        <result column="top_id" jdbcType="TINYINT" property="topId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="edit_time" jdbcType="TIMESTAMP" property="editTime"/>
+        <result column="sort_code" jdbcType="REAL" property="sortCode"/>
+    </resultMap>
+
+    <!-- 根据用户 id 查询用户所具有的角色对象表示 -->
+    <select id="selectByUid" parameterType="byte" resultType="org.tc.shiro.po.SysRole">
+        SELECT t2.id, t2.name, t2.sn FROM sys_user_role t1
+        LEFT JOIN sys_role t2 ON t2.id = t1.role_id
+        WHERE t1.user_id = #{uid}
+    </select>
+
+    <!-- 批量删除 -->
+    <delete id="deleteByIdList" parameterType="list">
+        DELETE FROM sys_role where id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- 批量删除 -->
+    <delete id="diableByIdList" parameterType="list">
+        UPDATE sys_role SET enable = 0 where id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+</mapper>
