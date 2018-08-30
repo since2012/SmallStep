@@ -1,0 +1,253 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.tc.SBM</groupId>
+    <artifactId>parent-SBM</artifactId>
+    <version>1.0.0</version>
+    <modules>
+        <module>shiro-admin</module>
+    </modules>
+
+    <packaging>pom</packaging>
+
+    <name>parent-SBM</name>
+    <description>spring boot,Mybatis,Mysql,shiro,Freemarker,JQuery,Bootstrap,Kaptcha</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.0.3.RELEASE</version>
+    </parent>
+
+    <!--版本管理-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <java.version>1.8</java.version>
+
+        <tool.jar.version>1.0.0</tool.jar.version>
+
+        <shiro.version>1.4.0</shiro.version>
+        <mybatis.version>1.3.2</mybatis.version>
+        <mysql-connector-java.version>6.0.6</mysql-connector-java.version>
+        <druid.version>1.1.9</druid.version>
+        <fastjson.version>1.2.47</fastjson.version>
+
+        <velocity.version>1.7</velocity.version>
+        <beetl.version>2.8.5</beetl.version>
+
+        <kaptcha.springboot.version>2.0.0</kaptcha.springboot.version>
+        <swagger.version>2.9.2</swagger.version>
+        <jwt.version>0.9.0</jwt.version>
+        <hutool.version>4.1.1</hutool.version>
+
+        <commons-collections.version>3.2.1</commons-collections.version>
+        <commons-lang3.version>3.7</commons-lang3.version>
+        <protostuff.version>1.1.2</protostuff.version>
+    </properties>
+
+    <!--依赖管理-->
+    <dependencyManagement>
+        <dependencies>
+
+            <dependency>
+                <groupId>org.tc.springboot</groupId>
+                <artifactId>mybatis-kit-spring-boot</artifactId>
+                <version>${tool.jar.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tc.springboot</groupId>
+                <artifactId>redis-cache-spring-boot</artifactId>
+                <version>${tool.jar.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tc.springboot</groupId>
+                <artifactId>fastjson-spring-boot</artifactId>
+                <version>${tool.jar.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tc.springboot</groupId>
+                <artifactId>kaptcha-spring-boot</artifactId>
+                <version>${tool.jar.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tc.springboot</groupId>
+                <artifactId>shiro-freemarker-tags</artifactId>
+                <version>${tool.jar.version}</version>
+            </dependency>
+
+            <!--spring-boot全家桶-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>2.0.3.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <!--shiro依赖-->
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-core</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.shiro</groupId>
+                <artifactId>shiro-spring</artifactId>
+                <version>${shiro.version}</version>
+            </dependency>
+            <!--<dependency>-->
+            <!--<groupId>org.apache.cache</groupId>-->
+            <!--<artifactId>cache-ehcache</artifactId>-->
+            <!--<version>${cache.version}</version>-->
+            <!--</dependency>-->
+
+            <!--mybatis-->
+            <dependency>
+                <groupId>org.mybatis.spring.boot</groupId>
+                <artifactId>mybatis-spring-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+            </dependency>
+            <!--mybatis逆向工程-->
+            <dependency>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-core</artifactId>
+                <version>${mybatis.version}</version>
+                <scope>compile</scope>
+                <optional>true</optional>
+            </dependency>
+            <!--mapper 接口模版-->
+            <dependency>
+                <groupId>tk.mybatis</groupId>
+                <artifactId>mapper-spring-boot-starter</artifactId>
+                <version>2.0.2</version>
+            </dependency>
+            <!--pagehelper分页工具-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>1.2.3</version>
+            </dependency>
+
+            <!--数据库-->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>${mysql-connector-java.version}</version>
+            </dependency>
+            <!--druid连接池-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid-spring-boot-starter</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+            <!--fastjson-->
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
+
+            <!--ehcache-->
+            <!--<dependency>-->
+            <!--<groupId>org.ehcache</groupId>-->
+            <!--<artifactId>ehcache</artifactId>-->
+            <!--<version>${ehcache.version}</version>-->
+            <!--</dependency>-->
+            <!--<dependency>-->
+            <!--<groupId>net.sf.ehcache</groupId>-->
+            <!--<artifactId>ehcache-core</artifactId>-->
+            <!--<version>${ehcache.core.version}</version>-->
+            <!--</dependency>-->
+
+            <!--模板引擎-->
+            <dependency>
+                <groupId>org.apache.velocity</groupId>
+                <artifactId>velocity</artifactId>
+                <version>${velocity.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.ibeetl</groupId>
+                <artifactId>beetl</artifactId>
+                <version>${beetl.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger2</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-swagger-ui</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-collections</groupId>
+                <artifactId>commons-collections</artifactId>
+                <version>${commons-collections.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3.version}</version>
+            </dependency>
+            <!--序列化相关-->
+            <dependency>
+                <groupId>com.dyuproject.protostuff</groupId>
+                <artifactId>protostuff-core</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.dyuproject.protostuff</groupId>
+                <artifactId>protostuff-runtime</artifactId>
+                <version>${protostuff.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <spring.active>local</spring.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.active>dev</spring.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.active>test</spring.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>produce</id>
+            <properties>
+                <spring.active>produce</spring.active>
+            </properties>
+        </profile>
+    </profiles>
+</project>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.SysRoleResourceMapper">
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.SysRoleResource">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="TINYINT" property="id"/>
+        <result column="role_id" jdbcType="TINYINT" property="roleId"/>
+        <result column="resource_id" jdbcType="TINYINT" property="resourceId"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <!-- 批量添加角色资源关联表数据 -->
+    <insert id="insertBatch" parameterType="map">
+        INSERT INTO sys_role_resource(role_id,resource_id) VALUES
+        <foreach collection="resIds" item="resId" separator=",">
+            (#{roleId},#{resId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByRid" parameterType="byte">
+        DELETE FROM sys_role_resource where role_id = #{id}
+  </delete>
+
+    <!-- 批量删除 -->
+    <delete id="deleteByRids" parameterType="list">
+        DELETE FROM sys_role_resource where role_id in
+        <foreach close=")" collection="ids" item="id" open="(" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="selectByRid" parameterType="byte" resultType="byte">
+        SELECT resource_id FROM sys_role_resource where role_id = #{id}
+    </select>
+
+</mapper>
