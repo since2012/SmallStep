@@ -1,41 +1,38 @@
 package org.tc.shiro.service.impl;
 
-import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.ShiroException;
+import com.stylefeng.guns.core.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
-import org.tc.shiro.core.shiro.kit.ShiroKit;
-import org.tc.shiro.mapper.SysUserMapper;
-import org.tc.shiro.mapper.SysUserRoleMapper;
-import org.tc.shiro.po.SysUser;
+import org.tc.shiro.core.common.constant.AdminConst;
+import org.tc.shiro.core.common.constant.enums.TrebleStatus;
+import org.tc.shiro.core.common.exception.BizExceptionEnum;
+import org.tc.shiro.core.shiroext.kit.ShiroKit;
+import org.tc.shiro.mapper.DeptMapper;
+import org.tc.shiro.mapper.UserMapper;
+import org.tc.shiro.po.User;
 import org.tc.shiro.service.IUserService;
 
 import java.util.Date;
 import java.util.List;
 
+/**
+ * <p>
+ * 管理员表 服务实现类
+ * </p>
+ *
+ * @author stylefeng123
+ * @since 2018-02-22
+ */
 @Service
-@Slf4j
-public class UserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements IUserService {
-
+public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {
 
     @Autowired
-    private SysUserRoleMapper userRoleMapper;
+    private DeptMapper deptMapper;
 
-    public static final Byte ADMIN_ID = 1;
-
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean insert(SysUser sysUser, List<Byte> roleIdList) {
-        setPwd(sysUser, sysUser.getPassword());
-        sysUser.setCreateTime(new Date());
-        int count = baseMapper.insertUseGeneratedKeys(sysUser);
-        if (!retBool(count)) {
-            return false;
-        }
-        count = userRoleMapper.insertBatch(sysUser.getId(), roleIdList);
-        return retBool(count);
+    private boolean existsByAccount(String account) {
+        return retBool(baseMapper.countByAcount(account));
     }
 
     /**
@@ -45,69 +42,119 @@ public class UserServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> imp
      * @param password 新密码
      * @return
      */
-    private SysUser setPwd(SysUser user, String password) {
-        String randomSalt = user.getUsername();
+    private User setPwd(User user, String password) {
+        String randomSalt = ShiroKit.getRandomSalt(5);
         String newMd5 = ShiroKit.md5(password, randomSalt);
+        user.setSalt(randomSalt);
         user.setPassword(newMd5);
         return user;
     }
 
     @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean insertBatch(Byte userId, List<Byte> roleIdList) {
-        int count = userRoleMapper.insertBatch(userId, roleIdList);
-        return retBool(count);
+    public void add(User user) {
+        boolean exists = existsByAccount(user.getAccount());
+        if (exists) {
+            throw new GunsException(BizExceptionEnum.USER_ALREADY_REG);
+        }
+        user = setPwd(user, user.getPassword());
+        user.setStatus(TrebleStatus.ACTIVED.getCode());
+        user.setCreatetime(new Date());
+        this.baseMapper.insertUseGeneratedKeys(user);
     }
 
-    @Override
-    @Transactional(rollbackFor = Exception.class)
-    public boolean deleteByIdList(List<Byte> ids) {
 
-        if (ids.contains(ADMIN_ID)) {
-            throw new ShiroException("不能删除管理员用户");
-        }
-        //先删除子表数据
-        int count = userRoleMapper.deleteByUids(ids);
-        //主表后处理
-        count += baseMapper.deleteByIdList(ids);
-        return retBool(count);
-    }
-
-    @Override
-    public boolean disableByIdList(List<Byte> ids) {
-
-        if (ids.contains(ADMIN_ID)) {
-            throw new ShiroException("不能禁用管理员用户");
-        }
-        int count = baseMapper.disableByIdList(ids);
-        return retBool(count);
-    }
-
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean update(SysUser user, List<Byte> rids) {
-        Byte id = user.getId();
-        boolean result = baseMapper.existsWithPrimaryKey(id);
-        //假数据
-        if (!result) {
-            return false;
-        }
-        SysUser sysUser = baseMapper.selectByPrimaryKey(id);
-        //变更则设为新值
-        if (!sysUser.getPassword().equals(user.getPassword())) {
-            setPwd(sysUser, sysUser.getPassword());
+    /**
+     * 将变更的数据复制给旧数据
+     *
+     * @param newUser
+     * @param oldUser
+     * @return
+     */
+    private User copyData(User newUser, User oldUser) {
+        if (newUser == null || oldUser == null) {
+            return oldUser;
         } else {
-            user.setPassword(null);
+            if (ToolUtil.isNotEmpty(newUser.getAvatar())) {
+                oldUser.setAvatar(newUser.getAvatar());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getName())) {
+                oldUser.setName(newUser.getName());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getBirthday())) {
+                oldUser.setBirthday(newUser.getBirthday());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getDeptid())) {
+                oldUser.setDeptid(newUser.getDeptid());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getSex())) {
+                oldUser.setSex(newUser.getSex());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getEmail())) {
+                oldUser.setEmail(newUser.getEmail());
+            }
+            if (ToolUtil.isNotEmpty(newUser.getPhone())) {
+                oldUser.setPhone(newUser.getPhone());
+            }
+            return oldUser;
         }
-        user.setEditTime(new Date());
+    }
 
-        //先删除
-        userRoleMapper.deleteByUid(id);
-        // 后生成
-        userRoleMapper.insertBatch(id, rids);
+    @Override
+    public boolean edit(User newUser, User oldUser) {
+        User user = copyData(newUser, oldUser);
+        int result = baseMapper.updateByPrimaryKey(user);
+        return retBool(result);
+    }
 
-        int count = baseMapper.updateByPrimaryKeySelective(user);
-        return retBool(count);
+    @Override
+    public void changePwd(String oldPwd, String newPwd, String rePwd) {
+        if (!newPwd.equals(rePwd)) {
+            throw new GunsException(BizExceptionEnum.TWO_PWD_NOT_MATCH);
+        }
+        Integer userId = ShiroKit.getUser().getId();
+        User currentUser = baseMapper.selectByPrimaryKey(userId);
+        String prevSalt = currentUser.getSalt();
+
+        String oldMd5 = ShiroKit.md5(oldPwd, prevSalt);
+        if (currentUser.getPassword().equals(oldMd5)) {
+            baseMapper.updateByPrimaryKey(setPwd(currentUser, newPwd));
+        } else {
+            throw new GunsException(BizExceptionEnum.OLD_PWD_NOT_RIGHT);
+        }
+    }
+
+
+    @Override
+    public void resetPwd(Integer id) {
+        User user = this.baseMapper.selectByPrimaryKey(id);
+        ShiroKit.assertAuth(id, user);
+        baseMapper.updateByPrimaryKey(setPwd(user, AdminConst.DEFAULT_PWD));
+    }
+
+
+    @Override
+    public void setStatus(Integer userId, int status) {
+        User user = baseMapper.selectByPrimaryKey(userId);
+        ShiroKit.assertAuth(userId, user);
+        user.setStatus(status);
+        baseMapper.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public void setRoles(Integer userId, String roleIds) {
+        User user = baseMapper.selectByPrimaryKey(userId);
+        ShiroKit.assertAuth(userId, user);
+        user.setRoleid(roleIds);
+        baseMapper.updateByPrimaryKey(user);
+    }
+
+    @Override
+    public List<User> list(String name, String beginTime, String endTime, Integer deptid) {
+        if (!ShiroKit.isAdmin()) {
+            List<Integer> deptDataScope = ShiroKit.getDeptDataScope();
+            return baseMapper.list(deptDataScope, name, beginTime, endTime, deptid);
+        }
+        return baseMapper.list(null, name, beginTime, endTime, deptid);
     }
 
 }

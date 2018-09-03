@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.DeptMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.Dept">
+        <id column="id" property="id"/>
+        <result column="num" property="num"/>
+        <result column="pid" property="pid"/>
+        <result column="pids" property="pids"/>
+        <result column="simplename" property="simplename"/>
+        <result column="fullname" property="fullname"/>
+        <result column="tips" property="tips"/>
+        <result column="version" property="version"/>
+    </resultMap>
+
+    <select id="tree" resultType="com.stylefeng.guns.core.ztree.ZTreeNode">
+		select id,pid,simplename as name,
+		( CASE  WHEN (pid = 0 OR pid IS NULL) THEN 'true' ELSE 'false' END
+		) as open from sys_dept
+	</select>
+
+    <select id="list" resultType="org.tc.shiro.po.Dept">
+        select * from sys_dept where 1=1
+        <if test="name != null and name != ''">
+            andn ( simplename like CONCAT('%',#{name},'%') or fullname like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="tips != null and tips != ''">
+            where tips like CONCAT('%',#{tips},'%')
+        </if>
+        order by num ASC
+    </select>
+
+    <delete id="delByPidsLike">
+        delete from sys_dept where pids like CONCAT('%',#{pids},'%')
+    </delete>
+    <select id="subDeptIdList">
+        select id from sys_dept where pids like CONCAT('%',#{pids},'%')
+    </select>
+    <select id="deptAndSubDept">
+        select id from sys_dept where id = #{id} pids like CONCAT('%',#{pids},'%')
+    </select>
+
+</mapper>

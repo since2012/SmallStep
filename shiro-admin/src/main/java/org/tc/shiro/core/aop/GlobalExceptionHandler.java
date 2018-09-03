@@ -14,7 +14,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.tc.mybatis.exception.GunsException;
+import org.tc.mybatis.tips.ErrorTip;
+import org.tc.mybatis.util.HttpKit;
+import org.tc.shiro.core.common.exception.BizExceptionEnum;
+import org.tc.shiro.core.log.LogManager;
+import org.tc.shiro.core.log.factory.LogTaskFactory;
+
+import javax.persistence.EntityNotFoundException;
+import java.lang.reflect.UndeclaredThrowableException;
 
 /**
  * 全局的的异常拦截器（拦截所有的控制器）
@@ -29,13 +39,38 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class GlobalExceptionHandler {
 
     /**
+     * 拦截业务异常
+     */
+    @ExceptionHandler(GunsException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorTip notFount(GunsException e) {
+//        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
+        HttpKit.getRequest().setAttribute("tip", e.getMessage());
+        log.error("业务异常:", e);
+        return new ErrorTip(e.getCode(), e.getMessage());
+    }
+
+    /**
+     * 拦截PO查询异常
+     */
+    @ExceptionHandler(EntityNotFoundException.class)
+    @ResponseBody
+    public ErrorTip entityNotFound(GunsException e) {
+//        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
+        HttpKit.getRequest().setAttribute("tip", e.getMessage());
+        log.error("PO查询异常:", e);
+        return new ErrorTip(400, "未查询到相关数据");
+    }
+
+    /**
      * 用户未登录异常
      */
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String unAuth(AuthenticationException e) {
         log.error("用户未登陆：", e);
-        return "login";
+        return "/login.html";
     }
 
     /**
@@ -45,8 +80,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(DisabledAccountException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String accountLocked(DisabledAccountException e, Model model) {
+        String username = HttpKit.getRequest().getParameter("username");
+        LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号被冻结", HttpKit.getIp()));
         model.addAttribute("tips", "账号被冻结");
-        return "/login";
+        return "/login.html";
     }
 
     /**
@@ -55,8 +92,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(CredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String credentials(CredentialsException e, Model model) {
+        String username = HttpKit.getRequest().getParameter("username");
+        LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", HttpKit.getIp()));
         model.addAttribute("tips", "账号密码错误");
-        return "/login";
+        return "/login.html";
     }
 
     /**
@@ -65,8 +104,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(UnknownAccountException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String unknownAccount(CredentialsException e, Model model) {
+        String username = HttpKit.getRequest().getParameter("username");
+        LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", HttpKit.getIp()));
         model.addAttribute("tips", "账号密码错误");
-        return "/login";
+        return "/login.html";
     }
 
     /**
@@ -77,6 +118,9 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(KaptchaException.class)
     public String kaptchaExceptionHandler(KaptchaException exception, Model model) {
+        String username = HttpKit.getRequest().getParameter("username");
+        LogManager.me().executeLog(LogTaskFactory.loginLog(username, "验证码错误", HttpKit.getIp()));
+
         if (exception instanceof KaptchaIncorrectException) {
             model.addAttribute("tips", "验证码错误");
         } else if (exception instanceof KaptchaNotFoundException) {
@@ -86,29 +130,31 @@ public class GlobalExceptionHandler {
         } else {
             model.addAttribute("tips", "验证码渲染失败");
         }
-        return "/login";
+        return "/login.html";
     }
-//
-//    /**
-//     * 无权访问该资源异常
-//     */
-//    @ExceptionHandler(UndeclaredThrowableException.class)
-//    @ResponseStatus(HttpStatus.UNAUTHORIZED)
-//    @ResponseBody
-//    public ErrorTip credentials(UndeclaredThrowableException e) {
-//        getRequest().setAttribute("tip", "权限异常");
-//        log.error("权限异常!", e);
-//        return new ErrorTip(BizExceptionEnum.NO_PERMITION.getCode(), BizExceptionEnum.NO_PERMITION.getMessage());
-//    }
-//
-//    /**
-//     * 拦截未知的运行时异常
-//     */
-//    @ExceptionHandler(RuntimeException.class)
-//    @ResponseBody
-//    public ErrorTip notFount(RuntimeException e) {
-//        log.error("运行时异常:", e);
-//        return
-//        return new ErrorTip(BizExceptionEnum.SERVER_ERROR.getCode(), BizExceptionEnum.SERVER_ERROR.getMessage());
-//    }
+
+    /**
+     * 无权访问该资源异常
+     */
+    @ExceptionHandler(UndeclaredThrowableException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public ErrorTip credentials(UndeclaredThrowableException e) {
+        HttpKit.getRequest().setAttribute("tip", "权限异常");
+        log.error("权限异常!", e);
+        return new ErrorTip(BizExceptionEnum.NO_PERMITION.getCode(), BizExceptionEnum.NO_PERMITION.getMessage());
+    }
+
+    /**
+     * 拦截未知的运行时异常
+     */
+    @ExceptionHandler(RuntimeException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public ErrorTip notFount(RuntimeException e) {
+//        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
+        HttpKit.getRequest().setAttribute("tip", "服务器未知运行时异常");
+        log.error("运行时异常:", e);
+        return new ErrorTip(BizExceptionEnum.SERVER_ERROR.getCode(), BizExceptionEnum.SERVER_ERROR.getMessage());
+    }
 }

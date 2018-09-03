@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.Role">
+        <id column="id" property="id"/>
+        <result column="num" property="num"/>
+        <result column="pid" property="pid"/>
+        <result column="name" property="name"/>
+        <result column="deptid" property="deptid"/>
+        <result column="tips" property="tips"/>
+        <result column="version" property="version"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, num, pid, name, deptid, tips, version
+	</sql>
+
+    <select id="selectRoles" resultType="map">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_role
+        <if test="condition != null">
+            where name like CONCAT('%',#{condition},'%')
+        </if>
+    </select>
+
+    <select id="roleTree" resultType="com.stylefeng.guns.core.ztree.ZTreeNode">
+		select id as id, pid as pid, name as name, (case when (pid=0 or pid is null) then 'true' else 'false' end) as open
+             FROM sys_role
+	</select>
+
+    <select id="checkedRoleTree" resultType="com.stylefeng.guns.core.ztree.ZTreeNode">
+        SELECT id,pid,name,
+        (CASE WHEN (pid = 0 OR pid IS NULL) THEN 'true' ELSE 'false' END) 'open',
+        (CASE WHEN id in
+        <foreach collection="list" index="index" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+        THEN 'true' ELSE 'false' END ) 'checked'
+        from sys_role ORDER BY pid, num ASC
+    </select>
+
+    <select id="nameList" resultType="string">
+        select name from sys_role where id in
+        <foreach collection="list" index="index" item="i" open="(" separator="," close=")">
+            #{i}
+        </foreach>
+    </select>
+</mapper>

@@ -33,7 +33,10 @@
             <groupId>org.tc.springboot</groupId>
             <artifactId>shiro-freemarker-tags</artifactId>
         </dependency>
-
+        <dependency>
+            <groupId>org.tc.SBM</groupId>
+            <artifactId>guns-core</artifactId>
+        </dependency>
 
         <!-- 引入 spring aop 依赖 -->
         <dependency>
@@ -112,7 +115,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/org.sitemesh/sitemesh -->
+        <dependency>
+            <groupId>org.sitemesh</groupId>
+            <artifactId>sitemesh</artifactId>
+        </dependency>
 
         <!--测试-->
         <dependency>
@@ -137,6 +144,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-logging</artifactId>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -198,4 +206,33 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>local</id>
+            <properties>
+                <spring.active>local</spring.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>dev</id>
+            <properties>
+                <spring.active>dev</spring.active>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+        </profile>
+        <profile>
+            <id>test</id>
+            <properties>
+                <spring.active>test</spring.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>produce</id>
+            <properties>
+                <spring.active>produce</spring.active>
+            </properties>
+        </profile>
+    </profiles>
 </project>

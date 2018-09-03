@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.DictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.Dict">
+        <id column="id" property="id"/>
+        <result column="num" property="num"/>
+        <result column="pid" property="pid"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="tips" property="tips"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		id, num, pid, name,code,tips
+	</sql>
+
+    <select id="selectByCode" resultType="org.tc.shiro.po.Dict">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict where code = #{code}
+    </select>
+    <select id="findByNameEquals" resultType="org.tc.shiro.po.Dict">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict where name = #{name}
+    </select>
+
+    <select id="findByPidEquals" resultType="org.tc.shiro.po.Dict">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict where pid = #{pid}
+    </select>
+    <select id="selectCountByPidAndCode" resultType="int">
+        select count(*)
+        from sys_dict where pid = #{pid} and code = #{code}
+    </select>
+
+    <select id="findChildrenByParentCode" resultType="org.tc.shiro.po.Dict">
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict d1 where d1.pid in(select d2.id from sys_dict d2 where d2.code = #{code}) order by d1.num asc
+    </select>
+    <delete id="delByPidEq">
+        delete from sys_dict where pid = #{pid}
+    </delete>
+
+    <select id="list" resultType="org.tc.shiro.po.Dict">
+        select * from sys_dict where pid = 0
+        <if test="name != null and name != ''">
+            and ( simplename like CONCAT('%',#{name},'%') or fullname like CONCAT('%',#{name},'%'))
+        </if>
+        <if test="tips != null and tips != ''">
+            and tips like CONCAT('%',#{tips},'%')
+        </if>
+        order by id ASC
+    </select>
+
+</mapper>

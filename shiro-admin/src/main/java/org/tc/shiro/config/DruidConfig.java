@@ -6,6 +6,7 @@ import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
 import com.alibaba.druid.support.spring.stat.BeanTypeAutoProxyCreator;
 import com.alibaba.druid.support.spring.stat.DruidStatInterceptor;
+import com.stylefeng.guns.core.xss.XssFilter;
 import org.springframework.aop.Advisor;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
 import org.springframework.aop.support.JdkRegexpMethodPointcut;
@@ -17,8 +18,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.context.request.RequestContextListener;
+import org.tc.shiro.core.listener.ConfigListener;
+
+import java.util.Arrays;
 
 /**
+ * web 配置类
+ * WebMvcConfigurerAdapter已过时
+ * WebMvcConfigurationSupport
+ *
+ * @author fengshuonan
+ * @date 2016年11月12日 下午5:03:32
  */
 @Configuration
 @EnableTransactionManagement
@@ -63,7 +73,7 @@ public class DruidConfig {
     @Bean
     public JdkRegexpMethodPointcut druidStatPointcut() {
         JdkRegexpMethodPointcut druidStatPointcut = new JdkRegexpMethodPointcut();
-        String patterns = "org.tc.shiro.*.service.*";
+        String patterns = "com.stylefeng.guns.modular.*.service.*";
         //可以set多个
         druidStatPointcut.setPatterns(patterns);
         return druidStatPointcut;
@@ -91,11 +101,31 @@ public class DruidConfig {
     }
 
     /**
+     * xssFilter注册
+     */
+    @Bean
+    public FilterRegistrationBean xssFilterRegistration() {
+        XssFilter xssFilter = new XssFilter();
+        xssFilter.setUrlExclusion(Arrays.asList("/notice/updateAllCol", "/notice/add"));
+        FilterRegistrationBean registration = new FilterRegistrationBean(xssFilter);
+        registration.addUrlPatterns("/*");
+        return registration;
+    }
+
+    /**
      * RequestContextListener注册
      */
     @Bean
     public ServletListenerRegistrationBean<RequestContextListener> requestContextListenerRegistration() {
         return new ServletListenerRegistrationBean<>(new RequestContextListener());
+    }
+
+    /**
+     * ConfigListener注册
+     */
+    @Bean
+    public ServletListenerRegistrationBean<ConfigListener> configListenerRegistration() {
+        return new ServletListenerRegistrationBean<>(new ConfigListener());
     }
 
 }

@@ -1,6 +1,8 @@
 package org.tc.shiro.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
+import com.stylefeng.guns.core.util.Convert;
+import com.stylefeng.guns.core.util.ToolUtil;
+import com.stylefeng.guns.core.ztree.MenuNode;
 import org.apache.shiro.authc.LockedAccountException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -9,71 +11,55 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.tc.mybatis.service.impl.BaseServiceImpl;
-import org.tc.shiro.core.shiro.vo.ShiroUser;
-import org.tc.shiro.mapper.SysResourceMapper;
-import org.tc.shiro.mapper.SysRoleMapper;
-import org.tc.shiro.mapper.SysUserMapper;
-import org.tc.shiro.po.SysResource;
-import org.tc.shiro.po.SysRole;
-import org.tc.shiro.po.SysUser;
+import org.tc.shiro.core.common.constant.AdminConst;
+import org.tc.shiro.core.common.constant.enums.TrebleStatus;
+import org.tc.shiro.core.common.constant.factory.ConstantFactory;
+import org.tc.shiro.core.shiroext.vo.ShiroUser;
+import org.tc.shiro.mapper.MenuMapper;
+import org.tc.shiro.mapper.UserMapper;
+import org.tc.shiro.po.User;
 import org.tc.shiro.service.IShiroService;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ShiroServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> implements IShiroService {
+public class ShiroServiceImpl implements IShiroService {
 
     @Autowired
-    private SysResourceMapper resourceMapper;
+    private UserMapper userMapper;
     @Autowired
-    private SysRoleMapper roleMapper;
+    private MenuMapper menuMapper;
 
     @Override
-    public SysUser getUserByAccount(String account) {
-        if (StringUtils.isBlank(account)) {
-            throw new UnknownAccountException("缺失用户名");
-        }
-        SysUser sysUser = new SysUser();
-        sysUser.setUsername(account);
-        try {
-            sysUser = baseMapper.selectOne(sysUser);
-        } catch (Exception e) {
-            throw new UnknownAccountException("用户名或密码的错误");
-        }
+    public User getUserByAccount(String account) {
+        User user = userMapper.selectByAccount(account);
         // 账号不存在
-        if (sysUser == null) {
+        if (ToolUtil.isEmpty(user)) {
             throw new UnknownAccountException("用户名或密码的错误");
         }
         // 账号被冻结
-        if (!sysUser.getEnable()) {
+        if (user.getStatus() != TrebleStatus.ACTIVED.getCode()) {
             throw new LockedAccountException("用户已经被禁用，请联系管理员启用该账号");
         }
-        return sysUser;
+        return user;
     }
 
     @Override
-    public List<String> findPermissionsByRoleId(Byte roleid) {
-        List<SysResource> sysResources = resourceMapper.selectByRid(roleid);
-        ArrayList<String> list = new ArrayList<>();
-        for (SysResource resource : sysResources) {
-            list.add(resource.getUrl());
-        }
-        return list;
+    public List<String> getAPIByRoleId(Integer roleid) {
+        return menuMapper.getAPIByRoleId(roleid);
     }
 
     @Override
-    public String findRoleNameByRoleId(Byte roleid) {
-        SysRole sysRole = roleMapper.selectByPrimaryKey(roleid);
-        return sysRole.getSn();
+    public String findRoleNameByRoleId(Integer roleid) {
+        return ConstantFactory.me().getRoleEnName(roleid);
     }
 
     @Override
-    public SimpleAuthenticationInfo getSimpleInfo(SysUser user, String realmName) {
-        ShiroUser shiroUser = getShiroUser(user);
+    public SimpleAuthenticationInfo getSimpleInfo(User user, String realmName) {
+        ShiroUser shiroUser = toShiroUser(user);
         String credentials = user.getPassword();
-        String source = user.getUsername();
+        String source = user.getSalt();
         ByteSource credentialsSalt = new Md5Hash(source);
         //均为用户的正确信息
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(shiroUser, credentials, realmName);
@@ -87,19 +73,29 @@ public class ShiroServiceImpl extends BaseServiceImpl<SysUserMapper, SysUser> im
      * @param user
      * @return
      */
-    private ShiroUser getShiroUser(SysUser user) {
+    private ShiroUser toShiroUser(User user) {
         ShiroUser shiroUser = new ShiroUser();
         BeanUtils.copyProperties(user, shiroUser);
+        shiroUser.setDeptName(ConstantFactory.me().getDeptName(user.getDeptid()));
 
-        List<SysRole> sysRoles = roleMapper.selectByUid(user.getId());
-        List<Byte> roleList = new ArrayList<Byte>();
+        Integer[] roleArray = Convert.toIntArray(user.getRoleid());
+        List<Integer> roleList = new ArrayList<Integer>();
         List<String> roleNameList = new ArrayList<String>();
-        for (SysRole role : sysRoles) {
-            roleList.add(role.getId());
-            roleNameList.add(role.getSn());
+        for (int roleId : roleArray) {
+            roleList.add(roleId);
+            roleNameList.add(ConstantFactory.me().getSingleRoleName(roleId));
         }
         shiroUser.setRoleList(roleList);
         shiroUser.setRoleNames(roleNameList);
+        List<MenuNode> menus = null;
+        if (roleList.contains(AdminConst.ADMIN_ID)) {
+            menus = menuMapper.getListByRoleIds(roleList, false);
+        } else {
+            menus = menuMapper.getListByRoleIds(roleList, true);
+        }
+        List<MenuNode> titles = MenuNode.buildTitle(menus);
+//        titles = ApiMenuUtils.build(titles);
+        shiroUser.setNodeList(titles);
 
         return shiroUser;
     }

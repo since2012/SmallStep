@@ -1,51 +1,46 @@
 package org.tc.shiro.service;
 
 import org.tc.mybatis.service.IBaseService;
-import org.tc.shiro.po.SysUser;
+import org.tc.shiro.po.User;
 
 import java.util.List;
 
 /**
- * Created by Liwei on 2016/9/18.
+ * <p>
+ * 管理员表 服务类
+ * </p>
+ *
+ * @author stylefeng123
+ * @since 2018-02-22
  */
-public interface IUserService extends IBaseService<SysUser> {
+public interface IUserService extends IBaseService<User> {
+
+
+    public void add(User user);
+    public boolean edit(User newUser, User oldUser);
 
     /**
-     * 初始化用户信息
+     * 修改密码
      *
-     * @param roleIdList
-     * @return
+     * @param oldPwd
+     * @param newPwd
+     * @param rePwd
      */
-    public boolean insert(SysUser sysUser, List<Byte> roleIdList);
+    public void changePwd(String oldPwd, String newPwd, String rePwd);
+    public void resetPwd(Integer id);
 
     /**
-     * 给用户重新分配角色
-     *
-     * @param userId
-     * @param roleIdList
-     * @return
+     * 修改用户状态
      */
-    public boolean insertBatch(Byte userId, List<Byte> roleIdList);
+    void setStatus(Integer userId, int status);
+    /**
+     * 设置用户的角色
+     */
+    void setRoles(Integer userId, String roleIds);
 
     /**
-     * 根据id集合批量删除数据
-     *
-     * @param ids
-     * @return
+     * 根据条件查询用户列表
      */
-    public boolean deleteByIdList(List<Byte> ids);
-
-    /**
-     * 根据id集合批量禁用
-     *
-     * @param ids
-     * @return
-     */
-    public boolean disableByIdList(List<Byte> ids);
-
-    /**
-     * 更新用户数据
-     */
-    public boolean update(SysUser user, List<Byte> rids);
+    List<User> list(String name, String beginTime, String endTime, Integer deptid);
 
 }

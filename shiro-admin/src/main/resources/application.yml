@@ -5,6 +5,23 @@ server:
   servlet:
     context-path: /
 
+##########################################################################
+#                                 guns配置
+##########################################################################
+guns:
+  #验证码开启
+  kaptcha-open: true
+  kaptcha-invalidate-time: 180
+  swagger-open: false
+#文件上传目录(不配置的话为java.io.tmpdir目录)
+  file-upload-path: d:\\tmp
+  #是否开启spring session,如果是多机环境需要开启(true/false)
+  spring-session-open: true
+  #session失效时间(只在单机环境下生效，多机环境在SpringSessionConfig类中配置) 单位：秒
+  session-invalidate-time: 1800
+  #多久检测一次失效的session(只在单机环境下生效) 单位：秒
+  session-validation-interval: 900
+
 spring:
   profiles:
     active: dev
@@ -117,12 +134,13 @@ spring:
 # freemarker静态资源配置
 #
 ##########################################################################
+##########################################################################
   freemarker:
     enabled: true
     charset: UTF-8
     check-template-location: true
     content-type: text/html
-    expose-request-attributes: true
+#    expose-request-attributes: true
     expose-session-attributes: true
-    request-context-attribute: request
+#    request-context-attribute: req
     cache: false

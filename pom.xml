@@ -7,6 +7,7 @@
     <version>1.0.0</version>
     <modules>
         <module>shiro-admin</module>
+        <module>guns-core</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -77,6 +78,11 @@
                 <groupId>org.tc.springboot</groupId>
                 <artifactId>shiro-freemarker-tags</artifactId>
                 <version>${tool.jar.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.tc.SBM</groupId>
+                <artifactId>guns-core</artifactId>
+                <version>1.0.0</version>
             </dependency>
 
             <!--spring-boot全家桶-->
@@ -194,6 +200,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.sitemesh/sitemesh -->
+            <dependency>
+                <groupId>org.sitemesh</groupId>
+                <artifactId>sitemesh</artifactId>
+                <version>3.0.1</version>
             </dependency>
 
             <dependency>
