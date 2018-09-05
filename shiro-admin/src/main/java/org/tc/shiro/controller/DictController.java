@@ -1,6 +1,8 @@
 package org.tc.shiro.controller;
 
+import com.github.pagehelper.PageInfo;
 import com.stylefeng.guns.core.util.ToolUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,6 +22,7 @@ import org.tc.shiro.core.common.constant.cache.CacheKey;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.po.Dict;
 import org.tc.shiro.service.IDictService;
+import org.tc.shiro.vo.DictVo;
 import org.tc.shiro.warpper.DictWarpper;
 
 import java.util.List;
@@ -55,9 +58,20 @@ public class DictController extends BaseController {
     @RequestMapping(value = "/list")
     @RequiresRoles(AdminConst.ADMIN_NAME)
     @ResponseBody
-    public Object list(String name, String tips) {
-        List<Dict> list = this.dictService.list(name,tips);
-        return new DictWarpper().warpList(list);
+    public Object list(String name, String tips,
+                       @RequestParam(required = false) Integer limit,
+                       @RequestParam(required = false) Integer offset,
+                       @RequestParam(required = false) String sort,
+                       @RequestParam(required = false) String order) {
+        if (StringUtils.isBlank(sort)) {
+            sort = "num asc";
+        } else {
+            sort = sort + " " + order;
+        }
+        PageInfo<Dict> page = dictService.page(name, tips, offset / limit + 1, limit, sort);
+        List<Dict> content = page.getList();
+        List<DictVo> list = new DictWarpper().warpList(content);
+        return super.warpForBT(list, page.getTotal());
     }
 
     /**

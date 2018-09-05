@@ -30,9 +30,7 @@
 <body class="hold-transition skin-blue sidebar-mini">
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>
-        个人资料
-    </h1>
+    <h1> 个人资料 </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
         <li><a href="#">用户管理</a></li>

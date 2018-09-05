@@ -24,7 +24,7 @@ public interface LoginLogMapper extends MyMapper<LoginLog> {
     /**
      * 获取登录日志
      */
-    List<LoginLog> getLoginLogs(@Param("beginTime") String beginTime,
-                                @Param("endTime") String endTime, @Param("logName") String logName);
+    List<LoginLog> list(@Param("logName") String logName, @Param("message") String message,
+                        @Param("beginTime") String beginTime, @Param("endTime") String endTime);
 
 }

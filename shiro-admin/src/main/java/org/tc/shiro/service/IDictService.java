@@ -1,5 +1,6 @@
 package org.tc.shiro.service;
 
+import com.github.pagehelper.PageInfo;
 import org.tc.mybatis.service.IBaseService;
 import org.tc.shiro.po.Dict;
 
@@ -41,7 +42,7 @@ public interface IDictService extends IBaseService<Dict> {
     /**
      * 查询字典列表
      */
-    List<Dict> list(String name, String tips);
+    PageInfo<Dict> page(String name, String tips, Integer pageNo, Integer pageSize, String sort);
 
     /**
      * @param pid

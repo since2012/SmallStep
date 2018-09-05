@@ -17,8 +17,9 @@ Dept.initColumn = function () {
         {title: 'id', field: 'id', align: 'center', valign: 'middle', width: '50px'},
         {title: '部门简称', field: 'simplename', align: 'center', valign: 'middle', sortable: true},
         {title: '部门全称', field: 'fullname', align: 'center', valign: 'middle', sortable: true},
-        {title: '排序', field: 'num', align: 'center', valign: 'middle', sortable: true},
-        {title: '备注', field: 'tips', align: 'center', valign: 'middle', sortable: true}];
+        {title: '备注', field: 'tips', align: 'center', valign: 'middle', sortable: true},
+        {title: '排序', field: 'num', align: 'center', valign: 'middle', sortable: true}
+    ];
 };
 
 /**
@@ -34,7 +35,42 @@ Dept.check = function () {
         return true;
     }
 };
+/**
+ * 获取数据
+ *
+ * @param key 数据的名称
+ * @param val 数据的具体值
+ */
+Dept.get = function (key) {
+    return $("#" + key).val();
+};
 
+/**
+ * 设置收集数据
+ *
+ * @param key 数据的名称
+ * @param val 数据的具体值
+ */
+Dept.set = function (key, val) {
+    this.queryData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
+    return this;
+};
+
+/**
+ * 清除数据
+ */
+Dept.clearData = function () {
+    this.queryData = {};
+}
+
+/**
+ * 收集数据
+ */
+Dept.collectData = function () {
+    this.clearData();
+    this.set('name')
+        .set('tips');
+};
 /**
  * 点击添加部门
  */
@@ -90,8 +126,10 @@ Dept.delDept = function () {
  * 查询部门列表
  */
 Dept.search = function () {
-    Dept.table.refresh($("#searchForm").serialize());
+    this.collectData();
+    Dept.table.refresh({query: this.queryData});
 };
+
 //高级重置
 Dept.reset = function () {
     $("form .form-group input").val("");

@@ -2,7 +2,6 @@ package org.tc.shiro.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.mapper.LoginLogMapper;
@@ -28,12 +27,9 @@ public class LoginLogServiceImpl extends BaseServiceImpl<LoginLogMapper, LoginLo
     }
 
     @Override
-    public PageInfo<LoginLog> page(String beginTime, String endTime, String logName, Integer pageNo, Integer pageSize, String sort, String order) {
-        if (StringUtils.isBlank(sort)) {
-            PageHelper.startPage(pageNo, pageSize, "createtime desc");
-        } else {
-            PageHelper.startPage(pageNo, pageSize, sort + " " + order);
-        }
+    public PageInfo<LoginLog> page(String logName, String message, String beginTime, String endTime,
+                                   Integer pageNo, Integer pageSize, String sort) {
+        PageHelper.startPage(pageNo, pageSize, sort);
 
 //        Example example = new Example(Command.class);
 //        Example.Criteria criteria = example.createCriteria();
@@ -46,8 +42,8 @@ public class LoginLogServiceImpl extends BaseServiceImpl<LoginLogMapper, LoginLo
 //        }
 //        //排序依据
 //        example.orderBy("id").asc();
-//        List<Command> list = baseMapper.selectByExample(example);
-        List<LoginLog> list = this.baseMapper.getLoginLogs(beginTime, endTime, logName);
+//        List<Command> page = baseMapper.selectByExample(example);
+        List<LoginLog> list = this.baseMapper.list(logName, message, beginTime, endTime);
         //用PageInfo对结果进行包装
         PageInfo<LoginLog> page = new PageInfo<LoginLog>(list);
         return page;

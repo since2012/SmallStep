@@ -129,6 +129,6 @@ $(function () {
     table.init();
     Role.table = table;
 
-    $("#system").attr("class", "active");
+    $("#power").attr("class", "active");
     $("#role").attr("class", "active");
 });

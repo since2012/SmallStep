@@ -8,21 +8,21 @@
 // Easily usable on <ul>, <ol>, or <div>.
 
 .list-group {
-  // No need to set list-style: none; since .list-group-item is block level
+  // No need to set page-style: none; since .page-group-item is block level
   margin-bottom: 20px;
   padding-left: 0; // reset padding because ul and ol
 }
 
 
-// Individual list items
+// Individual page items
 //
-// Use on `li`s or `div`s within the `.list-group` parent.
+// Use on `li`s or `div`s within the `.page-group` parent.
 
 .list-group-item {
   position: relative;
   display: block;
   padding: 10px 15px;
-  // Place the border on the list items and negative margin up for better styling
+  // Place the border on the page items and negative margin up for better styling
   margin-bottom: -1px;
   background-color: @list-group-bg;
   border: 1px solid @list-group-border;
@@ -38,7 +38,7 @@
 }
 
 
-// Interactive list items
+// Interactive page items
 //
 // Use anchor or button elements instead of `li`s or `div`s to create interactive items.
 // Includes an extra `.active` modifier class for showing selected items.
@@ -118,7 +118,7 @@ button.list-group-item {
 
 // Custom content options
 //
-// Extra classes for creating well-formatted content within `.list-group-item`s.
+// Extra classes for creating well-formatted content within `.page-group-item`s.
 
 .list-group-item-heading {
   margin-top: 0;

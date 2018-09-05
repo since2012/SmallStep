@@ -54,6 +54,7 @@ LoginLog.search = function () {
     var queryData = {};
 
     queryData['logName'] = $("#logName").val();
+    queryData['message'] = $("#message").val();
     queryData['beginTime'] = $("#beginTime").val();
     queryData['endTime'] = $("#endTime").val();
 
@@ -71,6 +72,16 @@ $(function () {
     var table = new BSTable(LoginLog.id, "/login_log/list", defaultColunms);
     table.setPaginationType("server");
     LoginLog.table = table.init();
+
+    //Date picker
+    $('#beginTime').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    })
+    $('#endTime').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+    })
 
     $("#mon").attr("class", "active");
     $("#login_log").attr("class", "active");

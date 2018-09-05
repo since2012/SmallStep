@@ -149,12 +149,12 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
     @Override
-    public List<User> list(String name, String beginTime, String endTime, Integer deptid) {
+    public List<User> list(User user, String beginTime, String endTime) {
         if (!ShiroKit.isAdmin()) {
             List<Integer> deptDataScope = ShiroKit.getDeptDataScope();
-            return baseMapper.list(deptDataScope, name, beginTime, endTime, deptid);
+            return baseMapper.list(deptDataScope, user, beginTime, endTime);
         }
-        return baseMapper.list(null, name, beginTime, endTime, deptid);
+        return baseMapper.list(null, user, beginTime, endTime);
     }
 
 }

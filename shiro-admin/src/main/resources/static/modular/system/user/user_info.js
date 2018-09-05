@@ -261,5 +261,8 @@ $(function () {
     $('#birthday').datepicker({
         format: 'yyyy-mm-dd',
         autoclose: true
-    })
+    });
+
+    $("#power").attr("class", "active");
+    $("#mgr").attr("class", "active");
 });

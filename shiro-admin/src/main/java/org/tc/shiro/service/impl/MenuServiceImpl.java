@@ -84,10 +84,28 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     }
 
     @Override
+    @Transactional
     public void update(Menu menu) {
+        Menu oldMenu = baseMapper.selectByPrimaryKey(menu.getId());
         //设置父级菜单编号
         setPcode(menu);
         baseMapper.updateByPrimaryKeySelective(menu);
+        String oldcode = oldMenu.getCode();
+        String newcode = menu.getCode();
+        if (!oldcode.equals(newcode)) {
+            //所有子菜单
+            List<Menu> menus = baseMapper.getByPcodesLike(oldcode);
+            if (CollectionUtils.isNotEmpty(menus)) {
+                for (Menu temp : menus) {
+                    if (oldcode.equals(temp.getPcode())) {
+                        temp.setPcode(newcode);
+                    }
+                    temp.setPcodes(temp.getPcodes().replace("[" + oldcode + "]",
+                            "[" + newcode + "]"));
+                    baseMapper.updateByPrimaryKey(temp);
+                }
+            }
+        }
     }
 
     private void setPcode(Menu menu) {
@@ -104,8 +122,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
                 throw new GunsException(BizExceptionEnum.MENU_PCODE_COINCIDENCE);
             }
             menu.setLevels(pmenu.getLevels() + 1);
-            menu.setPcode(pcode);
-            menu.setPcodes(pmenu.getPcodes() + "[" + code + "],");
+            menu.setPcodes(pmenu.getPcodes() + "[" + pcode + "],");
         }
     }
 

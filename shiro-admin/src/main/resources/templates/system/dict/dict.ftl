@@ -9,14 +9,12 @@
 <#--bootstrap table-->
     <link rel="stylesheet" href="/static/plugins/bootstrap-table/bootstrap-table.min.css">
     <script src="/static/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-<#--国际化-->
     <script src="/static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
-    <script src="/static/plugins/common/ajax-object.js"></script>
-<#--弹出层-->
-    <script src="/static/plugins/layer/layer.js"></script>
-<#--自定义封装-->
     <script src="/static/plugins/common/bootstrap-table-object.js"></script>
+<#--自定义封装-->
+    <script src="/static/plugins/layer/layer.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
+    <script src="/static/plugins/common/ajax-object.js"></script>
 <#--本页JS-->
     <script src="/static/modular/system/dict/dict.js"></script>
 </head>
@@ -53,10 +51,10 @@
                                        placeholder="名称">
                             </div>
                             <label for="tips" class="col-md-2 col-lg-1 control-label"
-                                   style="padding-right:0px">别名</label>
+                                   style="padding-right:0px">备注</label>
                             <div class="col-md-4 col-lg-5 ">
                                 <input class="form-control" type="text" id="tips"
-                                       name="tips" placeholder="别名">
+                                       name="tips" placeholder="备注">
                             </div>
                         </div>
                     </div>

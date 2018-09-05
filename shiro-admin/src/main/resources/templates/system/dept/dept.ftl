@@ -51,11 +51,11 @@
                                        placeholder="名称">
                             </div>
                             <label for="tips" class="col-md-2 col-lg-1 control-label"
-                                   style="padding-right:0px">别名</label>
+                                   style="padding-right:0px">备注</label>
                             <div class="col-md-4 col-lg-5 ">
                                 <input class="form-control" type="text" id="tips"
                                        name="tips"
-                                       placeholder="别名">
+                                       placeholder="备注">
                             </div>
                         </div>
                     </div>

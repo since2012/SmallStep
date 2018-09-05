@@ -1,6 +1,7 @@
 package org.tc.shiro.controller;
 
 import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,15 +46,21 @@ public class LoginLogController extends BaseController {
     @RequestMapping("/list")
     @RequiresRoles(AdminConst.ADMIN_NAME)
     @ResponseBody
-    public Object list(@RequestParam(required = false) String beginTime,
+    public Object list(@RequestParam(required = false) String logName,
+                       @RequestParam(required = false) String message,
+                       @RequestParam(required = false) String beginTime,
                        @RequestParam(required = false) String endTime,
-                       @RequestParam(required = false) String name,
                        @RequestParam(required = false) Integer limit,
                        @RequestParam(required = false) Integer offset,
                        @RequestParam(required = false) String sort,
                        @RequestParam(required = false) String order) {
 
-        PageInfo<LoginLog> page = loginLogService.page(beginTime, endTime, name, offset / limit + 1, limit, sort, order);
+        if (StringUtils.isBlank(sort)) {
+            sort = "createtime desc";
+        } else {
+            sort = sort + " " + order;
+        }
+        PageInfo<LoginLog> page = loginLogService.page(logName, message, beginTime, endTime, offset / limit + 1, limit, sort);
         List<LoginLog> content = page.getList();
         List<LoginLogVo> list = new LoginLogWarpper().warpList(content);
         return super.warpForBT(list, page.getTotal());

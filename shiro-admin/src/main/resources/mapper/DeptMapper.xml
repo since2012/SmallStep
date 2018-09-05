@@ -14,6 +14,10 @@
         <result column="version" property="version"/>
     </resultMap>
 
+    <sql id="Base_Column_List">
+        id, num, pid, pids,simplename,fullname,tips,version
+    </sql>
+
     <select id="tree" resultType="com.stylefeng.guns.core.ztree.ZTreeNode">
 		select id,pid,simplename as name,
 		( CASE  WHEN (pid = 0 OR pid IS NULL) THEN 'true' ELSE 'false' END
@@ -21,12 +25,14 @@
 	</select>
 
     <select id="list" resultType="org.tc.shiro.po.Dept">
-        select * from sys_dept where 1=1
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dept where 1=1
         <if test="name != null and name != ''">
-            andn ( simplename like CONCAT('%',#{name},'%') or fullname like CONCAT('%',#{name},'%'))
+            and ( simplename like CONCAT('%',#{name},'%') or fullname like CONCAT('%',#{name},'%'))
         </if>
         <if test="tips != null and tips != ''">
-            where tips like CONCAT('%',#{tips},'%')
+            and tips like CONCAT('%',#{tips},'%')
         </if>
         order by num ASC
     </select>

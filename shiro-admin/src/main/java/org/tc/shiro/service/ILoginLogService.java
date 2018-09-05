@@ -26,6 +26,7 @@ public interface ILoginLogService extends IBaseService<LoginLog> {
      * @param pageSize
      * @return
      */
-    PageInfo<LoginLog> page(String beginTime, String endTime, String logName, Integer pageNo, Integer pageSize, String sort, String order);
+    PageInfo<LoginLog> page(String logName, String message, String beginTime, String endTime,
+                            Integer pageNo, Integer pageSize, String sort);
 
 }

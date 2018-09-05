@@ -1,5 +1,7 @@
 package org.tc.shiro.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tc.mybatis.exception.GunsException;
@@ -89,8 +91,12 @@ public class DictServiceImpl extends BaseServiceImpl<DictMapper, Dict> implement
     }
 
     @Override
-    public List<Dict> list(String name, String tips) {
-        return baseMapper.list(name, tips);
+    public PageInfo<Dict> page(String name, String tips, Integer pageNo, Integer pageSize, String sort) {
+        PageHelper.startPage(pageNo, pageSize, sort);
+        List<Dict> list = baseMapper.list(name, tips);
+        //用PageInfo对结果进行包装
+        PageInfo<Dict> page = new PageInfo<Dict>(list);
+        return page;
     }
 
     @Override

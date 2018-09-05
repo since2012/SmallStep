@@ -32,13 +32,13 @@
                 <div class="row">
                     <div class="col-xs-12" id="itemsArea">
                         <div class="form-group">
-                            <label class="col-xs-2 control-label">类型编码</label>
-                            <div class="col-xs-3">
-                                <input class="form-control" id="dictCode" type="text">
-                            </div>
                             <label class="col-xs-2 control-label">类型名称</label>
                             <div class="col-xs-3">
                                 <input class="form-control" id="dictName" type="text">
+                            </div>
+                            <label class="col-xs-2 control-label">类型编码</label>
+                            <div class="col-xs-3">
+                                <input class="form-control" id="dictCode" type="text">
                             </div>
                             <div class="col-xs-2">
                                 <button type="button" class="btn btn-info " onclick="DictInfo.addItem()" id="">

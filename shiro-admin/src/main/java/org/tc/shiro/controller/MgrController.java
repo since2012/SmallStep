@@ -69,11 +69,10 @@ public class MgrController extends BaseController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public Object list(@RequestParam(required = false) String name,
+    public Object list(User user,
                        @RequestParam(required = false) String beginTime,
-                       @RequestParam(required = false) String endTime,
-                       @RequestParam(required = false) Integer deptid) {
-        List<User> list = userService.list(name, beginTime, endTime, deptid);
+                       @RequestParam(required = false) String endTime) {
+        List<User> list = userService.list(user, beginTime, endTime);
         return new UserWarpper().warpList(list);
     }
 

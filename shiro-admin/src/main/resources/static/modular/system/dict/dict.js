@@ -15,8 +15,8 @@ Dict.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
         {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
-        {title: '名称', field: 'name', align: 'center', valign: 'middle', sortable: true},
-        {title: '编码', field: 'code', align: 'center', valign: 'middle', sortable: true},
+        {title: '名称(值)', field: 'name', align: 'center', valign: 'middle', sortable: true},
+        {title: '编码(键)', field: 'code', align: 'center', valign: 'middle', sortable: true},
         {title: '详情', field: 'detail', align: 'center', valign: 'middle', sortable: false},
         {title: '备注', field: 'tips', align: 'center', valign: 'middle', sortable: false}];
 };
@@ -33,6 +33,43 @@ Dict.check = function () {
         Dict.seItem = selected[0];
         return true;
     }
+};
+
+/**
+ * 获取数据
+ *
+ * @param key 数据的名称
+ * @param val 数据的具体值
+ */
+Dict.get = function (key) {
+    return $("#" + key).val();
+};
+
+/**
+ * 设置收集数据
+ *
+ * @param key 数据的名称
+ * @param val 数据的具体值
+ */
+Dict.set = function (key, val) {
+    this.queryData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
+    return this;
+};
+
+/**
+ * 清除数据
+ */
+Dict.clearData = function () {
+    this.queryData = {};
+}
+
+/**
+ * 收集数据
+ */
+Dict.collectData = function () {
+    this.clearData();
+    this.set('name')
+        .set('tips');
 };
 
 /**
@@ -90,7 +127,8 @@ Dict.delDict = function () {
  * 查询字典列表
  */
 Dict.search = function () {
-    Dict.table.refresh($("#searchForm").serialize());
+    this.collectData();
+    Dict.table.refresh({query: this.queryData});
 };
 
 //高级重置
@@ -101,7 +139,7 @@ Dict.reset = function () {
 $(function () {
     var defaultColunms = Dict.initColumn();
     var table = new BSTable(Dict.id, "/dict/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     Dict.table = table.init();
 
     $("#system").attr("class", "active");

@@ -47,10 +47,12 @@
         select
         <include refid="Base_Column_List"/>
         from sys_user where 1=1
-        <if test="name != null and name != ''">
-            and (phone like CONCAT('%',#{name},'%')
-            or account like CONCAT('%',#{name},'%')
-            or name like CONCAT('%',#{name},'%'))
+        <if test="user.name != null and user.name != ''">
+            and (account like CONCAT('%',#{user.name},'%')
+            or name like CONCAT('%',#{user.name},'%'))
+        </if>
+        <if test="user.phone != null and user.phone != ''">
+            and phone like CONCAT('%',#{user.phone},'%')
         </if>
         <if test="dataScope != null">
             and deptid
@@ -58,12 +60,17 @@
                 #{i}
             </foreach>
         </if>
-        <if test="deptid != null and deptid != 0">
-            and (deptid = #{deptid} or deptid in ( select id from sys_dept where pids like CONCAT('%[', #{deptid}, ']%')
-            ))
+        <if test="user.deptid != null and user.deptid != 0">
+            and (deptid = #{user.deptid} or deptid in(
+                select id from sys_dept where pids like CONCAT('%[', #{user.deptid}, ']%')
+                )
+            )
         </if>
-        <if test="beginTime != null and beginTime != '' and endTime != null and endTime != ''">
-            and (createTime between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(beginTime)">
+            and createTime &gt;= CONCAT(#{beginTime},' 00:00:00')
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(endTime)">
+            and createTime &lt;= CONCAT(#{endTime},' 23:59:59')
         </if>
         order by createTime
     </select>

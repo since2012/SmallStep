@@ -17,6 +17,7 @@ public interface IUserService extends IBaseService<User> {
 
 
     public void add(User user);
+
     public boolean edit(User newUser, User oldUser);
 
     /**
@@ -27,12 +28,14 @@ public interface IUserService extends IBaseService<User> {
      * @param rePwd
      */
     public void changePwd(String oldPwd, String newPwd, String rePwd);
+
     public void resetPwd(Integer id);
 
     /**
      * 修改用户状态
      */
     void setStatus(Integer userId, int status);
+
     /**
      * 设置用户的角色
      */
@@ -41,6 +44,6 @@ public interface IUserService extends IBaseService<User> {
     /**
      * 根据条件查询用户列表
      */
-    List<User> list(String name, String beginTime, String endTime, Integer deptid);
+    List<User> list(User user, String beginTime, String endTime);
 
 }

@@ -6,16 +6,22 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
     <meta charset="UTF-8">
+
+    <!-- bootstrap datepicker -->
+    <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+    <script src="/static/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+    <script src="/static/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+
 <#--bootstrap table-->
     <link rel="stylesheet" href="/static/plugins/bootstrap-table/bootstrap-table.min.css">
     <script src="/static/plugins/bootstrap-table/bootstrap-table.min.js"></script>
     <script src="/static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
+    <script src="/static/plugins/common/bootstrap-table-object.js"></script>
 
 <#--弹出层-->
     <script src="/static/plugins/layer/layer.js"></script>
     <script src="/static/plugins/common/ajax-object.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
-    <script src="/static/plugins/common/bootstrap-table-object.js"></script>
 <#--本页JS-->
     <script src="/static/modular/system/log/login_log.js"></script>
 </head>
@@ -45,18 +51,18 @@
                 <form class="form-horizontal">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="name" class="col-md-2 col-lg-1 control-label"
+                            <label for="logName" class="col-md-2 col-lg-1 control-label"
                                    style="padding-right:0px;">名称</label>
                             <div class="col-md-4 col-lg-5 ">
-                                <input class="form-control" type="text" id="name" name="name"
+                                <input class="form-control" type="text" id="logName" name="logName"
                                        placeholder="名称">
                             </div>
                             <label for="tips" class="col-md-2 col-lg-1 control-label"
-                                   style="padding-right:0px">别名</label>
+                                   style="padding-right:0px">消息</label>
                             <div class="col-md-4 col-lg-5 ">
-                                <input class="form-control" type="text" id="tips"
-                                       name="tips"
-                                       placeholder="别名">
+                                <input class="form-control" type="text" id="message"
+                                       name="message"
+                                       placeholder="消息">
                             </div>
                         </div>
                         <div class="form-group">

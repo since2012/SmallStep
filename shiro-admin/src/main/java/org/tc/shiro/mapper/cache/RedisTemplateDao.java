@@ -14,7 +14,7 @@ public interface RedisTemplateDao {
     //================================================Hash================================================
 
     /**
-     * TODO 删除键为key的缓存(hash/set/list/String)
+     * TODO 删除键为key的缓存(hash/set/page/String)
      *
      * @param key ning 创建于  2017年11月8日 上午11:54:05
      */

@@ -78,9 +78,9 @@ MgrUser.clearData = function () {
  */
 MgrUser.collectData = function () {
     this.clearData();
-    this
-        .set('deptid')
+    this.set('deptid')
         .set('name')
+        .set('phone')
         .set('beginTime')
         .set('endTime');
 };
@@ -253,6 +253,6 @@ $(function () {
         autoclose: true
     })
 
-    $("#system").attr("class", "active");
+    $("#power").attr("class", "active");
     $("#mgr").attr("class", "active");
 });

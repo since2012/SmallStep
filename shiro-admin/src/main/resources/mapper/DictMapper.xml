@@ -47,14 +47,15 @@
     </delete>
 
     <select id="list" resultType="org.tc.shiro.po.Dict">
-        select * from sys_dict where pid = 0
+        select
+        <include refid="Base_Column_List"/>
+        from sys_dict where pid = 0
         <if test="name != null and name != ''">
-            and ( simplename like CONCAT('%',#{name},'%') or fullname like CONCAT('%',#{name},'%'))
+            and name like CONCAT('%',#{name},'%')
         </if>
         <if test="tips != null and tips != ''">
             and tips like CONCAT('%',#{tips},'%')
         </if>
-        order by id ASC
     </select>
 
 </mapper>

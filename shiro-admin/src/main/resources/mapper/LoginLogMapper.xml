@@ -21,18 +21,21 @@
         delete from sys_login_log
     </delete>
 
-    <select id="getLoginLogs" resultType="org.tc.shiro.po.LoginLog">
+    <select id="list" resultType="org.tc.shiro.po.LoginLog">
         select
         <include refid="Base_Column_List"/>
         from sys_login_log where 1 = 1
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(logName)">
+            and logname like CONCAT('%',#{logName},'%')
+        </if>
+        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(message)">
+            and message like CONCAT('%',#{message},'%')
+        </if>
         <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(beginTime)">
             and createTime &gt;= CONCAT(#{beginTime},' 00:00:00')
         </if>
         <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(endTime)">
             and createTime &lt;= CONCAT(#{endTime},' 23:59:59')
-        </if>
-        <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(logName)">
-            and logname like CONCAT('%',#{logName},'%')
         </if>
     </select>
 

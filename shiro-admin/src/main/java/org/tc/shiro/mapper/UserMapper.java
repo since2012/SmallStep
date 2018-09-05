@@ -34,7 +34,8 @@ public interface UserMapper extends MyMapper<User> {
     /**
      * 根据条件查询用户列表
      */
-    List<User> list(@Param("dataScope") List<Integer> dataScope, @Param("name") String name, @Param("beginTime") String beginTime, @Param("endTime") String endTime, @Param("deptid") Integer deptid);
+    List<User> list(@Param("dataScope") List<Integer> dataScope, @Param("user") User user,
+                    @Param("beginTime") String beginTime, @Param("endTime") String endTime);
 
     /**
      * 是否存在该账户号（忽略大小写）

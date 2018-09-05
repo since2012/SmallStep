@@ -71,7 +71,9 @@
         select * from sys_menu where code = #{code}
     </select>
     <select id="getByPcodesLike" resultType="org.tc.shiro.po.Menu">
-        select * from sys_menu where pcodes like CONCAT('%',#{pcodes},'%')
+        select
+        <include refid="Base_Column_List"/>
+        from sys_menu where pcodes like CONCAT('%[',#{pcodes},']%')
     </select>
     <select id="selectCountByCode" resultType="int">
         select count(*) from sys_menu where code = #{code}
@@ -93,7 +95,7 @@
     </select>
 
 
-    <select id="nameList">
+    <select id="nameList" resultType="string">
         select name from sys_menu where id in (#{menuids})
     </select>
 </mapper>

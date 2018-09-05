@@ -142,6 +142,6 @@ $(function () {
     table.init();
     Menu.table = table;
 
-    $("#system").attr("class", "active");
+    $("#power").attr("class", "active");
     $("#menu").attr("class", "active");
 });
