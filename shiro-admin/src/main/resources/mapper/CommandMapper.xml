@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.CommandMapper">
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.Command">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="ID" jdbcType="INTEGER" property="id"/>
+        <result column="NAME" jdbcType="VARCHAR" property="name"/>
+        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+        <collection property="contents" ofType="org.tc.shiro.po.CommandContent">
+            <id column="CID" jdbcType="INTEGER" property="id"/>
+            <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
+            <result column="COMMAND_ID" jdbcType="INTEGER" property="commandId"/>
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id, name, description
+    </sql>
+
+    <select id="list" parameterType="org.tc.shiro.po.Command" resultType="org.tc.shiro.po.Command">
+        select
+        <include refid="Base_Column_List"/>
+        from command a
+        <where>
+            <if test="name != null">
+                and a.NAME = #{name}
+            </if>
+            <if test="description != null">
+                and a.DESCRIPTION like '%' #{description} '%'
+            </if>
+        </where>
+    </select>
+    <!--<select id="list" parameterType="org.tc.shiro.po.Command" resultMap="BaseResultMap">-->
+    <!--select a.ID,a.NAME,a.DESCRIPTION,b.ID CID,b.CONTENT,b.COMMAND_ID-->
+    <!--from command a-->
+    <!--left join COMMAND_CONTENT b on a.ID=b.COMMAND_ID-->
+    <!--<where>-->
+    <!--<if test="name != null">-->
+    <!--and a.NAME = #{name}-->
+    <!--</if>-->
+    <!--<if test="description != null">-->
+    <!--and a.DESCRIPTION like '%' #{description} '%'-->
+    <!--</if>-->
+    <!--</where>-->
+    <!--</select>-->
+
+    <select id="getByName" parameterType="string" resultType="org.tc.shiro.po.Command">
+        select
+        <include refid="Base_Column_List"/>
+        from command a
+        WHERE a.NAME = #{name}
+    </select>
+
+    <sql id="columns">ID,COMMAND,DESCRIPTION,CONTENT</sql>
+
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from command where ID in(
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </delete>
+</mapper>

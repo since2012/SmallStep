@@ -2,7 +2,7 @@
  * 日志管理初始化
  */
 var Maintain = {
-    id: "MaintainTable",	//表格id
+    id: "maintainTable",	//表格id
     seItem: null,		//选中的条目
     table: null,
     layerIndex: -1,
@@ -33,11 +33,12 @@ Maintain.initColumn = function () {
             formatter: function (value, row, index) {
                 var result = '';
                 for (var i = 0; i < value.length; i++) {
-                    result += i + '. ' + value[i].content + '</br>';
+                    result += (i + 1) + '. ' + value[i] + '</br>';
                 }
                 return result;
             }
-        }];
+        }
+    ];
 };
 
 /**
@@ -88,8 +89,7 @@ Maintain.clearData = function () {
  */
 Maintain.collectData = function () {
     this.clearData();
-    this
-        .set('name')
+    this.set('name')
         .set('description');
 };
 
@@ -121,7 +121,10 @@ Maintain.deleteBatch = function () {
         ajax.start();
     }
 };
-Maintain.delRole = function () {
+/**
+ * 单条记录删除
+ */
+Maintain.delete = function () {
     if (this.check()) {
         var ajax = new $ax(Feng.ctxPath + "/maintain/delete", function (data) {
             Feng.success("删除成功!");
@@ -210,5 +213,8 @@ $(function () {
     var table = new BSTable(Maintain.id, "/maintain/list", defaultColunms);
     table.setPaginationType("server");
     Maintain.table = table.init();
+
+    $("#biz").attr("class", "active");
+    $("#maintain").attr("class", "active");
 });
 

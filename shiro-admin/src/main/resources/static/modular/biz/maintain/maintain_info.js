@@ -64,8 +64,7 @@ MaintainInfo.set = function (key, val) {
  */
 MaintainInfo.collectData = function () {
     MaintainInfo.clearNullDom();
-    this
-        .set('id')
+    this.set('id')
         .set('name')
         .set('description');
 };
@@ -73,7 +72,7 @@ MaintainInfo.collectData = function () {
 /**
  * 提交添加字典
  */
-MaintainInfo.login = function () {
+MaintainInfo.addSubmit = function () {
     MaintainInfo.clearNullDom();
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/maintain/add", function (data) {
