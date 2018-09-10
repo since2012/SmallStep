@@ -1,4 +1,4 @@
-package org.tc.shiro.controller;
+package org.tc.shiro.modular.biz.controller;
 
 
 import lombok.extern.slf4j.Slf4j;

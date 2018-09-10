@@ -16,6 +16,8 @@ public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
                 .addDecoratorPath("/mgr/profile", "/decorator/main")
                 .addDecoratorPath("/maintain", "/decorator/main")
                 .addDecoratorPath("/robot", "/decorator/main")
+                .addDecoratorPath("/seckill", "/decorator/main")
+                .addDecoratorPath("/seckill/*/detail", "/decorator/main")
                 .addDecoratorPath("/druid/*", "/decorator/main");
     }
 }

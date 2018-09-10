@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.SeckillResultMapper">
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.SeckillResult">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="seckid" jdbcType="BIGINT" property="seckid"/>
+        <id column="userid" jdbcType="INTEGER" property="userid"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+    </resultMap>
+
+    <select id="queryByIdWithSeckill" resultType="org.tc.shiro.po.SeckillResult">
+
+        <!--根据seckillId查询SuccessKilled对象，并携带Seckill对象-->
+        <!--如何告诉mybatis把结果映射到SuccessKill属性同时映射到Seckill属性-->
+        <!--可以自由控制SQL语句-->
+        SELECT
+        sk.seckid, sk.userid, sk.createtime, sk.state,
+        s.id "seckill.id",
+        s.name "seckill.name",
+        s.number "seckill.number",
+        s.begintime "seckill.begintime",
+        s.endtime "seckill.endtime",
+        s.createtime "seckill.createtime"
+        FROM seckill_result sk
+        INNER JOIN seckill s ON sk.seckid=s.id
+        WHERE sk.seckid=#{seckid} AND sk.userid=#{userid}
+    </select>
+</mapper>

@@ -1,4 +1,4 @@
-package org.tc.shiro.controller;
+package org.tc.shiro.modular.system.controller;
 
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.core.ztree.ZTreeNode;

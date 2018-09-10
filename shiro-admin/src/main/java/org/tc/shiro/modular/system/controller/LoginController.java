@@ -1,4 +1,4 @@
-package org.tc.shiro.controller;
+package org.tc.shiro.modular.system.controller;
 
 import com.baomidou.kaptcha.Kaptcha;
 import com.stylefeng.guns.core.util.ToolUtil;

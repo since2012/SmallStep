@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tc.shiro.mapper.CommandMapper">
-    <resultMap id="BaseResultMap" type="org.tc.shiro.po.Command">
-        <!--
-          WARNING - @mbg.generated
-        -->
-        <id column="ID" jdbcType="INTEGER" property="id"/>
-        <result column="NAME" jdbcType="VARCHAR" property="name"/>
-        <result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
-        <collection property="contents" ofType="org.tc.shiro.po.CommandContent">
-            <id column="CID" jdbcType="INTEGER" property="id"/>
-            <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
-            <result column="COMMAND_ID" jdbcType="INTEGER" property="commandId"/>
-        </collection>
-    </resultMap>
+    <!--<resultMap id="BaseResultMap" type="org.tc.shiro.po.Command">-->
+        <!--&lt;!&ndash;-->
+          <!--WARNING - @mbg.generated-->
+        <!--&ndash;&gt;-->
+        <!--<id column="ID" jdbcType="INTEGER" property="id"/>-->
+        <!--<result column="NAME" jdbcType="VARCHAR" property="name"/>-->
+        <!--<result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>-->
+        <!--<collection property="contents" ofType="org.tc.shiro.po.CmdContent">-->
+            <!--<id column="CID" jdbcType="INTEGER" property="id"/>-->
+            <!--<result column="CONTENT" jdbcType="VARCHAR" property="content"/>-->
+            <!--<result column="COMMAND_ID" jdbcType="INTEGER" property="commandId"/>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
 
     <sql id="Base_Column_List">
         id, name, description

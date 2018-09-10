@@ -2,11 +2,11 @@ package org.tc.shiro.mapper;
 
 import org.apache.ibatis.annotations.Param;
 import org.tc.mybatis.dao.MyMapper;
-import org.tc.shiro.po.CommandContent;
+import org.tc.shiro.po.CmdContent;
 
 import java.util.List;
 
-public interface CommandContentMapper extends MyMapper<CommandContent> {
+public interface CommandContentMapper extends MyMapper<CmdContent> {
 
     /**
      * 根据外键删除

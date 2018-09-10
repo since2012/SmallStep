@@ -1,4 +1,4 @@
-package org.tc.shiro.controller;
+package org.tc.shiro.modular.system.controller;
 
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.lang3.StringUtils;

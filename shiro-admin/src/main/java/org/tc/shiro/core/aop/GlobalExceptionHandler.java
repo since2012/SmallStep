@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.tc.mybatis.dto.GlobalResult;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.tips.ErrorTip;
 import org.tc.mybatis.util.HttpKit;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
+import org.tc.shiro.core.dto.ExecutionResult;
+import org.tc.shiro.core.enums.SeckillStateEnum;
+import org.tc.shiro.core.exception.RepeatKillException;
+import org.tc.shiro.core.exception.SeckillClosedException;
 import org.tc.shiro.core.log.LogManager;
 import org.tc.shiro.core.log.factory.LogTaskFactory;
 
@@ -70,7 +75,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public String unAuth(AuthenticationException e) {
         log.error("用户未登陆：", e);
-        return "/login.html";
+        return "/login";
     }
 
     /**
@@ -83,7 +88,7 @@ public class GlobalExceptionHandler {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号被冻结", HttpKit.getIp()));
         model.addAttribute("tips", "账号被冻结");
-        return "/login.html";
+        return "/login";
     }
 
     /**
@@ -95,7 +100,7 @@ public class GlobalExceptionHandler {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", HttpKit.getIp()));
         model.addAttribute("tips", "账号密码错误");
-        return "/login.html";
+        return "/login";
     }
 
     /**
@@ -107,7 +112,7 @@ public class GlobalExceptionHandler {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", HttpKit.getIp()));
         model.addAttribute("tips", "账号密码错误");
-        return "/login.html";
+        return "/login";
     }
 
     /**
@@ -130,7 +135,7 @@ public class GlobalExceptionHandler {
         } else {
             model.addAttribute("tips", "验证码渲染失败");
         }
-        return "/login.html";
+        return "/login";
     }
 
     /**
@@ -143,6 +148,27 @@ public class GlobalExceptionHandler {
         HttpKit.getRequest().setAttribute("tip", "权限异常");
         log.error("权限异常!", e);
         return new ErrorTip(BizExceptionEnum.NO_PERMITION.getCode(), BizExceptionEnum.NO_PERMITION.getMessage());
+    }
+
+
+    /**
+     * 重复秒杀异常
+     */
+    @ExceptionHandler(RepeatKillException.class)
+    @ResponseBody
+    public GlobalResult killrepeat(RepeatKillException e) {
+        log.info("重复秒杀异常:", e);
+        return GlobalResult.ok(ExecutionResult.error(SeckillStateEnum.REPEAT_KILL));
+    }
+
+    /**
+     * 秒杀结束异常
+     */
+    @ExceptionHandler(SeckillClosedException.class)
+    @ResponseBody
+    public GlobalResult killover(SeckillClosedException e) {
+        log.info("秒杀结束异常:", e);
+        return GlobalResult.ok(ExecutionResult.error(SeckillStateEnum.END));
     }
 
     /**

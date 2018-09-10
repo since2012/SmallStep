@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-@Table(name = "command_content")
-public class CommandContent {
+@Table(name = "cmd_content")
+public class CmdContent {
     @Id
     @Column(name = "ID")
     private Integer id;
@@ -16,8 +16,8 @@ public class CommandContent {
     @Column(name = "CONTENT")
     private String content;
 
-    @Column(name = "COMMAND_ID")
-    private Integer commandId;
+    @Column(name = "CMDID")
+    private Integer cmdid;
 
     @Override
     public String toString() {

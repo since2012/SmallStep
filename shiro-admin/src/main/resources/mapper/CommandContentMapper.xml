@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tc.shiro.mapper.CommandContentMapper">
-    <resultMap id="BaseResultMap" type="org.tc.shiro.po.CommandContent">
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.CmdContent">
         <!--
           WARNING - @mbg.generated
         -->
         <id column="ID" jdbcType="INTEGER" property="id"/>
         <result column="CONTENT" jdbcType="VARCHAR" property="content"/>
-        <result column="COMMAND_ID" jdbcType="INTEGER" property="commandId"/>
+        <result column="CMDID" jdbcType="INTEGER" property="cmdid"/>
     </resultMap>
 
     <delete id="deleteByFk" parameterType="integer">
-        delete from command_content WHERE command_id = #{fk}
+        delete from cmd_content WHERE cmdid = #{fk}
     </delete>
 
     <delete id="deleteByFkList" parameterType="list">
-        delete from command_content WHERE command_id in(
+        delete from cmd_content WHERE cmdid in(
         <foreach collection="list" item="item" separator=",">
             #{item}
         </foreach>
@@ -23,7 +23,7 @@
     </delete>
 
     <select id="selectByFk" parameterType="integer" resultType="string">
-        SELECT content from command_content WHERE command_id = #{fk}
+        SELECT content from cmd_content WHERE cmdid = #{fk}
     </select>
 
 </mapper>

@@ -1,11 +1,11 @@
 package org.tc.shiro.service;
 
 import org.tc.mybatis.service.IBaseService;
-import org.tc.shiro.po.CommandContent;
+import org.tc.shiro.po.CmdContent;
 
 import java.util.List;
 
-public interface CommandContentService extends IBaseService<CommandContent> {
+public interface CommandContentService extends IBaseService<CmdContent> {
 
     /**
      * 根据外键查询

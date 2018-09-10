@@ -11,8 +11,8 @@ import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.core.consts.IRobotConst;
 import org.tc.shiro.mapper.CommandContentMapper;
 import org.tc.shiro.mapper.CommandMapper;
+import org.tc.shiro.po.CmdContent;
 import org.tc.shiro.po.Command;
-import org.tc.shiro.po.CommandContent;
 import org.tc.shiro.service.CommandService;
 
 import java.util.ArrayList;
@@ -30,12 +30,12 @@ public class CommandServiceImpl extends BaseServiceImpl<CommandMapper, Command> 
 
     private void genContent(Integer id, List<String> contentList) {
         if (CollectionUtils.isNotEmpty(contentList)) {
-            List<CommandContent> contents = new ArrayList<CommandContent>();
+            List<CmdContent> contents = new ArrayList<CmdContent>();
             for (String content : contentList) {
-                CommandContent commandContent = new CommandContent();
-                commandContent.setCommandId(id);
-                commandContent.setContent(content);
-                contents.add(commandContent);
+                CmdContent cmdContent = new CmdContent();
+                cmdContent.setCmdid(id);
+                cmdContent.setContent(content);
+                contents.add(cmdContent);
             }
             contentMapper.insertList(contents);
         }
