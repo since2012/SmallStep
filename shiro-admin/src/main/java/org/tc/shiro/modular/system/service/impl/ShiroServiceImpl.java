@@ -1,4 +1,4 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.system.service.impl;
 
 import com.stylefeng.guns.core.util.Convert;
 import com.stylefeng.guns.core.util.ToolUtil;
@@ -17,8 +17,8 @@ import org.tc.shiro.core.common.constant.factory.ConstantFactory;
 import org.tc.shiro.core.shiroext.vo.ShiroUser;
 import org.tc.shiro.mapper.MenuMapper;
 import org.tc.shiro.mapper.UserMapper;
+import org.tc.shiro.modular.system.service.IShiroService;
 import org.tc.shiro.po.User;
-import org.tc.shiro.service.IShiroService;
 
 import java.util.ArrayList;
 import java.util.List;

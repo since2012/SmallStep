@@ -10,8 +10,8 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.tc.shiro.core.shiroext.vo.ShiroUser;
+import org.tc.shiro.modular.system.service.IShiroService;
 import org.tc.shiro.po.User;
-import org.tc.shiro.service.IShiroService;
 
 import java.util.List;
 

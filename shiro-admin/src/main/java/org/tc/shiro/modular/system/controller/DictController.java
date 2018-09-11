@@ -20,8 +20,8 @@ import org.tc.shiro.core.common.constant.AdminConst;
 import org.tc.shiro.core.common.constant.cache.Cache;
 import org.tc.shiro.core.common.constant.cache.CacheKey;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
+import org.tc.shiro.modular.system.service.IDictService;
 import org.tc.shiro.po.Dict;
-import org.tc.shiro.service.IDictService;
 import org.tc.shiro.vo.DictVo;
 import org.tc.shiro.warpper.DictWarpper;
 

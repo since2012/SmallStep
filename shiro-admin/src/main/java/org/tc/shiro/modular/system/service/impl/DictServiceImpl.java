@@ -1,4 +1,4 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.system.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -9,8 +9,8 @@ import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.core.common.constant.factory.MutiStrFactory;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.mapper.DictMapper;
+import org.tc.shiro.modular.system.service.IDictService;
 import org.tc.shiro.po.Dict;
-import org.tc.shiro.service.IDictService;
 
 import java.util.List;
 import java.util.Map;

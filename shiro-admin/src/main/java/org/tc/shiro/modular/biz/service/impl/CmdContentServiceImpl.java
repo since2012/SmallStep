@@ -1,10 +1,10 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.biz.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.mapper.CmdContentMapper;
+import org.tc.shiro.modular.biz.service.CmdContentService;
 import org.tc.shiro.po.CmdContent;
-import org.tc.shiro.service.CmdContentService;
 
 import java.util.List;
 

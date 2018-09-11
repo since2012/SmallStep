@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.shiro.core.common.constant.AdminConst;
+import org.tc.shiro.modular.system.service.ILoginLogService;
 import org.tc.shiro.po.LoginLog;
-import org.tc.shiro.service.ILoginLogService;
 import org.tc.shiro.vo.LoginLogVo;
 import org.tc.shiro.warpper.LoginLogWarpper;
 

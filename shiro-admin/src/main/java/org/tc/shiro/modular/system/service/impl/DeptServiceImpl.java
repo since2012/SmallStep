@@ -1,4 +1,4 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.system.service.impl;
 
 import com.stylefeng.guns.core.ztree.ZTreeNode;
 import org.springframework.stereotype.Service;
@@ -7,8 +7,8 @@ import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.mapper.DeptMapper;
+import org.tc.shiro.modular.system.service.IDeptService;
 import org.tc.shiro.po.Dept;
-import org.tc.shiro.service.IDeptService;
 
 import java.util.List;
 

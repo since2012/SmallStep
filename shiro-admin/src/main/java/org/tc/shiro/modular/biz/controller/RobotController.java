@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.dto.GlobalResult;
-import org.tc.shiro.service.CmdService;
+import org.tc.shiro.modular.biz.service.CmdService;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;

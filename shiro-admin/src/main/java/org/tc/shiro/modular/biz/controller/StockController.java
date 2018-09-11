@@ -16,8 +16,8 @@ import org.tc.shiro.core.dto.Exposer;
 import org.tc.shiro.core.dto.SeckillTimeData;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.core.shiroext.vo.ShiroUser;
+import org.tc.shiro.modular.biz.service.IStockService;
 import org.tc.shiro.po.Stock;
-import org.tc.shiro.service.IStockService;
 
 import java.util.Date;
 

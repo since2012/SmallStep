@@ -1,4 +1,4 @@
-package org.tc.shiro.service;
+package org.tc.shiro.modular.system.service;
 
 import com.github.pagehelper.PageInfo;
 import org.tc.mybatis.service.IBaseService;

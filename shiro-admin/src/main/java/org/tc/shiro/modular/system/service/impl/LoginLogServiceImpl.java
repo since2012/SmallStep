@@ -1,12 +1,12 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.system.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.mapper.LoginLogMapper;
+import org.tc.shiro.modular.system.service.ILoginLogService;
 import org.tc.shiro.po.LoginLog;
-import org.tc.shiro.service.ILoginLogService;
 
 import java.util.List;
 

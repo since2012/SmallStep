@@ -1,4 +1,4 @@
-package org.tc.shiro.service;
+package org.tc.shiro.modular.system.service;
 
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.tc.shiro.po.User;

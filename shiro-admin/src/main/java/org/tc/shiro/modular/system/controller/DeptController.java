@@ -19,8 +19,8 @@ import org.tc.shiro.core.common.constant.cache.Cache;
 import org.tc.shiro.core.common.constant.cache.CacheKey;
 import org.tc.shiro.core.common.constant.factory.ConstantFactory;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
+import org.tc.shiro.modular.system.service.IDeptService;
 import org.tc.shiro.po.Dept;
-import org.tc.shiro.service.IDeptService;
 import org.tc.shiro.warpper.DeptWarpper;
 
 import javax.validation.Valid;

@@ -1,4 +1,4 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.biz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -20,9 +20,9 @@ import org.tc.shiro.core.dto.Exposer;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.mapper.SeckillMapper;
 import org.tc.shiro.mapper.StockMapper;
+import org.tc.shiro.modular.biz.service.IStockService;
 import org.tc.shiro.po.Seckill;
 import org.tc.shiro.po.Stock;
-import org.tc.shiro.service.IStockService;
 
 import java.util.Date;
 import java.util.HashMap;

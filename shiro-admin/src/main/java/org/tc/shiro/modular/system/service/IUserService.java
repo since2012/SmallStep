@@ -1,4 +1,4 @@
-package org.tc.shiro.service;
+package org.tc.shiro.modular.system.service;
 
 import org.tc.mybatis.service.IBaseService;
 import org.tc.shiro.po.User;

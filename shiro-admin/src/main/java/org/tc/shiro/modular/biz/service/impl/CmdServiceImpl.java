@@ -1,4 +1,4 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.biz.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -11,9 +11,9 @@ import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.core.common.constant.IRobotConst;
 import org.tc.shiro.mapper.CmdContentMapper;
 import org.tc.shiro.mapper.CmdMapper;
+import org.tc.shiro.modular.biz.service.CmdService;
 import org.tc.shiro.po.Cmd;
 import org.tc.shiro.po.CmdContent;
-import org.tc.shiro.service.CmdService;
 
 import java.util.ArrayList;
 import java.util.List;

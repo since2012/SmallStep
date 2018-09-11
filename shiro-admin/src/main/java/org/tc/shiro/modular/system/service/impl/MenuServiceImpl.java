@@ -1,4 +1,4 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.system.service.impl;
 
 import com.stylefeng.guns.core.util.ToolUtil;
 import com.stylefeng.guns.core.ztree.MenuNode;
@@ -14,8 +14,8 @@ import org.tc.shiro.core.common.constant.enums.DoubleStatus;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.mapper.MenuMapper;
 import org.tc.shiro.mapper.RelationMapper;
+import org.tc.shiro.modular.system.service.IMenuService;
 import org.tc.shiro.po.Menu;
-import org.tc.shiro.service.IMenuService;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;

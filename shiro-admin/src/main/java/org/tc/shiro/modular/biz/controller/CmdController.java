@@ -10,9 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.dto.GlobalResult;
+import org.tc.shiro.modular.biz.service.CmdContentService;
+import org.tc.shiro.modular.biz.service.CmdService;
 import org.tc.shiro.po.Cmd;
-import org.tc.shiro.service.CmdContentService;
-import org.tc.shiro.service.CmdService;
 import org.tc.shiro.vo.CmdVo;
 import org.tc.shiro.warpper.CmdWarpper;
 

@@ -1,4 +1,4 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.system.service.impl;
 
 import com.stylefeng.guns.core.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +11,8 @@ import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.mapper.DeptMapper;
 import org.tc.shiro.mapper.UserMapper;
+import org.tc.shiro.modular.system.service.IUserService;
 import org.tc.shiro.po.User;
-import org.tc.shiro.service.IUserService;
 
 import java.util.Date;
 import java.util.List;

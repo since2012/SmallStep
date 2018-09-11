@@ -1,4 +1,4 @@
-package org.tc.shiro.service.impl;
+package org.tc.shiro.modular.system.service.impl;
 
 import com.stylefeng.guns.core.support.CollectionKit;
 import com.stylefeng.guns.core.support.StrKit;
@@ -16,10 +16,10 @@ import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.mapper.RelationMapper;
 import org.tc.shiro.mapper.RoleMapper;
 import org.tc.shiro.mapper.UserMapper;
+import org.tc.shiro.modular.system.service.IRoleService;
 import org.tc.shiro.po.Relation;
 import org.tc.shiro.po.Role;
 import org.tc.shiro.po.User;
-import org.tc.shiro.service.IRoleService;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;

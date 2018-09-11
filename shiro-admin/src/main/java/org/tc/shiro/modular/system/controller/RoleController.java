@@ -19,8 +19,8 @@ import org.tc.shiro.core.common.constant.AdminConst;
 import org.tc.shiro.core.common.constant.cache.Cache;
 import org.tc.shiro.core.common.constant.factory.ConstantFactory;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
+import org.tc.shiro.modular.system.service.IRoleService;
 import org.tc.shiro.po.Role;
-import org.tc.shiro.service.IRoleService;
 import org.tc.shiro.warpper.RoleWarpper;
 
 import javax.validation.Valid;

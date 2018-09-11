@@ -25,8 +25,8 @@ import org.tc.shiro.core.common.constant.factory.ConstantFactory;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.core.shiroext.vo.ShiroUser;
+import org.tc.shiro.modular.system.service.IUserService;
 import org.tc.shiro.po.User;
-import org.tc.shiro.service.IUserService;
 import org.tc.shiro.warpper.UserWarpper;
 
 import javax.servlet.http.HttpServletResponse;

@@ -16,8 +16,8 @@ import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.tips.Tip;
 import org.tc.shiro.core.common.constant.AdminConst;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
+import org.tc.shiro.modular.system.service.IMenuService;
 import org.tc.shiro.po.Menu;
-import org.tc.shiro.service.IMenuService;
 import org.tc.shiro.warpper.MenuWarpper;
 
 import javax.validation.Valid;
