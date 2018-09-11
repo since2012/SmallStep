@@ -1,4 +1,4 @@
-package org.tc.shiro.core.consts;
+package org.tc.shiro.core.common.constant;
 
 /**
  * 共通的常量定义

@@ -1,10 +1,10 @@
-package org.tc.shiro.core.enums;
+package org.tc.shiro.core.common.constant.enums;
 
 /**
  * Author: Redinw
  * Description:
  */
-public enum SeckillStateEnum {
+public enum SeckillState {
     SUCCESS(1, "秒杀成功"),
     END(0, "秒杀结束"),
     REPEAT_KILL(-1, "重复秒杀"),
@@ -14,7 +14,7 @@ public enum SeckillStateEnum {
     private int state;
     private String stateInfo;
 
-    SeckillStateEnum(int state, String stateInfo) {
+    SeckillState(int state, String stateInfo) {
         this.state = state;
         this.stateInfo = stateInfo;
     }
@@ -27,10 +27,10 @@ public enum SeckillStateEnum {
         return stateInfo;
     }
 
-    public static SeckillStateEnum stateOf(int state) {
-        for (SeckillStateEnum seckillStateEnum : values()) {
-            if (seckillStateEnum.getState() == state) {
-                return seckillStateEnum;
+    public static SeckillState stateOf(int state) {
+        for (SeckillState seckillState : values()) {
+            if (seckillState.getState() == state) {
+                return seckillState;
             }
         }
         return null;

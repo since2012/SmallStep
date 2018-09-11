@@ -24,7 +24,7 @@
         s.begintime "stock.begintime",
         s.endtime "stock.endtime",
         s.createtime "stock.createtime"
-        FROM seckill_result sk
+        FROM seckill sk
         INNER JOIN stock s ON sk.stockid=s.id
         WHERE sk.stockid=#{stockid} AND sk.userid=#{userid}
     </select>

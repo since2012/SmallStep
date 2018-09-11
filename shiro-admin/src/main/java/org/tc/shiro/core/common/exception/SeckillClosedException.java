@@ -1,4 +1,4 @@
-package org.tc.shiro.core.exception;
+package org.tc.shiro.core.common.exception;
 
 
 /**

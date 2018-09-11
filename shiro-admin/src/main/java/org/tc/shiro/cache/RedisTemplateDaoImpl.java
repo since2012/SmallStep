@@ -1,21 +1,38 @@
-package org.tc.shiro.mapper.cache;
+package org.tc.shiro.cache;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class RedisTemplateDaoImpl implements RedisTemplateDao {
 
     @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+    private RedisTemplate<Object, Object> redisTemplate;
 
     @Override
-    public void deleteFromRedis(String key) {
+    public void del(String key) {
         redisTemplate.delete(key);
+    }
+
+    @Override
+    public Set<Object> keys(String pattern) {
+        return redisTemplate.keys(pattern);
+    }
+
+    @Override
+    public long ttl(String key) {
+        return redisTemplate.getExpire(key);
+    }
+
+    @Override
+    public void expire(String key, long timeout) {
+        redisTemplate.expire(key, timeout, TimeUnit.SECONDS);
     }
 
     @Override
@@ -69,12 +86,12 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public void listLeftPushList(String key, String value) {
+    public void listLeftPushList(String key, Object value) {
         redisTemplate.opsForList().leftPush(key, value);
     }
 
     @Override
-    public String listLeftPopList(String key) {
+    public Object listLeftPopList(String key) {
         return redisTemplate.opsForList().leftPop(key);
     }
 
@@ -84,7 +101,7 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public List<String> listRangeList(String key, Long start, Long end) {
+    public List<Object> listRangeList(String key, Long start, Long end) {
         return redisTemplate.opsForList().range(key, start, end);
     }
 
@@ -94,12 +111,12 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public String listIndexFromList(String key, long index) {
+    public Object listIndexFromList(String key, long index) {
         return redisTemplate.opsForList().index(key, index);
     }
 
     @Override
-    public void listSetValueToList(String key, long index, String value) {
+    public void listSetValueToList(String key, long index, Object value) {
         redisTemplate.opsForList().set(key, index, value);
     }
 
@@ -109,17 +126,17 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public void listRightPushList(String key, String value) {
+    public void listRightPushList(String key, Object value) {
         redisTemplate.opsForList().rightPush(key, value);
     }
 
     @Override
-    public String listRightPopList(String key) {
+    public Object listRightPopList(String key) {
         return redisTemplate.opsForList().rightPop(key);
     }
 
     @Override
-    public Long setAddSetMap(String key, String... values) {
+    public Long setAddSetMap(String key, Object... values) {
         return redisTemplate.opsForSet().add(key, values);
     }
 
@@ -129,7 +146,7 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public Set<String> setGetMemberOfSetMap(String key) {
+    public Set<Object> setGetMemberOfSetMap(String key) {
         return redisTemplate.opsForSet().members(key);
     }
 
@@ -144,7 +161,7 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public String stringGetStringByKey(String key) {
+    public Object stringGetStringByKey(String key) {
         return redisTemplate.opsForValue().get(key);
     }
 
@@ -169,7 +186,7 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public String stringGetAndSet(String key, String value) {
+    public Object stringGetAndSet(String key, String value) {
         return redisTemplate.opsForValue().getAndSet(key, value);
     }
 

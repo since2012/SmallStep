@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
-import org.tc.redis.cache.RedisCacheDao;
+import org.tc.shiro.cache.RedisTemplateDao;
+import org.tc.shiro.core.common.constant.enums.SeckillState;
+import org.tc.shiro.core.common.exception.RepeatKillException;
+import org.tc.shiro.core.common.exception.SeckillClosedException;
+import org.tc.shiro.core.common.exception.SeckillException;
 import org.tc.shiro.core.dto.ExecutionResult;
 import org.tc.shiro.core.dto.Exposer;
-import org.tc.shiro.core.enums.SeckillStateEnum;
-import org.tc.shiro.core.exception.RepeatKillException;
-import org.tc.shiro.core.exception.SeckillClosedException;
-import org.tc.shiro.core.exception.SeckillException;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.mapper.SeckillMapper;
 import org.tc.shiro.mapper.StockMapper;
@@ -41,8 +41,10 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
 
     @Autowired
     private SeckillMapper seckillMapper;
+    //    @Autowired
+//    private RedisCacheDao redisCacheDao;
     @Autowired
-    private RedisCacheDao redisCacheDao;
+    private RedisTemplateDao redisTemplateDao;
 
     @Override
     public PageInfo<Stock> page(Stock stock, Integer pageNo, Integer pageSize, String sort) {
@@ -58,13 +60,16 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
 
     @Override
     public Exposer exoportSeckillUrl(long id) {
-        Stock stock = (Stock) redisCacheDao.get("stock", id);
+//        Stock stock = (Stock) redisCacheDao.get("stock", id);
+        Stock stock = (Stock) redisTemplateDao.hashGet("stock", id + "");
         if (stock == null) {
             stock = baseMapper.selectByPrimaryKey(id);
             if (stock == null) {
                 return Exposer.notExist(id);
             } else {
-                redisCacheDao.put("stock", id, stock);
+//                redisCacheDao.put("stock", id, stock);
+                redisTemplateDao.hashPushHashMap("stock", "" + id, stock);
+                redisTemplateDao.expire("stock", 1000);
             }
         }
         Date startTime = stock.getBegintime();
@@ -110,7 +115,7 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
                     throw new SeckillClosedException("stock is closed");
                 } else {
                     Seckill seckill = seckillMapper.selectById(id, userid);
-                    return new ExecutionResult(id, SeckillStateEnum.SUCCESS, seckill);
+                    return new ExecutionResult(id, SeckillState.SUCCESS, seckill);
                 }
             }
         } catch (SeckillClosedException e) {
@@ -127,7 +132,7 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
     @Override
     public ExecutionResult executeSeckillProcedure(long id, String md5) {
         if (md5 == null || !md5.equals(getMD5(id))) {
-            return ExecutionResult.error(id, SeckillStateEnum.DATA_REWRITE);
+            return ExecutionResult.error(id, SeckillState.DATA_REWRITE);
         }
         Date killTime = new Date();
         Map<String, Object> map = new HashMap<>();
@@ -141,13 +146,13 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
             int result = MapUtils.getInteger(map, "result", -2);
             if (result == 1) {
                 Seckill seckill = seckillMapper.selectById(id, userid);
-                return ExecutionResult.ok(id, SeckillStateEnum.SUCCESS, seckill);
+                return ExecutionResult.ok(id, SeckillState.SUCCESS, seckill);
             } else {
-                return ExecutionResult.error(id, SeckillStateEnum.stateOf(result));
+                return ExecutionResult.error(id, SeckillState.stateOf(result));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return new ExecutionResult(id, SeckillStateEnum.INNER_ERROR);
+            return new ExecutionResult(id, SeckillState.INNER_ERROR);
         }
     }
 }

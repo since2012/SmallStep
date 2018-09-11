@@ -20,11 +20,11 @@ import org.tc.mybatis.dto.GlobalResult;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.tips.ErrorTip;
 import org.tc.mybatis.util.HttpKit;
+import org.tc.shiro.core.common.constant.enums.SeckillState;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
+import org.tc.shiro.core.common.exception.RepeatKillException;
+import org.tc.shiro.core.common.exception.SeckillClosedException;
 import org.tc.shiro.core.dto.ExecutionResult;
-import org.tc.shiro.core.enums.SeckillStateEnum;
-import org.tc.shiro.core.exception.RepeatKillException;
-import org.tc.shiro.core.exception.SeckillClosedException;
 import org.tc.shiro.core.log.LogManager;
 import org.tc.shiro.core.log.factory.LogTaskFactory;
 
@@ -50,7 +50,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ErrorTip notFount(GunsException e) {
-//        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
         HttpKit.getRequest().setAttribute("tip", e.getMessage());
         log.error("业务异常:", e);
         return new ErrorTip(e.getCode(), e.getMessage());
@@ -62,7 +61,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     @ResponseBody
     public ErrorTip entityNotFound(GunsException e) {
-//        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
         HttpKit.getRequest().setAttribute("tip", e.getMessage());
         log.error("PO查询异常:", e);
         return new ErrorTip(400, "未查询到相关数据");
@@ -150,7 +148,6 @@ public class GlobalExceptionHandler {
         return new ErrorTip(BizExceptionEnum.NO_PERMITION.getCode(), BizExceptionEnum.NO_PERMITION.getMessage());
     }
 
-
     /**
      * 重复秒杀异常
      */
@@ -158,7 +155,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public GlobalResult killrepeat(RepeatKillException e) {
         log.info("重复秒杀异常:", e);
-        return GlobalResult.ok(ExecutionResult.error(SeckillStateEnum.REPEAT_KILL));
+        return GlobalResult.ok(ExecutionResult.error(SeckillState.REPEAT_KILL));
     }
 
     /**
@@ -168,7 +165,7 @@ public class GlobalExceptionHandler {
     @ResponseBody
     public GlobalResult killover(SeckillClosedException e) {
         log.info("秒杀结束异常:", e);
-        return GlobalResult.ok(ExecutionResult.error(SeckillStateEnum.END));
+        return GlobalResult.ok(ExecutionResult.error(SeckillState.END));
     }
 
     /**
@@ -178,7 +175,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ErrorTip notFount(RuntimeException e) {
-//        LogManager.me().executeLog(LogTaskFactory.exceptionLog(ShiroKit.getUser().getId(), e));
         HttpKit.getRequest().setAttribute("tip", "服务器未知运行时异常");
         log.error("运行时异常:", e);
         return new ErrorTip(BizExceptionEnum.SERVER_ERROR.getCode(), BizExceptionEnum.SERVER_ERROR.getMessage());

@@ -1,7 +1,7 @@
 package org.tc.shiro.core.dto;
 
 import lombok.Data;
-import org.tc.shiro.core.enums.SeckillStateEnum;
+import org.tc.shiro.core.common.constant.enums.SeckillState;
 import org.tc.shiro.po.Seckill;
 
 /**
@@ -26,13 +26,13 @@ public class ExecutionResult {
      * 秒杀成功
      *
      * @param seckillId
-     * @param seckillStateEnum
+     * @param seckillState
      * @param seckill
      */
-    public ExecutionResult(long seckillId, SeckillStateEnum seckillStateEnum, Seckill seckill) {
+    public ExecutionResult(long seckillId, SeckillState seckillState, Seckill seckill) {
         this.seckillId = seckillId;
-        this.state = seckillStateEnum.getState();
-        this.stateInfo = seckillStateEnum.getStateInfo();
+        this.state = seckillState.getState();
+        this.stateInfo = seckillState.getStateInfo();
         this.seckill = seckill;
     }
 
@@ -40,54 +40,54 @@ public class ExecutionResult {
      * 秒杀失败
      *
      * @param seckillId
-     * @param seckillStateEnum
+     * @param seckillState
      */
-    public ExecutionResult(long seckillId, SeckillStateEnum seckillStateEnum) {
+    public ExecutionResult(long seckillId, SeckillState seckillState) {
         this.seckillId = seckillId;
-        this.state = seckillStateEnum.getState();
-        this.stateInfo = seckillStateEnum.getStateInfo();
+        this.state = seckillState.getState();
+        this.stateInfo = seckillState.getStateInfo();
     }
 
     /**
      * 秒杀失败
      *
-     * @param seckillStateEnum
+     * @param seckillState
      */
-    public ExecutionResult(SeckillStateEnum seckillStateEnum) {
-        this.state = seckillStateEnum.getState();
-        this.stateInfo = seckillStateEnum.getStateInfo();
+    public ExecutionResult(SeckillState seckillState) {
+        this.state = seckillState.getState();
+        this.stateInfo = seckillState.getStateInfo();
     }
 
     /**
      * 成功
      *
      * @param seckillId
-     * @param seckillStateEnum
+     * @param seckillState
      * @param seckill
      * @return
      */
-    public static ExecutionResult ok(long seckillId, SeckillStateEnum seckillStateEnum, Seckill seckill) {
-        return new ExecutionResult(seckillId, seckillStateEnum, seckill);
+    public static ExecutionResult ok(long seckillId, SeckillState seckillState, Seckill seckill) {
+        return new ExecutionResult(seckillId, seckillState, seckill);
     }
 
     /**
      * 失败
      *
      * @param seckillId
-     * @param seckillStateEnum
+     * @param seckillState
      * @return
      */
-    public static ExecutionResult error(long seckillId, SeckillStateEnum seckillStateEnum) {
-        return new ExecutionResult(seckillId, seckillStateEnum);
+    public static ExecutionResult error(long seckillId, SeckillState seckillState) {
+        return new ExecutionResult(seckillId, seckillState);
     }
 
     /**
      * 失败
      *
-     * @param seckillStateEnum
+     * @param seckillState
      * @return
      */
-    public static ExecutionResult error(SeckillStateEnum seckillStateEnum) {
-        return new ExecutionResult(seckillStateEnum);
+    public static ExecutionResult error(SeckillState seckillState) {
+        return new ExecutionResult(seckillState);
     }
 }
