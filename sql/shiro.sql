@@ -11,11 +11,30 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 10/09/2018 19:39:53
+ Date: 11/09/2018 15:33:05
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for cmd
+-- ----------------------------
+DROP TABLE IF EXISTS `cmd`;
+CREATE TABLE `cmd`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '命令ID',
+  `name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '命令',
+  `detail` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '描述',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of cmd
+-- ----------------------------
+INSERT INTO `cmd` VALUES (1, '段子', '精彩段子');
+INSERT INTO `cmd` VALUES (16, '查看', '查看详情');
+INSERT INTO `cmd` VALUES (22, '测试', '命令提示');
+INSERT INTO `cmd` VALUES (24, '订购', '订购服务');
 
 -- ----------------------------
 -- Table structure for cmd_content
@@ -27,7 +46,7 @@ CREATE TABLE `cmd_content`  (
   `content` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '内容',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `COMMAND_ID`(`cmdid`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 53 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of cmd_content
@@ -40,9 +59,6 @@ INSERT INTO `cmd_content` VALUES (30, NULL, 'AA');
 INSERT INTO `cmd_content` VALUES (31, NULL, 'BB');
 INSERT INTO `cmd_content` VALUES (32, NULL, 'AA');
 INSERT INTO `cmd_content` VALUES (33, NULL, 'CC');
-INSERT INTO `cmd_content` VALUES (36, 23, 'b');
-INSERT INTO `cmd_content` VALUES (37, 23, 'c');
-INSERT INTO `cmd_content` VALUES (38, 23, 'd');
 INSERT INTO `cmd_content` VALUES (39, 16, '查看1');
 INSERT INTO `cmd_content` VALUES (40, 16, '查看2');
 INSERT INTO `cmd_content` VALUES (41, 16, '查看3');
@@ -52,31 +68,28 @@ INSERT INTO `cmd_content` VALUES (44, 1, '段子2');
 INSERT INTO `cmd_content` VALUES (45, 1, '段子3');
 INSERT INTO `cmd_content` VALUES (46, 22, '测试1');
 INSERT INTO `cmd_content` VALUES (47, 22, '测试2');
-
--- ----------------------------
--- Table structure for command
--- ----------------------------
-DROP TABLE IF EXISTS `command`;
-CREATE TABLE `command`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '命令ID',
-  `name` varchar(16) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '命令',
-  `description` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '描述',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 24 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of command
--- ----------------------------
-INSERT INTO `command` VALUES (1, '段子', '精彩段子');
-INSERT INTO `command` VALUES (16, '查看', '查看详情');
-INSERT INTO `command` VALUES (22, '测试', '命令提示');
-INSERT INTO `command` VALUES (23, 'A', 'aaa');
+INSERT INTO `cmd_content` VALUES (50, 24, '套餐1');
+INSERT INTO `cmd_content` VALUES (51, 24, '套餐2');
+INSERT INTO `cmd_content` VALUES (52, 24, '套餐3');
 
 -- ----------------------------
 -- Table structure for seckill
 -- ----------------------------
 DROP TABLE IF EXISTS `seckill`;
 CREATE TABLE `seckill`  (
+  `stockid` bigint(20) NOT NULL COMMENT '秒杀商品ID',
+  `userid` int(11) NOT NULL COMMENT '用户手机号',
+  `state` tinyint(4) NOT NULL DEFAULT -1 COMMENT '状态标识:-1:无效； 0:成功 ；1:已付款； 2:已发货',
+  `createtime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
+  PRIMARY KEY (`stockid`, `userid`) USING BTREE,
+  INDEX `idx_create_time`(`createtime`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '秒杀明细表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for stock
+-- ----------------------------
+DROP TABLE IF EXISTS `stock`;
+CREATE TABLE `stock`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '库存ID',
   `name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
   `total` int(11) NOT NULL COMMENT '库存数量',
@@ -90,25 +103,12 @@ CREATE TABLE `seckill`  (
 ) ENGINE = InnoDB AUTO_INCREMENT = 1004 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '秒杀库存表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
--- Records of seckill
+-- Records of stock
 -- ----------------------------
-INSERT INTO `seckill` VALUES (1000, '1000元秒杀iphone6', 99, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
-INSERT INTO `seckill` VALUES (1001, '800元秒杀ipad', 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
-INSERT INTO `seckill` VALUES (1002, '6600元秒杀mac book pro', 100, '2020-11-26 00:00:00', '2020-12-04 00:00:00', '2020-11-26 00:00:00');
-INSERT INTO `seckill` VALUES (1003, '7000元秒杀iMac', 100, '2018-07-06 00:00:00', '2018-08-31 00:00:00', '2020-11-26 00:00:00');
-
--- ----------------------------
--- Table structure for seckill_result
--- ----------------------------
-DROP TABLE IF EXISTS `seckill_result`;
-CREATE TABLE `seckill_result`  (
-  `seckid` bigint(20) NOT NULL COMMENT '秒杀商品ID',
-  `userid` int(11) NOT NULL COMMENT '用户手机号',
-  `state` tinyint(4) NOT NULL DEFAULT -1 COMMENT '状态标识:-1:无效； 0:成功 ；1:已付款； 2:已发货',
-  `createtime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '创建时间',
-  PRIMARY KEY (`seckid`, `userid`) USING BTREE,
-  INDEX `idx_create_time`(`createtime`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '秒杀明细表' ROW_FORMAT = Dynamic;
+INSERT INTO `stock` VALUES (1000, '1000元秒杀iphone6', 99, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1001, '800元秒杀ipad', 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1002, '6600元秒杀mac book pro', 100, '2020-11-26 00:00:00', '2020-12-04 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1003, '7000元秒杀iMac', 100, '2018-07-06 00:00:00', '2018-08-31 00:00:00', '2020-11-26 00:00:00');
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -179,62 +179,7 @@ CREATE TABLE `sys_login_log`  (
   `message` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '具体消息',
   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '登录ip',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 136 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录记录' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_login_log
--- ----------------------------
-INSERT INTO `sys_login_log` VALUES (85, '退出日志', 1, '2018-09-04 11:01:33', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (86, '登录日志', 1, '2018-09-04 11:01:39', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (87, '退出日志', 1, '2018-09-04 11:09:29', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (88, '登录日志', 1, '2018-09-04 11:09:35', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (89, '退出日志', 1, '2018-09-04 11:13:08', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (90, '登录日志', 1, '2018-09-04 11:13:13', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (91, '退出日志', 1, '2018-09-04 11:14:31', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (92, '登录日志', 1, '2018-09-04 11:14:37', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (93, '退出日志', 1, '2018-09-04 11:15:42', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (94, '登录日志', 1, '2018-09-04 11:15:49', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (95, '登录日志', 1, '2018-09-04 11:56:23', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (96, '退出日志', 1, '2018-09-04 12:00:45', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (97, '登录日志', 1, '2018-09-04 12:00:53', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (98, '退出日志', 1, '2018-09-04 12:05:51', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (99, '登录日志', 1, '2018-09-04 12:08:20', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (100, '退出日志', 1, '2018-09-04 12:12:07', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (101, '登录日志', 1, '2018-09-04 12:12:12', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (102, '退出日志', 1, '2018-09-04 12:18:51', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (103, '登录日志', 1, '2018-09-04 12:18:56', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (104, '登录日志', 1, '2018-09-04 17:00:42', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (105, '登录日志', 1, '2018-09-04 17:17:58', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (106, '登录日志', 1, '2018-09-04 17:29:04', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (107, '登录日志', 1, '2018-09-04 17:57:28', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (108, '登录日志', 1, '2018-09-04 18:00:15', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (109, '登录日志', 1, '2018-09-04 18:04:54', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (110, '登录日志', 1, '2018-09-05 20:24:54', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (111, '登录日志', 1, '2018-09-05 20:28:39', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (112, '退出日志', 1, '2018-09-05 20:29:15', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (113, '登录日志', 1, '2018-09-05 20:32:19', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (114, '登录日志', 1, '2018-09-06 14:12:35', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (115, '退出日志', 1, '2018-09-06 14:19:11', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (116, '登录日志', 1, '2018-09-06 14:19:19', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (117, '退出日志', 1, '2018-09-06 14:23:13', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (118, '登录日志', 1, '2018-09-06 14:23:19', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (119, '退出日志', 1, '2018-09-06 14:26:43', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (120, '登录日志', 1, '2018-09-06 14:27:14', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (121, '登录日志', 1, '2018-09-06 15:01:18', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (122, '登录日志', 1, '2018-09-06 15:04:24', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (123, '登录日志', 1, '2018-09-10 18:09:53', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (124, '登录日志', 1, '2018-09-10 18:12:15', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (125, '退出日志', 1, '2018-09-10 18:13:59', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (126, '登录日志', 1, '2018-09-10 18:14:06', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (127, '登录日志', 1, '2018-09-10 18:19:52', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (128, '退出日志', 1, '2018-09-10 18:20:04', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (129, '登录日志', 1, '2018-09-10 18:20:10', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (130, '退出日志', 1, '2018-09-10 18:21:41', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (131, '登录日志', 1, '2018-09-10 18:22:14', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (132, '登录日志', 1, '2018-09-10 18:27:06', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (133, '登录日志', 1, '2018-09-10 18:30:08', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (134, '登录日志', 1, '2018-09-10 18:32:11', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (135, '登录日志', 1, '2018-09-10 18:56:18', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+) ENGINE = InnoDB AUTO_INCREMENT = 145 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -315,9 +260,9 @@ INSERT INTO `sys_menu` VALUES (192, 'mgr_img', '用户获取头像', 'mgr', '[0]
 INSERT INTO `sys_menu` VALUES (193, 'mgr_upload', '用户上传头像', 'mgr', '[0],[power],[mgr],', '', '/mgr/upload', 3, 21, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (194, 'system', '系统管理', '0', '[0],', 'fa-dashboard', '#', 1, 3, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (195, 'biz', '业务管理', '0', '[0],', 'fa-bank', '#', 1, 12, 1, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (196, 'maintain', '指令管理', 'biz', '[0],[biz],', '', '/maintain', 2, 1, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (196, 'cmd', '指令管理', 'biz', '[0],[biz],', '', '/cmd', 2, 1, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (197, 'robot', '自动回复', 'biz', '[0],[biz],', '', '/robot', 2, 2, 1, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (198, 'seckill', '秒杀管理', 'biz', '[0],[biz],', '', '/seckill', 2, 14, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (198, 'stock', '库存管理', 'biz', '[0],[biz],', '', '/stock', 2, 14, 1, NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for sys_relation
@@ -472,8 +417,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `execute_seckill`(in v_seckill_id bi
 BEGIN
     DECLARE insert_count int DEFAULT 0;
     START TRANSACTION;
-    insert ignore into seckill_result
-      (seckid,userid,createtime)
+    insert ignore into seckill
+      (stockid,userid,createtime)
       values (v_seckill_id,v_phone,v_kill_time);
     select row_count() into insert_count;
     IF (insert_count = 0) THEN
@@ -483,8 +428,8 @@ BEGIN
       ROLLBACK;
       SET R_RESULT = -2;
     ELSE
-      update seckill
-      set number = number-1
+      update stock
+      set total = total-1
       where id = v_seckill_id
         and endtime > v_kill_time
         and begintime < v_kill_time

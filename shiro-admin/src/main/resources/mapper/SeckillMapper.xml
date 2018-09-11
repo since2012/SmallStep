@@ -5,38 +5,27 @@
         <!--
           WARNING - @mbg.generated
         -->
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="total" jdbcType="INTEGER" property="total"/>
-        <result column="begintime" jdbcType="TIMESTAMP" property="begintime"/>
-        <result column="endtime" jdbcType="TIMESTAMP" property="endtime"/>
+        <id column="stockid" jdbcType="BIGINT" property="stockid"/>
+        <id column="userid" jdbcType="INTEGER" property="userid"/>
+        <result column="state" jdbcType="TINYINT" property="state"/>
         <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
     </resultMap>
 
-    <select id="list" parameterType="org.tc.shiro.po.Seckill" resultType="org.tc.shiro.po.Seckill">
-        SELECT * FROM seckill
-        <where>
-            <if test="name!=null">
-                and name like CONCAT('%',#{name},'%')
-            </if>
-        </where>
+    <select id="selectById" resultType="org.tc.shiro.po.Seckill">
+
+        <!--根据seckillId查询SuccessKilled对象，并携带Seckill对象-->
+        <!--如何告诉mybatis把结果映射到SuccessKill属性同时映射到Seckill属性-->
+        <!--可以自由控制SQL语句-->
+        SELECT
+        sk.stockid, sk.userid, sk.createtime, sk.state,
+        s.id "stock.id",
+        s.name "stock.name",
+        s.number "stock.number",
+        s.begintime "stock.begintime",
+        s.endtime "stock.endtime",
+        s.createtime "stock.createtime"
+        FROM seckill_result sk
+        INNER JOIN stock s ON sk.stockid=s.id
+        WHERE sk.stockid=#{stockid} AND sk.userid=#{userid}
     </select>
-
-    <update id="reduceNumber">
-        UPDATE seckill SET total = total-1
-        WHERE seckill_id=#{id}
-        AND begintime <![CDATA[ <= ]]> #{killTime}
-        AND endtime >= #{killTime}
-        AND total > 0
-  </update>
-
-    <select id="killByProcedure" statementType="CALLABLE">
-        CALL execute_seckill(
-            #{id, jdbcType=BIGINT, mode=IN},
-            #{phone, jdbcType=BIGINT, mode=IN},
-            #{killTime, jdbcType=TIMESTAMP, mode=IN},
-            #{result, jdbcType=INTEGER, mode=OUT}
-        )
-  </select>
-
 </mapper>

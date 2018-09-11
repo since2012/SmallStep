@@ -19,6 +19,7 @@
     <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/static/plugins/common/ajax-object.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
+
 </head>
 <body>
 <!-- Main content -->
@@ -36,10 +37,10 @@
                         </div>
                         <label class="control-label col-xs-1">描述</label>
                         <div class="col-xs-4">
-                            <input class="form-control" id="description" name="description" type="text">
+                            <input class="form-control" id="detail" name="detail" type="text">
                         </div>
                         <div class="col-xs-2">
-                            <button type="button" class="btn btn-plus" onclick="MaintainInfo.addItem()"
+                            <button type="button" class="btn btn-plus" onclick="CommandInfo.addItem()"
                                     id="cancel">
                                 <i class="fa fa-plus"></i>&nbsp;增加
                             </button>
@@ -49,11 +50,11 @@
                 <!-- /.box-body -->
                 <div class="box-footer text-center">
                     <div class="text-center">
-                        <button type="button" class="btn btn-success" onclick="MaintainInfo.addSubmit()"
+                        <button type="button" class="btn btn-success" onclick="CommandInfo.addSubmit()"
                                 id="ensure">
                             <i class="fa fa-check"></i>&nbsp;提交
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="MaintainInfo.close()" id="cancel">
+                        <button type="button" class="btn btn-danger" onclick="CommandInfo.close()" id="cancel">
                             <i class="fa fa-eraser"></i>&nbsp;取消
                         </button>
                     </div>
@@ -73,13 +74,13 @@
             <input class="form-control" type="text" name="content">
         </div>
         <div class="col-xs-2">
-            <button type="button" class="btn btn-danger" onclick="MaintainInfo.deleteItem(this)" id="cancel">
+            <button type="button" class="btn btn-danger" onclick="CommandInfo.deleteItem(this)" id="cancel">
                 <i class="fa fa-remove"></i>&nbsp;删除
             </button>
         </div>
     </div>
 </script>
+<script src="/static/modular/biz/cmd/cmd_info.js"></script>
 
-<script src="/static/modular/biz/maintain/maintain_info.js"></script>
 </body>
 </html>

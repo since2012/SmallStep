@@ -1,8 +1,8 @@
 /**
  * 日志管理初始化
  */
-var Seckill = {
-    id: "seckillTable",	//表格id
+var Stock = {
+    id: "stockTable",	//表格id
     seItem: null,		//选中的条目
     table: null,
     layerIndex: -1,
@@ -14,7 +14,7 @@ var Seckill = {
  */
 
 
-Seckill.initColumn = function () {
+Stock.initColumn = function () {
     return [
         {field: 'selectItem', radio: true, checkbox: false},
         {
@@ -36,8 +36,8 @@ Seckill.initColumn = function () {
             valign: 'middle',
             sortable: false,
             formatter: function (value, row, index) {
-                var result = '<a class="btn btn-info" href="/seckill/' + value +
-                    '/detail" target="_blank">立刻秒杀</a>';
+                var result = '<a class="btn btn-info" href="/stock/' + value +
+                    '/seckill" target="_blank">立刻秒杀</a>';
                 return result;
             }
         }
@@ -47,13 +47,13 @@ Seckill.initColumn = function () {
 /**
  * 检查是否选中
  */
-Seckill.check = function () {
+Stock.check = function () {
     var selected = $('#' + this.id).bootstrapTable('getSelections');
     if (selected.length == 0) {
         Feng.info("请先选中表格中的某一记录！");
         return false;
     } else {
-        Seckill.seItem = selected[0];
+        Stock.seItem = selected[0];
         return true;
     }
 };
@@ -65,7 +65,7 @@ Seckill.check = function () {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-Seckill.get = function (key) {
+Stock.get = function (key) {
     return $("#" + key).val();
 };
 
@@ -75,7 +75,7 @@ Seckill.get = function (key) {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-Seckill.set = function (key, val) {
+Stock.set = function (key, val) {
     this.queryData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
     return this;
 };
@@ -83,14 +83,14 @@ Seckill.set = function (key, val) {
 /**
  * 清除数据
  */
-Seckill.clearData = function () {
+Stock.clearData = function () {
     this.queryData = {};
 }
 
 /**
  * 收集数据
  */
-Seckill.collectData = function () {
+Stock.collectData = function () {
     this.clearData();
     this.set('name');
 };
@@ -98,24 +98,24 @@ Seckill.collectData = function () {
 /**
  * 查询列表
  */
-Seckill.search = function () {
+Stock.search = function () {
     this.collectData();
-    Seckill.table.refresh({query: this.queryData});
+    Stock.table.refresh({query: this.queryData});
 };
 
 //高级重置
-Seckill.reset = function () {
+Stock.reset = function () {
     $("form .form-group input").val("");
 };
 
 /**
  * 调用后台批量删除方法
  */
-Seckill.deleteBatch = function () {
+Stock.deleteBatch = function () {
     if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/seckill/deleteBatch", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/stock/deleteBatch", function (data) {
             Feng.success("删除成功!");
-            Seckill.table.refresh();
+            Stock.table.refresh();
         }, function (data) {
             Feng.error("删除失败!" + data.responseJSON.message + "!");
         });
@@ -126,11 +126,11 @@ Seckill.deleteBatch = function () {
 /**
  * 单条记录删除
  */
-Seckill.delete = function () {
+Stock.delete = function () {
     if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/seckill/delete", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/stock/delete", function (data) {
             Feng.success("删除成功!");
-            Seckill.table.refresh();
+            Stock.table.refresh();
         }, function (data) {
             Feng.error("删除失败!" + data.responseJSON.message + "!");
         });
@@ -142,21 +142,21 @@ Seckill.delete = function () {
 /**
  * 新增功能
  */
-Seckill.openAddPage = function () {
+Stock.openAddPage = function () {
     var index = layer.open({
         type: 2,
         title: '新增指令',
         area: ['800px', '320px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: '/seckill/seckill_add'
+        content: '/stock/stock_add'
     });
     this.layerIndex = index;
 };
 /**
  * 编辑
  */
-Seckill.openEditPage = function () {
+Stock.openEditPage = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
@@ -164,7 +164,7 @@ Seckill.openEditPage = function () {
             area: ['800px', '320px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: '/seckill/seckill_edit?id=' + this.seItem.id
+            content: '/stock/stock_edit?id=' + this.seItem.id
         });
         this.layerIndex = index;
     }
@@ -211,12 +211,12 @@ function init() {
 
 $(function () {
     init();
-    var defaultColunms = Seckill.initColumn();
-    var table = new BSTable(Seckill.id, "/seckill/list", defaultColunms);
+    var defaultColunms = Stock.initColumn();
+    var table = new BSTable(Stock.id, "/stock/list", defaultColunms);
     table.setPaginationType("server");
-    Seckill.table = table.init();
+    Stock.table = table.init();
 
     $("#biz").attr("class", "active");
-    $("#seckill").attr("class", "active");
+    $("#stock").attr("class", "active");
 });
 

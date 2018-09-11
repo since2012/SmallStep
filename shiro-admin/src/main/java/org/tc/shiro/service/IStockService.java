@@ -4,9 +4,9 @@ import com.github.pagehelper.PageInfo;
 import org.tc.mybatis.service.IBaseService;
 import org.tc.shiro.core.dto.ExecutionResult;
 import org.tc.shiro.core.dto.Exposer;
-import org.tc.shiro.po.Seckill;
+import org.tc.shiro.po.Stock;
 
-public interface ISeckillService extends IBaseService<Seckill> {
+public interface IStockService extends IBaseService<Stock> {
 
     /**
      * 分页查询
@@ -14,32 +14,32 @@ public interface ISeckillService extends IBaseService<Seckill> {
      * @param pageSize
      * @return
      */
-    PageInfo<Seckill> page(Seckill seckill, Integer pageNo, Integer pageSize, String sort);
+    PageInfo<Stock> page(Stock stock, Integer pageNo, Integer pageSize, String sort);
 
     /**
      * 暴露接口
      *
-     * @param seckillId
+     * @param id
      * @return
      */
-    Exposer exoportSeckillUrl(long seckillId);
+    Exposer exoportSeckillUrl(long id);
 
     /**
      * 秒杀
      *
-     * @param seckllId
+     * @param id
      * @param md5
      * @return
      */
-    ExecutionResult executeSeckill(long seckllId, String md5);
+    ExecutionResult executeSeckill(long id, String md5);
 
     /**
      * 秒杀（存储过程）
      *
-     * @param seckillid
+     * @param id
      * @param md5
      * @return
      */
-    ExecutionResult executeSeckillProcedure(long seckillid, String md5);
+    ExecutionResult executeSeckillProcedure(long id, String md5);
 
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.CmdMapper">
+
+    <sql id="Base_Column_List">
+        id, name, detail
+    </sql>
+
+    <select id="list" parameterType="org.tc.shiro.po.Cmd" resultType="org.tc.shiro.po.Cmd">
+        select
+        <include refid="Base_Column_List"/>
+        from cmd a
+        <where>
+            <if test="name != null">
+                and a.NAME = #{name}
+            </if>
+            <if test="detail != null">
+                and a.detail like '%' #{detail} '%'
+            </if>
+        </where>
+    </select>
+
+    <select id="getByName" parameterType="string" resultType="org.tc.shiro.po.Cmd">
+        select
+        <include refid="Base_Column_List"/>
+        from cmd a
+        WHERE a.NAME = #{name}
+    </select>
+
+
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from cmd where ID in(
+        <foreach collection="list" item="item" separator=",">
+            #{item}
+        </foreach>
+        )
+    </delete>
+</mapper>

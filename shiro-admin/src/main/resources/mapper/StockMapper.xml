@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.StockMapper">
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.Stock">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="total" jdbcType="INTEGER" property="total"/>
+        <result column="begintime" jdbcType="TIMESTAMP" property="begintime"/>
+        <result column="endtime" jdbcType="TIMESTAMP" property="endtime"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+    </resultMap>
+
+    <select id="list" parameterType="org.tc.shiro.po.Stock" resultType="org.tc.shiro.po.Stock">
+        SELECT * FROM stock
+        <where>
+            <if test="name!=null">
+                and name like CONCAT('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+
+    <update id="reduceNumber">
+        UPDATE stock SET total = total-1
+        WHERE stockid=#{id}
+        AND begintime <![CDATA[ <= ]]> #{killTime}
+        AND endtime >= #{killTime}
+        AND total > 0
+  </update>
+
+    <select id="killByProcedure" statementType="CALLABLE">
+        CALL execute_seckill(
+            #{id, jdbcType=BIGINT, mode=IN},
+            #{phone, jdbcType=BIGINT, mode=IN},
+            #{killTime, jdbcType=TIMESTAMP, mode=IN},
+            #{result, jdbcType=INTEGER, mode=OUT}
+        )
+  </select>
+
+</mapper>

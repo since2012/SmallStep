@@ -1,8 +1,8 @@
 /**
  * 日志管理初始化
  */
-var Maintain = {
-    id: "maintainTable",	//表格id
+var Command = {
+    id: "cmdTable",	//表格id
     seItem: null,		//选中的条目
     table: null,
     layerIndex: -1,
@@ -12,7 +12,7 @@ var Maintain = {
 /**
  * 初始化表格的列
  */
-Maintain.initColumn = function () {
+Command.initColumn = function () {
     return [
         {field: 'selectItem', radio: true, checkbox: false},
         {
@@ -23,7 +23,7 @@ Maintain.initColumn = function () {
         },
         {title: 'ID', field: 'id', visible: false, align: 'center', valign: 'middle', sortable: false},
         {title: '指令', field: 'name', align: 'center', valign: 'middle', sortable: true},
-        {title: '描述', field: 'description', align: 'center', valign: 'middle', sortable: false},
+        {title: '描述', field: 'detail', align: 'center', valign: 'middle', sortable: false},
         {
             title: '内容',
             field: 'contents',
@@ -44,13 +44,13 @@ Maintain.initColumn = function () {
 /**
  * 检查是否选中
  */
-Maintain.check = function () {
+Command.check = function () {
     var selected = $('#' + this.id).bootstrapTable('getSelections');
     if (selected.length == 0) {
         Feng.info("请先选中表格中的某一记录！");
         return false;
     } else {
-        Maintain.seItem = selected[0];
+        Command.seItem = selected[0];
         return true;
     }
 };
@@ -62,7 +62,7 @@ Maintain.check = function () {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-Maintain.get = function (key) {
+Command.get = function (key) {
     return $("#" + key).val();
 };
 
@@ -72,7 +72,7 @@ Maintain.get = function (key) {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-Maintain.set = function (key, val) {
+Command.set = function (key, val) {
     this.queryData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
     return this;
 };
@@ -80,40 +80,40 @@ Maintain.set = function (key, val) {
 /**
  * 清除数据
  */
-Maintain.clearData = function () {
-    this.queryData = {};
+Command.clearData = function () {
+    Command.queryData = {};
 }
 
 /**
  * 收集数据
  */
-Maintain.collectData = function () {
+Command.collectData = function () {
     this.clearData();
     this.set('name')
-        .set('description');
+        .set('detail');
 };
 
 /**
  * 查询列表
  */
-Maintain.search = function () {
+Command.search = function () {
     this.collectData();
-    Maintain.table.refresh({query: this.queryData});
+    Command.table.refresh({query: this.queryData});
 };
 
 //高级重置
-Maintain.reset = function () {
+Command.reset = function () {
     $("form .form-group input").val("");
 };
 
 /**
  * 调用后台批量删除方法
  */
-Maintain.deleteBatch = function () {
+Command.deleteBatch = function () {
     if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/maintain/deleteBatch", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/cmd/deleteBatch", function (data) {
             Feng.success("删除成功!");
-            Maintain.table.refresh();
+            Command.table.refresh();
         }, function (data) {
             Feng.error("删除失败!" + data.responseJSON.message + "!");
         });
@@ -124,11 +124,11 @@ Maintain.deleteBatch = function () {
 /**
  * 单条记录删除
  */
-Maintain.delete = function () {
+Command.delete = function () {
     if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/maintain/delete", function (data) {
+        var ajax = new $ax(Feng.ctxPath + "/cmd/delete", function (data) {
             Feng.success("删除成功!");
-            Maintain.table.refresh();
+            Command.table.refresh();
         }, function (data) {
             Feng.error("删除失败!" + data.responseJSON.message + "!");
         });
@@ -140,21 +140,21 @@ Maintain.delete = function () {
 /**
  * 新增功能
  */
-Maintain.openAddPage = function () {
+Command.openAddPage = function () {
     var index = layer.open({
         type: 2,
         title: '新增指令',
         area: ['800px', '320px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: '/maintain/maintain_add'
+        content: '/cmd/cmd_add'
     });
     this.layerIndex = index;
 };
 /**
  * 编辑
  */
-Maintain.openEditPage = function () {
+Command.openEditPage = function () {
     if (this.check()) {
         var index = layer.open({
             type: 2,
@@ -162,7 +162,7 @@ Maintain.openEditPage = function () {
             area: ['800px', '320px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: '/maintain/maintain_edit?id=' + this.seItem.id
+            content: '/cmd/cmd_edit?id=' + this.seItem.id
         });
         this.layerIndex = index;
     }
@@ -209,12 +209,12 @@ function init() {
 
 $(function () {
     init();
-    var defaultColunms = Maintain.initColumn();
-    var table = new BSTable(Maintain.id, "/maintain/list", defaultColunms);
+    var defaultColunms = Command.initColumn();
+    var table = new BSTable(Command.id, "/cmd/list", defaultColunms);
     table.setPaginationType("server");
-    Maintain.table = table.init();
+    Command.table = table.init();
 
     $("#biz").attr("class", "active");
-    $("#maintain").attr("class", "active");
+    $("#cmd").attr("class", "active");
 });
 

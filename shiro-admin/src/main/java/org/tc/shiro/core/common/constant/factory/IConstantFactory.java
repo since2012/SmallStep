@@ -90,4 +90,6 @@ public interface IConstantFactory {
      */
     List<Dict> findChildrenInDict(Integer id);
 
+    List<String> selectByCmdId(Integer cmdid);
+
 }

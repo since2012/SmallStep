@@ -16,20 +16,20 @@ import org.tc.shiro.core.dto.Exposer;
 import org.tc.shiro.core.dto.SeckillTimeData;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.core.shiroext.vo.ShiroUser;
-import org.tc.shiro.po.Seckill;
-import org.tc.shiro.service.ISeckillService;
+import org.tc.shiro.po.Stock;
+import org.tc.shiro.service.IStockService;
 
 import java.util.Date;
 
 @Slf4j
 @Controller
-@RequestMapping("/seckill")
-public class SeckillController extends BaseController {
+@RequestMapping("/stock")
+public class StockController extends BaseController {
 
-    private String PREFIX = "biz/seckill/";
+    private String PREFIX = "biz/stock/";
 
     @Autowired
-    private ISeckillService seckillService;
+    private IStockService stockService;
 
     /**
      * 秒杀列表
@@ -38,7 +38,7 @@ public class SeckillController extends BaseController {
      */
     @GetMapping("")
     public String index() {
-        return PREFIX + "seckill";
+        return PREFIX + "stock";
     }
 
     /**
@@ -48,7 +48,7 @@ public class SeckillController extends BaseController {
      */
     @PostMapping("/list")
     @ResponseBody
-    public Object list(Seckill seckill,
+    public Object list(Stock stock,
                        @RequestParam(required = false) Integer limit,
                        @RequestParam(required = false) Integer offset,
                        @RequestParam(required = false) String sort,
@@ -58,45 +58,45 @@ public class SeckillController extends BaseController {
         } else {
             sort = sort + " " + order;
         }
-        PageInfo<Seckill> page = seckillService.page(seckill, offset / limit + 1, limit, sort);
+        PageInfo<Stock> page = stockService.page(stock, offset / limit + 1, limit, sort);
         return super.warpForBT(page.getList(), page.getTotal());
     }
 
     /**
      * 秒杀详情
      *
-     * @param seckillId
+     * @param stockId
      * @param model
      * @return
      */
-    @GetMapping("/{seckillId}/detail")
-    public String detial(@PathVariable("seckillId") Long seckillId, Model model) {
-        if (seckillId == null) {
+    @GetMapping("/{stockId}/seckill")
+    public String detial(@PathVariable("stockId") Long stockId, Model model) {
+        if (stockId == null) {
             //重定向：丢失数据
-            return REDIRECT + "/seckill/list";
+            return REDIRECT + "/stock/list";
         }
-        boolean exists = seckillService.existsByPK(seckillId);
+        boolean exists = stockService.existsByPK(stockId);
         if (!exists) {
             //转发数据
-            return FORWARD + "/seckill/list";
+            return FORWARD + "/stock/list";
         }
-        Seckill seckill = seckillService.selectByPK(seckillId);
-        model.addAttribute("seckill", seckill);
-        return PREFIX + "detail";
+        Stock stock = stockService.selectByPK(stockId);
+        model.addAttribute("stock", stock);
+        return PREFIX + "seckill";
     }
 
     /**
      * 秒杀地址暴露
      *
-     * @param seckillId
+     * @param stockId
      * @return
      */
-    @PostMapping("/{seckillId}/exposer")
+    @PostMapping("/{stockId}/exposer")
     @ResponseBody
-    public Object exposer(@PathVariable("seckillId") Long seckillId) {
+    public Object exposer(@PathVariable("stockId") Long stockId) {
         GlobalResult<Exposer> result;
         try {
-            Exposer exposer = seckillService.exoportSeckillUrl(seckillId);
+            Exposer exposer = stockService.exoportSeckillUrl(stockId);
             result = GlobalResult.ok(exposer);
         } catch (Exception e) {
             result = GlobalResult.errorMsg(e.getMessage());
@@ -105,9 +105,9 @@ public class SeckillController extends BaseController {
     }
 
 
-    @PostMapping("/{seckillId}/{md5}/execute")
+    @PostMapping("/{stockId}/{md5}/execute")
     @ResponseBody
-    public Object exec(@PathVariable("seckillId") Long seckillId,
+    public Object exec(@PathVariable("stockId") Long stockId,
                        @PathVariable("md5") String md5) {
         //未登录
         ShiroUser shiroUser = ShiroKit.getUser();
@@ -115,36 +115,36 @@ public class SeckillController extends BaseController {
             return GlobalResult.errorMsg("你还未登录");
         }
         ExecutionResult executionResult = null;
-        executionResult = seckillService.executeSeckill(seckillId, md5);
+        executionResult = stockService.executeSeckill(stockId, md5);
         return GlobalResult.ok(executionResult);
     }
 
     /**
      * 执行秒杀(采用存储过程)
      *
-     * @param seckillId
+     * @param stockId
      * @param md5
      * @return
      */
-    @PostMapping("/{seckillId}/{md5}/execution")
+    @PostMapping("/{stockId}/{md5}/execution")
     @ResponseBody
-    public Object execute(@PathVariable("seckillId") Long seckillId,
+    public Object execute(@PathVariable("stockId") Long stockId,
                           @PathVariable("md5") String md5) {
         //未登录
         ShiroUser shiroUser = ShiroKit.getUser();
         if (ToolUtil.isEmpty(shiroUser)) {
             return GlobalResult.errorMsg("你还未登录");
         }
-        ExecutionResult execution = seckillService.executeSeckillProcedure(seckillId, md5);
+        ExecutionResult execution = stockService.executeSeckillProcedure(stockId, md5);
         return GlobalResult.ok(execution);
     }
 
-    @GetMapping("/{seckillId}/time")
+    @GetMapping("/{stockId}/time")
     @ResponseBody
-    public Object now(@PathVariable("seckillId") Long seckillId) {
+    public Object now(@PathVariable("stockId") Long stockId) {
         Date date = new Date();
-        Seckill seckill = seckillService.selectByPK(seckillId);
-        SeckillTimeData timeData = new SeckillTimeData(date.getTime(), seckill.getBegintime().getTime(), seckill.getEndtime().getTime());
+        Stock stock = stockService.selectByPK(stockId);
+        SeckillTimeData timeData = new SeckillTimeData(date.getTime(), stock.getBegintime().getTime(), stock.getEndtime().getTime());
         return GlobalResult.ok(timeData);
     }
 }

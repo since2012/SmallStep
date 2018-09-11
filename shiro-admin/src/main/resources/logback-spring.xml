@@ -33,7 +33,7 @@
             <appender-ref ref="CONSOLE"/>
             <appender-ref ref="FILE"/>
         </root>
-        <logger name="org.tc.seckill" level="debug" additivity="false">
+        <logger name="org.tc.shiro" level="debug" additivity="false">
             <appender-ref ref="CONSOLE"/>
         </logger>
     </springProfile>

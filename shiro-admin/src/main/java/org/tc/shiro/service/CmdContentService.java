@@ -5,13 +5,13 @@ import org.tc.shiro.po.CmdContent;
 
 import java.util.List;
 
-public interface CommandContentService extends IBaseService<CmdContent> {
+public interface CmdContentService extends IBaseService<CmdContent> {
 
     /**
      * 根据外键查询
      *
-     * @param commandId
+     * @param cmdId
      */
-    public List<String> selectByCommandId(Integer commandId);
+    public List<String> selectByCmdId(Integer cmdId);
 
 }

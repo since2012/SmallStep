@@ -2,7 +2,7 @@ package org.tc.shiro.core.dto;
 
 import lombok.Data;
 import org.tc.shiro.core.enums.SeckillStateEnum;
-import org.tc.shiro.po.SeckillResult;
+import org.tc.shiro.po.Seckill;
 
 /**
  * 秒杀执行结果
@@ -20,20 +20,20 @@ public class ExecutionResult {
     private String stateInfo;
 
     //秒杀成功信息
-    private SeckillResult seckillResult;
+    private Seckill seckill;
 
     /**
      * 秒杀成功
      *
      * @param seckillId
      * @param seckillStateEnum
-     * @param seckillResult
+     * @param seckill
      */
-    public ExecutionResult(long seckillId, SeckillStateEnum seckillStateEnum, SeckillResult seckillResult) {
+    public ExecutionResult(long seckillId, SeckillStateEnum seckillStateEnum, Seckill seckill) {
         this.seckillId = seckillId;
         this.state = seckillStateEnum.getState();
         this.stateInfo = seckillStateEnum.getStateInfo();
-        this.seckillResult = seckillResult;
+        this.seckill = seckill;
     }
 
     /**
@@ -63,11 +63,11 @@ public class ExecutionResult {
      *
      * @param seckillId
      * @param seckillStateEnum
-     * @param seckillResult
+     * @param seckill
      * @return
      */
-    public static ExecutionResult ok(long seckillId, SeckillStateEnum seckillStateEnum, SeckillResult seckillResult) {
-        return new ExecutionResult(seckillId, seckillStateEnum, seckillResult);
+    public static ExecutionResult ok(long seckillId, SeckillStateEnum seckillStateEnum, Seckill seckill) {
+        return new ExecutionResult(seckillId, seckillStateEnum, seckill);
     }
 
     /**

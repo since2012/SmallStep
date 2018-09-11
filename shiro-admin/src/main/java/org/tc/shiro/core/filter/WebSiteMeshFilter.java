@@ -14,10 +14,10 @@ public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
                 .addDecoratorPath("/dept", "/decorator/main")
                 .addDecoratorPath("/login_log", "/decorator/main")
                 .addDecoratorPath("/mgr/profile", "/decorator/main")
-                .addDecoratorPath("/maintain", "/decorator/main")
+                .addDecoratorPath("/cmd", "/decorator/main")
                 .addDecoratorPath("/robot", "/decorator/main")
-                .addDecoratorPath("/seckill", "/decorator/main")
-                .addDecoratorPath("/seckill/*/detail", "/decorator/main")
+                .addDecoratorPath("/stock", "/decorator/main")
+                .addDecoratorPath("/stock/*/seckill", "/decorator/main")
                 .addDecoratorPath("/druid/*", "/decorator/main");
     }
 }

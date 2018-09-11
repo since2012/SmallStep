@@ -31,7 +31,7 @@ public class LoginLogServiceImpl extends BaseServiceImpl<LoginLogMapper, LoginLo
                                    Integer pageNo, Integer pageSize, String sort) {
         PageHelper.startPage(pageNo, pageSize, sort);
 
-//        Example example = new Example(Command.class);
+//        Example example = new Example(Cmd.class);
 //        Example.Criteria criteria = example.createCriteria();
 //        //where条件
 //        if (!StringUtils.isBlank(command.getName())) {
@@ -42,7 +42,7 @@ public class LoginLogServiceImpl extends BaseServiceImpl<LoginLogMapper, LoginLo
 //        }
 //        //排序依据
 //        example.orderBy("id").asc();
-//        List<Command> page = baseMapper.selectByExample(example);
+//        List<Cmd> page = baseMapper.selectByExample(example);
         List<LoginLog> list = this.baseMapper.list(logName, message, beginTime, endTime);
         //用PageInfo对结果进行包装
         PageInfo<LoginLog> page = new PageInfo<LoginLog>(list);

@@ -19,10 +19,10 @@ import org.tc.shiro.core.exception.SeckillClosedException;
 import org.tc.shiro.core.exception.SeckillException;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.mapper.SeckillMapper;
-import org.tc.shiro.mapper.SeckillResultMapper;
+import org.tc.shiro.mapper.StockMapper;
 import org.tc.shiro.po.Seckill;
-import org.tc.shiro.po.SeckillResult;
-import org.tc.shiro.service.ISeckillService;
+import org.tc.shiro.po.Stock;
+import org.tc.shiro.service.IStockService;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -35,82 +35,82 @@ import java.util.Map;
  */
 @Slf4j
 @Service
-public class SeckillServiceImpl extends BaseServiceImpl<SeckillMapper, Seckill> implements ISeckillService {
+public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implements IStockService {
 
     public static final String salt = "test";
 
     @Autowired
-    private SeckillResultMapper seckillResultMapper;
+    private SeckillMapper seckillMapper;
     @Autowired
     private RedisCacheDao redisCacheDao;
 
     @Override
-    public PageInfo<Seckill> page(Seckill seckill, Integer pageNo, Integer pageSize, String sort) {
+    public PageInfo<Stock> page(Stock stock, Integer pageNo, Integer pageSize, String sort) {
 
-        if (StringUtils.isBlank(seckill.getName())) {
-            seckill.setName(null);
+        if (StringUtils.isBlank(stock.getName())) {
+            stock.setName(null);
         }
         PageHelper.startPage(pageNo, pageSize, sort);
-        List<Seckill> list = baseMapper.list(seckill);
-        PageInfo<Seckill> page = new PageInfo<>(list);
+        List<Stock> list = baseMapper.list(stock);
+        PageInfo<Stock> page = new PageInfo<>(list);
         return page;
     }
 
     @Override
-    public Exposer exoportSeckillUrl(long seckillId) {
-        Seckill seckill = (Seckill) redisCacheDao.get("seckill", seckillId);
-        if (seckill == null) {
-            seckill = baseMapper.selectByPrimaryKey(seckillId);
-            if (seckill == null) {
-                return Exposer.notExist(seckillId);
+    public Exposer exoportSeckillUrl(long id) {
+        Stock stock = (Stock) redisCacheDao.get("stock", id);
+        if (stock == null) {
+            stock = baseMapper.selectByPrimaryKey(id);
+            if (stock == null) {
+                return Exposer.notExist(id);
             } else {
-                redisCacheDao.put("seckill", seckillId, seckill);
+                redisCacheDao.put("stock", id, stock);
             }
         }
-        Date startTime = seckill.getBegintime();
-        Date endTime = seckill.getEndtime();
+        Date startTime = stock.getBegintime();
+        Date endTime = stock.getEndtime();
         Date nowTime = new Date();
         if (nowTime.getTime() < startTime.getTime() || nowTime.getTime() > endTime.getTime()) {
-            return Exposer.timeError(seckillId, nowTime.getTime(), startTime.getTime(), endTime.getTime());
+            return Exposer.timeError(id, nowTime.getTime(), startTime.getTime(), endTime.getTime());
         }
-        String md5 = getMD5(seckillId);
-        return Exposer.ok(md5, seckillId);
+        String md5 = getMD5(id);
+        return Exposer.ok(md5, id);
     }
 
-    private String getMD5(long seckillId) {
-        String base = seckillId + "/" + salt;
+    private String getMD5(long id) {
+        String base = id + "/" + salt;
         String md5 = DigestUtils.md5DigestAsHex(base.getBytes());
-        return seckillId + md5;
+        return id + md5;
     }
 
     @Override
     @Transactional //开启事务
-    public ExecutionResult executeSeckill(long seckllId, String md5) {
-        if (md5 == null || !md5.equals(getMD5(seckllId))) {
-            throw new SeckillException("seckill data rewirite");
+    public ExecutionResult executeSeckill(long id, String md5) {
+        if (md5 == null || !md5.equals(getMD5(id))) {
+            throw new SeckillException("stock data rewirite");
         }
 
         Date nowTime = new Date();
         //执行秒杀逻辑=减库存+记录购买行为
         try {
             //记录购买行为
-            SeckillResult killed = new SeckillResult();
-            killed.setSeckid(seckllId);
+            Seckill killed = new Seckill();
+            killed.setStockid(id);
             Integer userid = ShiroKit.getUser().getId();
             killed.setUserid(userid);
             killed.setState(Byte.parseByte("0"));
-            int insertCount = seckillResultMapper.insert(killed);
+            int insertCount = seckillMapper.insert(killed);
             if (insertCount <= 0) {
                 //重复秒杀
-                throw new RepeatKillException("seckill repeated");
+                throw new RepeatKillException("stock repeated");
             } else {
-                int updateCount = baseMapper.reduceNumber(seckllId, nowTime);
+                int updateCount = baseMapper.reduceNumber(id, nowTime);
                 if (updateCount <= 0) {
                     //没有更新到记录
-                    throw new SeckillClosedException("seckill is closed");
+                    throw new SeckillClosedException("stock is closed");
                 } else {
-                    SeckillResult seckillResult = seckillResultMapper.queryByIdWithSeckill(seckllId, userid);
-                    return new ExecutionResult(seckllId, SeckillStateEnum.SUCCESS, seckillResult);
+                    Seckill seckill = seckillMapper.selectById(id, userid);
+                    return new ExecutionResult(id, SeckillStateEnum.SUCCESS, seckill);
                 }
             }
         } catch (SeckillClosedException e) {
@@ -120,18 +120,18 @@ public class SeckillServiceImpl extends BaseServiceImpl<SeckillMapper, Seckill> 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             //所有编译器异常转换为运行期异常
-            throw new SeckillException("seckill inner error:" + e.getMessage());
+            throw new SeckillException("stock inner error:" + e.getMessage());
         }
     }
 
     @Override
-    public ExecutionResult executeSeckillProcedure(long seckillid, String md5) {
-        if (md5 == null || !md5.equals(getMD5(seckillid))) {
-            return ExecutionResult.error(seckillid, SeckillStateEnum.DATA_REWRITE);
+    public ExecutionResult executeSeckillProcedure(long id, String md5) {
+        if (md5 == null || !md5.equals(getMD5(id))) {
+            return ExecutionResult.error(id, SeckillStateEnum.DATA_REWRITE);
         }
         Date killTime = new Date();
         Map<String, Object> map = new HashMap<>();
-        map.put("seckillId", seckillid);
+        map.put("id", id);
         Integer userid = ShiroKit.getUser().getId();
         map.put("phone", userid);
         map.put("killTime", killTime);
@@ -140,14 +140,14 @@ public class SeckillServiceImpl extends BaseServiceImpl<SeckillMapper, Seckill> 
             baseMapper.killByProcedure(map);
             int result = MapUtils.getInteger(map, "result", -2);
             if (result == 1) {
-                SeckillResult seckillResult = seckillResultMapper.queryByIdWithSeckill(seckillid, userid);
-                return ExecutionResult.ok(seckillid, SeckillStateEnum.SUCCESS, seckillResult);
+                Seckill seckill = seckillMapper.selectById(id, userid);
+                return ExecutionResult.ok(id, SeckillStateEnum.SUCCESS, seckill);
             } else {
-                return ExecutionResult.error(seckillid, SeckillStateEnum.stateOf(result));
+                return ExecutionResult.error(id, SeckillStateEnum.stateOf(result));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return new ExecutionResult(seckillid, SeckillStateEnum.INNER_ERROR);
+            return new ExecutionResult(id, SeckillStateEnum.INNER_ERROR);
         }
     }
 }

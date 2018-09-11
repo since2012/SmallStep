@@ -6,25 +6,25 @@ import org.tc.shiro.po.CmdContent;
 
 import java.util.List;
 
-public interface CommandContentMapper extends MyMapper<CmdContent> {
+public interface CmdContentMapper extends MyMapper<CmdContent> {
 
     /**
      * 根据外键删除
      *
-     * @param fk
+     * @param cmdId
      */
-    public void deleteByFk(@Param("fk") Integer fk);
+    public void deleteByCmdId(@Param("cmdId") Integer cmdId);
 
     /**
      * 根据外键LIST删除
      */
-    public void deleteByFkList(List<Integer> fkList);
+    public void delByCmdIdList(List<Integer> cmdIdList);
 
     /**
      * 根据外键查询
      *
-     * @param fk
+     * @param cmdId
      */
-    public List<String> selectByFk(@Param("fk") Integer fk);
+    public List<String> selectByCmdId(@Param("cmdId") Integer cmdId);
 
 }

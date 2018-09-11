@@ -19,6 +19,7 @@
     <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/static/plugins/common/ajax-object.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
+
 </head>
 <body>
 <!-- Main content -->
@@ -28,19 +29,19 @@
             <!-- /.box-header -->
             <form class="form-horizontal">
                 <div class="box-body" id="itemsArea">
-                    <input type="hidden" id="id" name="id" value="${command.id}">
+                    <input type="hidden" id="id" name="id" value="${cmd.id}">
                     <div class="form-group">
                         <label class="control-label col-xs-1">指令</label>
                         <div class="col-xs-4">
-                            <input class="form-control" id="name" name="name" type="text" value="${command.name}">
+                            <input class="form-control" id="name" name="name" type="text" value="${cmd.name}">
                         </div>
                         <label class="control-label col-xs-1">描述</label>
                         <div class="col-xs-4">
-                            <input class="form-control" id="description" name="description" type="text"
-                                   value="${command.description}">
+                            <input class="form-control" id="detail" name="detail" type="text"
+                                   value="${cmd.detail}">
                         </div>
                         <div class="col-xs-2">
-                            <button type="button" class="btn btn-plus" onclick="MaintainInfo.addItem()"
+                            <button type="button" class="btn btn-plus" onclick="CommandInfo.addItem()"
                                     id="cancel">
                                 <i class="fa fa-plus"></i>&nbsp;增加
                             </button>
@@ -54,7 +55,7 @@
                                 <input class="form-control" type="text" name="content" value="${item}">
                             </div>
                             <div class="col-xs-2">
-                                <button type="button" class="btn btn-danger" onclick="MaintainInfo.deleteItem(this)"
+                                <button type="button" class="btn btn-danger" onclick="CommandInfo.deleteItem(this)"
                                         id="cancel">
                                     <i class="fa fa-remove"></i>&nbsp;删除
                                 </button>
@@ -66,11 +67,11 @@
                 <!-- /.box-body -->
                 <div class="box-footer text-center">
                     <div class="text-center">
-                        <button type="button" class="btn btn-success" onclick="MaintainInfo.editSubmit()"
+                        <button type="button" class="btn btn-success" onclick="CommandInfo.editSubmit()"
                                 id="ensure">
                             <i class="fa fa-check"></i>&nbsp;提交
                         </button>
-                        <button type="button" class="btn btn-danger" onclick="MaintainInfo.close()" id="cancel">
+                        <button type="button" class="btn btn-danger" onclick="CommandInfo.close()" id="cancel">
                             <i class="fa fa-eraser"></i>&nbsp;取消
                         </button>
                     </div>
@@ -90,13 +91,13 @@
             <input class="form-control" type="text" name="content">
         </div>
         <div class="col-xs-2">
-            <button type="button" class="btn btn-danger" onclick="MaintainInfo.deleteItem(this)" id="cancel">
+            <button type="button" class="btn btn-danger" onclick="CommandInfo.deleteItem(this)" id="cancel">
                 <i class="fa fa-remove"></i>&nbsp;删除
             </button>
         </div>
     </div>
 </script>
+<script src="/static/modular/biz/cmd/cmd_info.js"></script>
 
-<script src="/static/modular/biz/maintain/maintain_info.js"></script>
 </body>
 </html>

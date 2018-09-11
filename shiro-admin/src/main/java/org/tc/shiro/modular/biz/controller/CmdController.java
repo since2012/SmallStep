@@ -10,24 +10,26 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.dto.GlobalResult;
-import org.tc.shiro.po.Command;
-import org.tc.shiro.service.CommandContentService;
-import org.tc.shiro.service.CommandService;
+import org.tc.shiro.po.Cmd;
+import org.tc.shiro.service.CmdContentService;
+import org.tc.shiro.service.CmdService;
+import org.tc.shiro.vo.CmdVo;
+import org.tc.shiro.warpper.CmdWarpper;
 
 import javax.validation.Valid;
 import java.util.List;
 
 @Controller
 @Slf4j
-@RequestMapping("/maintain")
-public class MaintenanceController extends BaseController {
+@RequestMapping("/cmd")
+public class CmdController extends BaseController {
 
-    private String PREFIX = "biz/maintain/";
+    private String PREFIX = "biz/cmd/";
 
     @Autowired
-    private CommandService commandService;
+    private CmdService cmdService;
     @Autowired
-    private CommandContentService commandContentService;
+    private CmdContentService cmdContentService;
 
     /**
      * 维护主页
@@ -36,18 +38,18 @@ public class MaintenanceController extends BaseController {
      */
     @GetMapping("")
     public String index() {
-        return PREFIX + "maintain";
+        return PREFIX + "cmd";
     }
 
     /**
      * 查询列表
      *
-     * @param command
+     * @param cmd
      * @return
      */
     @PostMapping("/list")
     @ResponseBody
-    public Object list(Command command,
+    public Object list(Cmd cmd,
                        @RequestParam(required = false) Integer limit,
                        @RequestParam(required = false) Integer offset,
                        @RequestParam(required = false) String sort,
@@ -57,8 +59,10 @@ public class MaintenanceController extends BaseController {
         } else {
             sort = sort + " " + order;
         }
-        PageInfo<Command> page = commandService.page(command, offset / limit + 1, limit, sort);
-        return super.warpForBT(page.getList(), page.getTotal());
+        PageInfo<Cmd> page = cmdService.page(cmd, offset / limit + 1, limit, sort);
+        List<Cmd> list = page.getList();
+        List<CmdVo> voList = new CmdWarpper().warpList(list);
+        return super.warpForBT(voList, page.getTotal());
     }
 
     /**
@@ -66,9 +70,9 @@ public class MaintenanceController extends BaseController {
      *
      * @return
      */
-    @GetMapping("/maintain_add")
-    public String maintainAdd() {
-        return PREFIX + "maintain_add";
+    @GetMapping("/cmd_add")
+    public String cmdAdd() {
+        return PREFIX + "cmd_add";
     }
 
     /**
@@ -78,11 +82,11 @@ public class MaintenanceController extends BaseController {
      */
     @PostMapping("/add")
     @ResponseBody
-    public Object add(@Valid Command command, @RequestParam("content") List<String> content, BindingResult bindingResult) {
+    public Object add(@Valid Cmd cmd, @RequestParam("content") List<String> content, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return GlobalResult.errorMsg(bindingResult.getFieldError().getDefaultMessage());
         }
-        commandService.add(command, content);
+        cmdService.add(cmd, content);
         return SUCCESS_TIP;
     }
 
@@ -91,13 +95,13 @@ public class MaintenanceController extends BaseController {
      *
      * @return
      */
-    @GetMapping("/maintain_edit")
-    public String maintainEdit(Integer id, Model model) {
-        Command command = commandService.selectByPK(id);
-        List<String> contents = commandContentService.selectByCommandId(id);
-        model.addAttribute("command", command);
+    @GetMapping("/cmd_edit")
+    public String cmdEdit(Integer id, Model model) {
+        Cmd cmd = cmdService.selectByPK(id);
+        List<String> contents = cmdContentService.selectByCmdId(id);
+        model.addAttribute("cmd", cmd);
         model.addAttribute("list", contents);
-        return PREFIX + "maintain_edit";
+        return PREFIX + "cmd_edit";
     }
 
     /**
@@ -107,18 +111,18 @@ public class MaintenanceController extends BaseController {
      */
     @PostMapping("/edit")
     @ResponseBody
-    public Object edit(@Valid Command command, @RequestParam("content") List<String> content, BindingResult bindingResult) {
+    public Object edit(@Valid Cmd cmd, @RequestParam("content") List<String> content, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return GlobalResult.errorMsg(bindingResult.getFieldError().getDefaultMessage());
         }
-        commandService.edit(command, content);
+        cmdService.edit(cmd, content);
         return SUCCESS_TIP;
     }
 
     @PostMapping("/delete")
     @ResponseBody
     public Object deleteOne(Integer id) {
-        commandService.delCascade(id);
+        cmdService.delCascade(id);
         // 向页面跳转
         return SUCCESS_TIP;
     }
@@ -131,7 +135,7 @@ public class MaintenanceController extends BaseController {
     @PostMapping("/deleteBatch")
     @ResponseBody
     public Object deleteBatch(@RequestParam("id") List<Integer> idList) {
-        commandService.deleteCascadeBatch(idList);
+        cmdService.deleteCascadeBatch(idList);
         // 向页面跳转
         return SUCCESS_TIP;
     }

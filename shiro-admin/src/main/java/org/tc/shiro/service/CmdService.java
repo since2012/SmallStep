@@ -2,25 +2,25 @@ package org.tc.shiro.service;
 
 import com.github.pagehelper.PageInfo;
 import org.tc.mybatis.service.IBaseService;
-import org.tc.shiro.po.Command;
+import org.tc.shiro.po.Cmd;
 
 import java.util.List;
 
-public interface CommandService extends IBaseService<Command> {
+public interface CmdService extends IBaseService<Cmd> {
 
     /**
      * 新增
      *
-     * @param command
+     * @param cmd
      */
-    public void add(Command command, List<String> contentList);
+    public void add(Cmd cmd, List<String> contentList);
 
     /**
      * 编辑
      *
-     * @param command
+     * @param cmd
      */
-    public void edit(Command command, List<String> contentList);
+    public void edit(Cmd cmd, List<String> contentList);
 
     /**
      * 级联删除
@@ -37,12 +37,12 @@ public interface CommandService extends IBaseService<Command> {
     /**
      * 分页查询
      *
-     * @param command
+     * @param cmd
      * @param pageNo
      * @param pageSize
      * @return
      */
-    PageInfo<Command> page(Command command, Integer pageNo, Integer pageSize, String sort);
+    PageInfo<Cmd> page(Cmd cmd, Integer pageNo, Integer pageSize, String sort);
 
     /**
      * 回复查询

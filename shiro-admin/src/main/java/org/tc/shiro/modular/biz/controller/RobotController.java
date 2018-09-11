@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.dto.GlobalResult;
-import org.tc.shiro.service.CommandService;
+import org.tc.shiro.service.CmdService;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
@@ -23,7 +23,7 @@ public class RobotController extends BaseController {
     private String PREFIX = "biz/robot/";
 
     @Autowired
-    private CommandService commandService;
+    private CmdService cmdService;
 
     /**
      * 对话页面
@@ -48,7 +48,7 @@ public class RobotController extends BaseController {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        String data = commandService.reply(message);
+        String data = cmdService.reply(message);
         return GlobalResult.ok(data);
     }
 

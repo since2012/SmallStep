@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>秒杀列表</title>
+    <title>指令维护</title>
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
@@ -16,18 +16,18 @@
     <script src="/static/plugins/common/ajax-object.js"></script>
     <script src="/static/plugins/layer/layer.js"></script>
 
-    <script src="/static/modular/biz/seckill/seckill.js"></script>
+    <script src="/static/modular/biz/cmd/cmd.js"></script>
 </head>
 <body>
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>秒杀列表
+    <h1>指令管理
         <small></small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
         <li><a href="#">业务管理</a></li>
-        <li class="active">秒杀列表</li>
+        <li class="active">指令管理</li>
     </ol>
 </section>
 <!-- Main content -->
@@ -44,20 +44,27 @@
                 <form class="form-horizontal">
                     <div class="box-body">
                         <div class="form-group">
-                            <label for="command" class="col-md-2 col-lg-1 control-label"
-                                   style="padding-right:0px;">名称</label>
+                            <label for="cmd" class="col-md-2 col-lg-1 control-label"
+                                   style="padding-right:0px;">指令</label>
                             <div class="col-md-4 col-lg-5 ">
                                 <input class="form-control" type="text" id="name" name="name"
-                                       placeholder="名称">
+                                       placeholder="指令">
+                            </div>
+                            <label for="detail" class="col-md-2 col-lg-1 control-label"
+                                   style="padding-right:0px">描述</label>
+                            <div class="col-md-4 col-lg-5 ">
+                                <input class="form-control" type="text" id="detail"
+                                       name="detail"
+                                       placeholder="描述">
                             </div>
                         </div>
                     </div>
                     <!-- /.box-body -->
                     <div class="box-footer text-center">
-                        <button type="button" onclick="Seckill.search()" class="btn btn-primary btn-sm no-margin-top">
+                        <button type="button" onclick="Command.search()" class="btn btn-primary btn-sm no-margin-top">
                             <i class="fa fa-check"></i> 查询
                         </button>
-                        <button type="button" onclick="Seckill.reset();" class="btn btn-default btn-sm no-margin-top">
+                        <button type="button" onclick="Command.reset();" class="btn btn-default btn-sm no-margin-top">
                             <i class="fa fa-refresh"></i>重置
                         </button>
                     </div>
@@ -71,20 +78,20 @@
         <div class="col-xs-12">
             <div class="box box-success">
                 <div class="box-body">
-                    <div class="hidden-xs" id="seckillTableToolbar" role="group">
-                        <button type="button" onclick="Seckill.openAddPage()"
+                    <div class="hidden-xs" id="cmdTableToolbar" role="group">
+                        <button type="button" onclick="Command.openAddPage()"
                                 class="btn btn-success btn-sm no-margin-top">
                             新增
                         </button>
-                        <button type="button" onclick="Seckill.openEditPage()"
+                        <button type="button" onclick="Command.openEditPage()"
                                 class="btn btn-warning btn-sm no-margin-top">
                             编辑
                         </button>
-                        <button type="button" onclick="Seckill.delete()" class="btn btn-default btn-sm no-margin-top">
+                        <button type="button" onclick="Command.delete()" class="btn btn-default btn-sm no-margin-top">
                             删除
                         </button>
                     </div>
-                    <table id="seckillTable" data-mobile-responsive="true" data-click-to-select="true">
+                    <table id="cmdTable" data-mobile-responsive="true" data-click-to-select="true">
                         <thead>
                         <tr>
                             <th data-field="selectItem" data-checkbox="true"></th>

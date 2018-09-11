@@ -39,6 +39,7 @@ public class ConstantFactory implements IConstantFactory {
     private DictMapper dictMapper = SpringContextHolder.getBean(DictMapper.class);
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
+    private CmdContentMapper contentMapper = SpringContextHolder.getBean(CmdContentMapper.class);
 
     public static IConstantFactory me() {
         return SpringContextHolder.getBean("constantFactory");
@@ -203,4 +204,9 @@ public class ConstantFactory implements IConstantFactory {
         return dicts;
     }
 
+    @Override
+    public List<String> selectByCmdId(Integer cmdid) {
+        List<String> contents = contentMapper.selectByCmdId(cmdid);
+        return contents;
+    }
 }

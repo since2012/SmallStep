@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.tc.shiro.mapper.CommandContentMapper">
+<mapper namespace="org.tc.shiro.mapper.CmdContentMapper">
     <resultMap id="BaseResultMap" type="org.tc.shiro.po.CmdContent">
         <!--
           WARNING - @mbg.generated
@@ -10,11 +10,11 @@
         <result column="CMDID" jdbcType="INTEGER" property="cmdid"/>
     </resultMap>
 
-    <delete id="deleteByFk" parameterType="integer">
-        delete from cmd_content WHERE cmdid = #{fk}
+    <delete id="deleteByCmdId" parameterType="integer">
+        delete from cmd_content WHERE cmdid = #{cmdId}
     </delete>
 
-    <delete id="deleteByFkList" parameterType="list">
+    <delete id="delByCmdIdList" parameterType="list">
         delete from cmd_content WHERE cmdid in(
         <foreach collection="list" item="item" separator=",">
             #{item}
@@ -22,8 +22,8 @@
         )
     </delete>
 
-    <select id="selectByFk" parameterType="integer" resultType="string">
-        SELECT content from cmd_content WHERE cmdid = #{fk}
+    <select id="selectByCmdId" parameterType="integer" resultType="string">
+        SELECT content from cmd_content WHERE cmdid = #{cmdId}
     </select>
 
 </mapper>

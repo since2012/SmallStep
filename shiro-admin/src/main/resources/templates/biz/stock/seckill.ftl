@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
 
     <script src="/static/plugins/countdown/jquery.countdown.js"></script>
-    <script src="/static/modular/biz/seckill/detail.js"></script>
+    <script src="/static/modular/biz/stock/seckill.js"></script>
 </head>
 <body>
 <!-- Content Header (Page header) -->
@@ -25,18 +25,17 @@
 <!-- Main content -->
 <section class="content">
     <div class="row">
-        <input type="hidden" id="seckillId" value="${seckill.id?c}">
+        <input type="hidden" id="stockId" value="${stock.id?c}">
         <div class="col-md-12 col-lg-12">
             <!-- Horizontal Form -->
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h2>${seckill.name}</h2>
+                    <h2>${stock.name}</h2>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
                 <div class="box-body">
                     <h2 class="text-danger text-center">
-                    <#--<span class="glyphicon glyphicon-time"></span>-->
                         <span class="glyphicon" id="seckill-box"></span>
                     </h2>
                 </div>

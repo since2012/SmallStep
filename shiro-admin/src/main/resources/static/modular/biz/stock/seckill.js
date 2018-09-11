@@ -1,29 +1,22 @@
 //存放主要交互逻辑JS代码
 //javaScripts 模块化
 
-var Detail = {
+var Seckill = {
     //封装秒杀相关的ajax的url地址
     URL: {
-        now: function (seckillId) {
-            return '/seckill/' + seckillId + '/time';
+        now: function (stockId) {
+            return '/stock/' + stockId + '/time';
         },
-        exposer: function (seckillId) {
-            return '/seckill/' + seckillId + '/exposer';
+        exposer: function (stockId) {
+            return '/stock/' + stockId + '/exposer';
         },
-        killUrl: function (seckillId, md5) {
-            return '/seckill/' + seckillId + '/' + md5 + '/execution';
+        killUrl: function (stockId, md5) {
+            return '/stock/' + stockId + '/' + md5 + '/execution';
         }
     },
-    validatePhone: function (phone) {
-        if (phone.length == 11 && !isNaN(phone)) {
-            return true;
-        } else {
-            return false;
-        }
-    },
-    handleSeckill: function (seckillId, node) {
+    handleSeckill: function (stockId, node) {
         node.hide().html('<button class="btn btn-primary btn-lg" id="killBtn">开始秒杀</button>');//按钮
-        $.post(Detail.URL.exposer(seckillId), {}, function (result) {
+        $.post(Seckill.URL.exposer(stockId), {}, function (result) {
             //在回调函数中，执行交互流程
             if (result) {
                 var exposer = result.data;
@@ -32,13 +25,13 @@ var Detail = {
                     //获取秒杀MD5
                     var md5 = exposer.md5;
                     //组装秒杀地址
-                    var killUrl = Detail.URL.killUrl(seckillId, md5);
+                    var killUrl = Seckill.URL.killUrl(stockId, md5);
                     console.log('killUrl:' + killUrl);
                     //绑定一次点击事件，回调函数内容为执行秒杀
                     $('#killBtn').one('click', function () {
                         $(this).addClass('disable');
                         //执行秒杀请求
-                        $.post(killUrl, {}, Detail.handleSubmit);
+                        $.post(killUrl, {}, Seckill.handleSubmit);
                     });
                     node.show();
                 } else {
@@ -47,7 +40,7 @@ var Detail = {
                     var start = exposer.startTime;
                     var end = exposer.endTime;
                     //重新计算计时逻辑
-                    Detail.countDown(seckillId, now, start, end);
+                    Seckill.countDown(stockId, now, start, end);
                 }
             } else {
                 console.log('result:' + result);
@@ -63,7 +56,7 @@ var Detail = {
             $('#seckill-box').html('<span class="label label-success">' + stateInfo + '</span>');
         }
     },
-    countDown: function (seckillId, nowTime, startTime, endTime) {
+    countDown: function (stockId, nowTime, startTime, endTime) {
         var seckillBox = $('#seckill-box');
         //时间判断
         if (nowTime > endTime) {
@@ -79,22 +72,22 @@ var Detail = {
                 //时间完成后回调事件
             }).on('finish.countdown', function () {
                 //获取秒杀地址，控制显示逻辑，执行秒杀
-                Detail.handleSeckill(seckillId, seckillBox);
+                Seckill.handleSeckill(stockId, seckillBox);
             });
         } else {
-            Detail.handleSeckill(seckillId, seckillBox);
+            Seckill.handleSeckill(stockId, seckillBox);
         }
 
     },
     //详情页初始化
-    init: function (seckillId) {
-        $.get(Detail.URL.now(seckillId), {}, function (result) {
+    init: function (stockId) {
+        $.get(Seckill.URL.now(stockId), {}, function (result) {
             if (result) {
                 var data = result.data;
                 var startTime = parseInt(data.startTime);
                 var endTime = parseInt(data.endTime);
                 var nowTime = parseInt(data.nowTime);
-                Detail.countDown(seckillId, nowTime, startTime, endTime);
+                Seckill.countDown(stockId, nowTime, startTime, endTime);
             } else {
                 console.log('result:' + result);
             }
@@ -103,5 +96,8 @@ var Detail = {
 };
 
 $(function () {
-    Detail.init($("#seckillId").val());
+    Seckill.init($("#stockId").val());
+
+    $("#biz").attr("class", "active");
+    $("#stock").attr("class", "active");
 });

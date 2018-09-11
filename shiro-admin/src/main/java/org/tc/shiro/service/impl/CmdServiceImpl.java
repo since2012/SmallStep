@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.core.consts.IRobotConst;
-import org.tc.shiro.mapper.CommandContentMapper;
-import org.tc.shiro.mapper.CommandMapper;
+import org.tc.shiro.mapper.CmdContentMapper;
+import org.tc.shiro.mapper.CmdMapper;
+import org.tc.shiro.po.Cmd;
 import org.tc.shiro.po.CmdContent;
-import org.tc.shiro.po.Command;
-import org.tc.shiro.service.CommandService;
+import org.tc.shiro.service.CmdService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +23,10 @@ import java.util.Random;
  * 查询相关的业务功能
  */
 @Service
-public class CommandServiceImpl extends BaseServiceImpl<CommandMapper, Command> implements CommandService {
+public class CmdServiceImpl extends BaseServiceImpl<CmdMapper, Cmd> implements CmdService {
 
     @Autowired
-    private CommandContentMapper contentMapper;
+    private CmdContentMapper contentMapper;
 
     private void genContent(Integer id, List<String> contentList) {
         if (CollectionUtils.isNotEmpty(contentList)) {
@@ -43,31 +43,31 @@ public class CommandServiceImpl extends BaseServiceImpl<CommandMapper, Command> 
 
     @Override
     @Transactional
-    public void add(Command command, List<String> contentList) {
-        baseMapper.insertUseGeneratedKeys(command);
-        Integer id = command.getId();
+    public void add(Cmd cmd, List<String> contentList) {
+        baseMapper.insertUseGeneratedKeys(cmd);
+        Integer id = cmd.getId();
         genContent(id, contentList);
     }
 
     @Override
     @Transactional
-    public void edit(Command command, List<String> contentList) {
-        Integer id = command.getId();
-        contentMapper.deleteByFk(id);
-        baseMapper.updateByPrimaryKey(command);
+    public void edit(Cmd cmd, List<String> contentList) {
+        Integer id = cmd.getId();
+        contentMapper.deleteByCmdId(id);
+        baseMapper.updateByPrimaryKey(cmd);
         genContent(id, contentList);
     }
 
     @Override
     @Transactional
     public void delCascade(Integer id) {
-        contentMapper.deleteByFk(id);
+        contentMapper.deleteByCmdId(id);
         baseMapper.deleteByPrimaryKey(id);
     }
 
     @Override
     public void deleteCascadeBatch(List<Integer> idList) {
-        contentMapper.deleteByFkList(idList);
+        contentMapper.delByCmdIdList(idList);
         baseMapper.deleteBatch(idList);
     }
 
@@ -75,19 +75,19 @@ public class CommandServiceImpl extends BaseServiceImpl<CommandMapper, Command> 
     public String reply(String name) {
         //查看帮助
         if (IRobotConst.HELP_COMMAND.equals(name)) {
-            List<Command> list = baseMapper.selectAll();
+            List<Cmd> list = baseMapper.selectAll();
             StringBuilder result = new StringBuilder();
-            for (Command cmd : list) {
-                result.append("回复[" + cmd.getName() + "]可以查看" + cmd.getDescription());
+            for (Cmd cmd : list) {
+                result.append("回复[" + cmd.getName() + "]可以查看" + cmd.getDetail());
                 result.append("<br/>");
             }
             return result.toString();
         }
 
         //其他情况
-        Command command = baseMapper.getByName(name);
-        if (command != null) {
-            List<String> contents = contentMapper.selectByFk(command.getId());
+        Cmd cmd = baseMapper.getByName(name);
+        if (cmd != null) {
+            List<String> contents = contentMapper.selectByCmdId(cmd.getId());
             //随机获取1条
             int i = new Random().nextInt(contents.size());
             return contents.get(i);
@@ -97,36 +97,30 @@ public class CommandServiceImpl extends BaseServiceImpl<CommandMapper, Command> 
     }
 
     @Override
-    public PageInfo<Command> page(Command command, Integer pageNo, Integer pageSize, String sort) {
+    public PageInfo<Cmd> page(Cmd cmd, Integer pageNo, Integer pageSize, String sort) {
 
-        if (StringUtils.isBlank(command.getName())) {
-            command.setName(null);
+        if (StringUtils.isBlank(cmd.getName())) {
+            cmd.setName(null);
         }
-        if (StringUtils.isBlank(command.getDescription())) {
-            command.setDescription(null);
+        if (StringUtils.isBlank(cmd.getDetail())) {
+            cmd.setDetail(null);
         }
         PageHelper.startPage(pageNo, pageSize, sort);
 
-//        Example example = new Example(Command.class);
+//        Example example = new Example(Cmd.class);
 //        Example.Criteria criteria = example.createCriteria();
 //        //where条件
 //
-//        if (!StringUtils.isBlank(command.getName())) {
-//            criteria.andLike("name", "%" + command.getName().trim() + "%");
+//        if (!StringUtils.isBlank(cmd.getName())) {
+//            criteria.andLike("name", "%" + cmd.getName().trim() + "%");
 //        }
-//        if (!StringUtils.isBlank(command.getDescription())) {
-//            criteria.andLike("description", "%" + command.getDescription().trim() + "%");
+//        if (!StringUtils.isBlank(cmd.getDescription())) {
+//            criteria.andLike("description", "%" + cmd.getDescription().trim() + "%");
 //        }
-//        List<Command> list = baseMapper.selectByExample(example);
-        List<Command> list = baseMapper.list(command);
-        if (CollectionUtils.isNotEmpty(list)) {
-            for (Command cmd : list) {
-                List<String> contents = contentMapper.selectByFk(cmd.getId());
-                cmd.setContents(contents);
-            }
-        }
+//        List<Cmd> list = baseMapper.selectByExample(example);
+        List<Cmd> list = baseMapper.list(cmd);
         //用PageInfo对结果进行包装
-        PageInfo<Command> page = new PageInfo<Command>(list);
+        PageInfo<Cmd> page = new PageInfo<Cmd>(list);
         return page;
     }
 
