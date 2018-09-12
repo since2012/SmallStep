@@ -51,27 +51,27 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public Long hashIncrementLongOfHashMap(String hKey, String hashKey, Long delta) {
+    public Long hashIncrementLong(String hKey, String hashKey, Long delta) {
         return redisTemplate.opsForHash().increment(hKey, hashKey, delta);
     }
 
     @Override
-    public Double hashIncrementDoubleOfHashMap(String hKey, String hashKey, Double delta) {
+    public Double hashIncrementDouble(String hKey, String hashKey, Double delta) {
         return redisTemplate.opsForHash().increment(hKey, hashKey, delta);
     }
 
     @Override
-    public void hashPushHashMap(String key, Object hashKey, Object value) {
+    public void hashPush(String key, Object hashKey, Object value) {
         redisTemplate.opsForHash().put(key, hashKey, value);
     }
 
     @Override
-    public Set<Object> hashGetAllHashKey(String key) {
+    public Set<Object> hashGetAllKey(String key) {
         return redisTemplate.opsForHash().keys(key);
     }
 
     @Override
-    public Long hashGetHashMapSize(String key) {
+    public Long hashGetSize(String key) {
         return redisTemplate.opsForHash().size(key);
     }
 
@@ -81,17 +81,17 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public Long hashDeleteHashKey(String key, Object... hashKeys) {
+    public Long hashDeleteKey(String key, Object... hashKeys) {
         return redisTemplate.opsForHash().delete(key, hashKeys);
     }
 
     @Override
-    public void listLeftPushList(String key, Object value) {
+    public void listLeftPush(String key, Object value) {
         redisTemplate.opsForList().leftPush(key, value);
     }
 
     @Override
-    public Object listLeftPopList(String key) {
+    public Object listLeftPop(String key) {
         return redisTemplate.opsForList().leftPop(key);
     }
 
@@ -101,22 +101,22 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public List<Object> listRangeList(String key, Long start, Long end) {
+    public List<Object> listRange(String key, Long start, Long end) {
         return redisTemplate.opsForList().range(key, start, end);
     }
 
     @Override
-    public Long listRemoveFromList(String key, long i, Object value) {
+    public Long listRemove(String key, long i, Object value) {
         return redisTemplate.opsForList().remove(key, i, value);
     }
 
     @Override
-    public Object listIndexFromList(String key, long index) {
+    public Object listIndex(String key, long index) {
         return redisTemplate.opsForList().index(key, index);
     }
 
     @Override
-    public void listSetValueToList(String key, long index, Object value) {
+    public void listSetValue(String key, long index, Object value) {
         redisTemplate.opsForList().set(key, index, value);
     }
 
@@ -126,37 +126,42 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public void listRightPushList(String key, Object value) {
+    public void listRightPush(String key, Object value) {
         redisTemplate.opsForList().rightPush(key, value);
     }
 
     @Override
-    public Object listRightPopList(String key) {
+    public Object listRightPop(String key) {
         return redisTemplate.opsForList().rightPop(key);
     }
 
     @Override
-    public Long setAddSetMap(String key, Object... values) {
+    public Long setAdd(String key, Object... values) {
         return redisTemplate.opsForSet().add(key, values);
     }
 
     @Override
-    public Long setGetSizeForSetMap(String key) {
+    public Long setGetSize(String key) {
         return redisTemplate.opsForSet().size(key);
     }
 
     @Override
-    public Set<Object> setGetMemberOfSetMap(String key) {
+    public Set<Object> setGetMember(String key) {
         return redisTemplate.opsForSet().members(key);
     }
 
     @Override
-    public Boolean setCheckIsMemberOfSet(String key, Object o) {
+    public Boolean setCheckIsMember(String key, Object o) {
         return redisTemplate.opsForSet().isMember(key, o);
     }
 
     @Override
-    public Integer stringAppendString(String key, String value) {
+    public Object setRandomMember(String key) {
+        return redisTemplate.opsForSet().randomMember(key);
+    }
+
+    @Override
+    public Integer stringAppend(String key, String value) {
         return redisTemplate.opsForValue().append(key, value);
     }
 
@@ -166,22 +171,22 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
     }
 
     @Override
-    public String stringGetSubStringFromString(String key, long start, long end) {
+    public String stringGetSubString(String key, long start, long end) {
         return redisTemplate.opsForValue().get(key, start, end);
     }
 
     @Override
-    public Long stringIncrementLongString(String key, Long delta) {
+    public Long stringIncrementLong(String key, Long delta) {
         return redisTemplate.opsForValue().increment(key, delta);
     }
 
     @Override
-    public Double stringIncrementDoubleString(String key, Double delta) {
+    public Double stringIncrementDouble(String key, Double delta) {
         return redisTemplate.opsForValue().increment(key, delta);
     }
 
     @Override
-    public void stringSetString(String key, String value) {
+    public void stringSet(String key, String value) {
         redisTemplate.opsForValue().set(key, value);
     }
 
@@ -192,7 +197,7 @@ public class RedisTemplateDaoImpl implements RedisTemplateDao {
 
     @Override
     public void stringSetValueAndExpireTime(String key, String value, long timeout) {
-        redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.MILLISECONDS);
+        redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
     }
 
 }

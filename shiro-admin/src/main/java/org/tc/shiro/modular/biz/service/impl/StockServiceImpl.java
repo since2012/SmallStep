@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.cache.RedisTemplateDao;
+import org.tc.shiro.core.common.constant.cache.Cache;
+import org.tc.shiro.core.common.constant.cache.CacheKey;
 import org.tc.shiro.core.common.constant.enums.SeckillState;
 import org.tc.shiro.core.common.exception.RepeatKillException;
 import org.tc.shiro.core.common.exception.SeckillClosedException;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Author: Redinw
+ * Author: TC
  * Description:
  */
 @Slf4j
@@ -41,8 +43,6 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
 
     @Autowired
     private SeckillMapper seckillMapper;
-    //    @Autowired
-//    private RedisCacheDao redisCacheDao;
     @Autowired
     private RedisTemplateDao redisTemplateDao;
 
@@ -60,16 +60,16 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
 
     @Override
     public Exposer exoportSeckillUrl(long id) {
-//        Stock stock = (Stock) redisCacheDao.get("stock", id);
-        Stock stock = (Stock) redisTemplateDao.hashGet("stock", id + "");
+        String hKey = Cache.BIZ + ":" + CacheKey.STOCK;
+        String hashKey = id + "";
+        Stock stock = (Stock) redisTemplateDao.hashGet(hKey, hashKey);
         if (stock == null) {
             stock = baseMapper.selectByPrimaryKey(id);
             if (stock == null) {
                 return Exposer.notExist(id);
             } else {
-//                redisCacheDao.put("stock", id, stock);
-                redisTemplateDao.hashPushHashMap("stock", "" + id, stock);
-                redisTemplateDao.expire("stock", 1000);
+                redisTemplateDao.hashPush(hKey, hashKey, stock);
+                redisTemplateDao.expire(hKey, 1000);
             }
         }
         Date startTime = stock.getBegintime();

@@ -76,7 +76,7 @@ public interface RedisTemplateDao {
      * @param delta
      * @return 执行 HINCRBY 命令之后，哈希表 hKey 中域 hashKey 的值。
      */
-    Long hashIncrementLongOfHashMap(String hKey, String hashKey, Long delta);
+    Long hashIncrementLong(String hKey, String hashKey, Long delta);
 
     /**
      * 哈希表 hKey 中的域 hashKey 的值加上浮点值 增量 delta 。
@@ -86,7 +86,7 @@ public interface RedisTemplateDao {
      * @param delta
      * @return 执行 HINCRBY 命令之后，哈希表 hKey 中域 hashKey 的值。
      */
-    Double hashIncrementDoubleOfHashMap(String hKey, String hashKey, Double delta);
+    Double hashIncrementDouble(String hKey, String hashKey, Double delta);
 
     /**
      * 添加键值对到哈希表key中
@@ -94,21 +94,21 @@ public interface RedisTemplateDao {
      * @param key
      * @param hashKey
      */
-    void hashPushHashMap(String key, Object hashKey, Object value);
+    void hashPush(String key, Object hashKey, Object value);
 
     /**
      * 获取哈希表key中的所有域
      *
      * @param key
      */
-    Set<Object> hashGetAllHashKey(String key);
+    Set<Object> hashGetAllKey(String key);
 
     /**
      * 获取散列中的字段数量
      *
      * @param key
      */
-    Long hashGetHashMapSize(String key);
+    Long hashGetSize(String key);
 
     /**
      * 获取哈希中的所有值
@@ -124,7 +124,7 @@ public interface RedisTemplateDao {
      * @param hashKeys
      * @return 返回值为被成功删除的数量
      */
-    Long hashDeleteHashKey(String key, Object... hashKeys);
+    Long hashDeleteKey(String key, Object... hashKeys);
 
 
     /******************************************************************************************/
@@ -136,14 +136,14 @@ public interface RedisTemplateDao {
      *
      * @param key
      */
-    void listRightPushList(String key, Object value);
+    void listRightPush(String key, Object value);
 
     /**
      * 从右出栈
      *
      * @param key
      */
-    Object listRightPopList(String key);
+    Object listRightPop(String key);
 
     /**
      * 从左向右存压栈
@@ -151,7 +151,7 @@ public interface RedisTemplateDao {
      * @param key
      * @param value ning 创建于  2017年11月8日 下午12:05:25
      */
-    void listLeftPushList(String key, Object value);
+    void listLeftPush(String key, Object value);
 
     /**
      * 从左出栈
@@ -159,7 +159,7 @@ public interface RedisTemplateDao {
      * @param key
      * @return ning 创建于  2017年11月8日 下午1:56:40
      */
-    Object listLeftPopList(String key);
+    Object listLeftPop(String key);
 
     /**
      * 集合list的长度
@@ -177,7 +177,7 @@ public interface RedisTemplateDao {
      * @param end
      * @return ning 创建于  2017年11月8日 下午12:09:56
      */
-    List<Object> listRangeList(String key, Long start, Long end);
+    List<Object> listRange(String key, Long start, Long end);
 
     /**
      * 移除key中值为value的i个,返回删除的个数；如果没有这个元素则返回0
@@ -187,7 +187,7 @@ public interface RedisTemplateDao {
      * @param value
      * @return ning 创建于  2017年11月8日 下午12:12:39
      */
-    Long listRemoveFromList(String key, long i, Object value);
+    Long listRemove(String key, long i, Object value);
 
     /**
      * 根据下标查询list中某个值
@@ -196,7 +196,7 @@ public interface RedisTemplateDao {
      * @param index
      * @return ning 创建于  2017年11月8日 下午12:13:40
      */
-    Object listIndexFromList(String key, long index);
+    Object listIndex(String key, long index);
 
     /**
      * 根据下标设置value
@@ -205,7 +205,7 @@ public interface RedisTemplateDao {
      * @param index
      * @param value ning 创建于  2017年11月8日 下午12:15:28
      */
-    void listSetValueToList(String key, long index, Object value);
+    void listSetValue(String key, long index, Object value);
 
     /**
      * 裁剪(删除), 删除 除了[start,end]以外的所有元素
@@ -227,21 +227,21 @@ public interface RedisTemplateDao {
      * @param values
      * @return 被添加到集合中的新元素的数量，不包括被忽略的元素。
      */
-    Long setAddSetMap(String key, Object... values);
+    Long setAdd(String key, Object... values);
 
     /**
      * 获取set集合的大小
      *
      * @param key
      */
-    Long setGetSizeForSetMap(String key);
+    Long setGetSize(String key);
 
     /**
      * 获取set集合中的元素
      *
      * @param key
      */
-    Set<Object> setGetMemberOfSetMap(String key);
+    Set<Object> setGetMember(String key);
 
     /**
      * 检查元素是不是set集合中的
@@ -249,8 +249,14 @@ public interface RedisTemplateDao {
      * @param key
      * @param o
      */
-    Boolean setCheckIsMemberOfSet(String key, Object o);
+    Boolean setCheckIsMember(String key, Object o);
 
+    /**
+     * 随机获取set集合中的一个元素
+     *
+     * @param key
+     */
+    Object setRandomMember(String key);
 
     /******************************************************************************************/
     /*                                          String                                        */
@@ -264,7 +270,7 @@ public interface RedisTemplateDao {
      * @param value
      * @return 追加 value 之后， key 中字符串的长度
      */
-    Integer stringAppendString(String key, String value);
+    Integer stringAppend(String key, String value);
 
     /**
      * 获取指定键的值
@@ -281,7 +287,7 @@ public interface RedisTemplateDao {
      * @param end
      * @return 截取后的子字符串
      */
-    String stringGetSubStringFromString(String key, long start, long end);
+    String stringGetSubString(String key, long start, long end);
 
     /**
      * 将键的整数值按给定的长整型数值增加
@@ -290,7 +296,7 @@ public interface RedisTemplateDao {
      * @param delta
      * @return 返回增长后的结果值
      */
-    Long stringIncrementLongString(String key, Long delta);
+    Long stringIncrementLong(String key, Long delta);
 
     /**
      * 将键的整数值按给定的浮点型数值增加
@@ -299,14 +305,14 @@ public interface RedisTemplateDao {
      * @param delta
      * @return 返回增长后的结果值
      */
-    Double stringIncrementDoubleString(String key, Double delta);
+    Double stringIncrementDouble(String key, Double delta);
 
     /**
      * 设置指定键的值
      *
      * @param key
      */
-    void stringSetString(String key, String value);
+    void stringSet(String key, String value);
 
     /**
      * 设置键的字符串值并返回其旧值

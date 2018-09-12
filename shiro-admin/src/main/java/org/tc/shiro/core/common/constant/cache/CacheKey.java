@@ -35,4 +35,8 @@ public interface CacheKey {
     String PO_BEFORE = "po_before_";
     String PO_AFTER = "po_agter_";
 
+
+    String COMMAND_CONTENT = "command_content_";
+    String STOCK = "stock_";
+
 }

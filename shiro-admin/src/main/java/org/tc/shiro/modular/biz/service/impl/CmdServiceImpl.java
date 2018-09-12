@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
+import org.tc.shiro.cache.RedisTemplateDao;
 import org.tc.shiro.core.common.constant.IRobotConst;
+import org.tc.shiro.core.common.constant.cache.Cache;
+import org.tc.shiro.core.common.constant.cache.CacheKey;
 import org.tc.shiro.mapper.CmdContentMapper;
 import org.tc.shiro.mapper.CmdMapper;
 import org.tc.shiro.modular.biz.service.CmdService;
@@ -17,7 +20,6 @@ import org.tc.shiro.po.CmdContent;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 /**
  * 查询相关的业务功能
@@ -27,6 +29,8 @@ public class CmdServiceImpl extends BaseServiceImpl<CmdMapper, Cmd> implements C
 
     @Autowired
     private CmdContentMapper contentMapper;
+    @Autowired
+    private RedisTemplateDao redisTemplateDao;
 
     private void genContent(Integer id, List<String> contentList) {
         if (CollectionUtils.isNotEmpty(contentList)) {
@@ -87,10 +91,17 @@ public class CmdServiceImpl extends BaseServiceImpl<CmdMapper, Cmd> implements C
         //其他情况
         Cmd cmd = baseMapper.getByName(name);
         if (cmd != null) {
-            List<String> contents = contentMapper.selectByCmdId(cmd.getId());
-            //随机获取1条
-            int i = new Random().nextInt(contents.size());
-            return contents.get(i);
+            String key = Cache.BIZ + ":" + CacheKey.COMMAND_CONTENT + cmd.getId();
+            String content = (String) redisTemplateDao.setRandomMember(key);
+            if (StringUtils.isBlank(content)) {
+                List<String> contents = contentMapper.selectByCmdId(cmd.getId());
+                for (String temp : contents) {
+                    redisTemplateDao.setAdd(key, temp);
+                }
+                redisTemplateDao.expire(key, 900);
+                content = (String) redisTemplateDao.setRandomMember(key);
+            }
+            return content;
         }
         //其他情况
         return IRobotConst.NO_MATCHING_CONTENT;

@@ -13,6 +13,8 @@ public interface Cache {
      */
     String CONSTANT = "CONSTANT";
 
+    String BIZ = "BIZ";
+
     //CRUD数据
     String CRUD = "CRUD";
 }
