@@ -116,14 +116,7 @@
                                         <div class="col-sm-9">
                                             <input class="form-control" id="account" name="account"
                                                    value="${user.account}" type="text" disabled="disabled"
-                                                   data-bv-field="account"><i class="form-control-feedback"
-                                                                              data-bv-icon-for="account"
-                                                                              style="display: none;"></i>
-
-                                            <small class="help-block" data-bv-validator="notEmpty"
-                                                   data-bv-for="account" data-bv-result="NOT_VALIDATED"
-                                                   style="display: none;">账户不能为空
-                                            </small>
+                                                   data-bv-field="account">
                                         </div>
                                     </div>
                                     <div class="hr-line-dashed"></div>
@@ -151,13 +144,7 @@
                                         <label class="col-sm-3 control-label">邮箱</label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="email" name="email" value="${user.email}"
-                                                   type="email" data-bv-field="email"><i
-                                                class="form-control-feedback" data-bv-icon-for="email"
-                                                style="display: none;"></i>
-                                            <small class="help-block" data-bv-validator="emailAddress"
-                                                   data-bv-for="email" data-bv-result="NOT_VALIDATED"
-                                                   style="display: none;">请输入有效的邮件地址
-                                            </small>
+                                                   type="email" data-bv-field="email">
                                         </div>
                                     </div>
                                 </div>
@@ -167,13 +154,7 @@
                                             <label class="col-sm-3 control-label">姓名</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" id="name" name="name" value="${user.name}"
-                                                       type="text" data-bv-field="name"><i
-                                                    class="form-control-feedback" data-bv-icon-for="name"
-                                                    style="display: none;"></i>
-                                                <small class="help-block" data-bv-validator="notEmpty"
-                                                       data-bv-for="name" data-bv-result="NOT_VALIDATED"
-                                                       style="display: none;">姓名不能为空
-                                                </small>
+                                                       type="text" data-bv-field="name">
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>
@@ -192,9 +173,7 @@
                                                        value="${deptName}" type="text" readonly="readonly"
                                                        onclick="UserInfo.showDeptSelectTree(); return false;"
                                                        style="background-color: #ffffff !important;"
-                                                       data-bv-field="citySel"><i class="form-control-feedback"
-                                                                                  data-bv-icon-for="citySel"
-                                                                                  style="display: none;"></i>
+                                                       data-bv-field="citySel">
                                                 <input class="form-control" type="hidden" id="deptid"
                                                        value="${user.deptid}">
                                                 <div id="menuContent"
@@ -203,10 +182,6 @@
                                                         style="width:250px !important;">
                                                     </ul>
                                                 </div>
-                                                <small class="help-block" data-bv-validator="notEmpty"
-                                                       data-bv-for="citySel" data-bv-result="NOT_VALIDATED"
-                                                       style="display: none;">部门不能为空
-                                                </small>
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>

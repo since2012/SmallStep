@@ -55,12 +55,7 @@
                             <label class="col-xs-3 control-label">账户</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="account" name="account" type="text"
-                                       data-bv-field="account"><i class="form-control-feedback"
-                                                                  data-bv-icon-for="account" style="display: none;"></i>
-
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="account"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">账户不能为空
-                                </small>
+                                       data-bv-field="account">
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,16 +71,7 @@
                             <label class="col-xs-3 control-label">密码</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="password" name="password" type="password"
-                                       data-bv-field="password"><i
-                                    class="form-control-feedback glyphicon glyphicon-remove" data-bv-icon-for="password"
-                                    style=""></i>
-
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="password"
-                                       data-bv-result="VALID" style="display: none;">密码不能为空
-                                </small>
-                                <small class="help-block" data-bv-validator="identical" data-bv-for="password"
-                                       data-bv-result="INVALID" style="">两次密码不一致
-                                </small>
+                                       data-bv-field="password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -99,12 +85,7 @@
                             <label class="col-xs-3 control-label">邮箱</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="email" name="email" type="email"
-                                       data-bv-field="email"><i class="form-control-feedback glyphicon glyphicon-remove"
-                                                                data-bv-icon-for="email" style=""></i>
-
-                                <small class="help-block" data-bv-validator="emailAddress" data-bv-for="email"
-                                       data-bv-result="INVALID" style="">请输入有效的邮件地址
-                                </small>
+                                       data-bv-field="email">
                             </div>
                         </div>
                     </div>
@@ -114,12 +95,7 @@
                                 <label class="col-xs-3 control-label">姓名</label>
                                 <div class="col-xs-9">
                                     <input class="form-control" id="name" name="name" type="text"
-                                           data-bv-field="name"><i class="form-control-feedback" data-bv-icon-for="name"
-                                                                   style="display: none;"></i>
-
-                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="name"
-                                           data-bv-result="NOT_VALIDATED" style="display: none;">姓名不能为空
-                                    </small>
+                                           data-bv-field="name">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -132,16 +108,7 @@
                                 <label class="col-xs-3 control-label">确认密码</label>
                                 <div class="col-xs-9">
                                     <input class="form-control" id="rePassword" name="rePassword" type="password"
-                                           data-bv-field="rePassword"><i class="form-control-feedback"
-                                                                         data-bv-icon-for="rePassword"
-                                                                         style="display: none;"></i>
-
-                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="rePassword"
-                                           data-bv-result="NOT_VALIDATED" style="display: none;">密码不能为空
-                                    </small>
-                                    <small class="help-block" data-bv-validator="identical" data-bv-for="rePassword"
-                                           data-bv-result="NOT_VALIDATED" style="display: none;">两次密码不一致
-                                    </small>
+                                           data-bv-field="rePassword">
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
@@ -150,8 +117,6 @@
                                     <input class="form-control" id="citySel" name="citySel" type="text"
                                            readonly="readonly" onclick="UserInfo.showDeptSelectTree(); return false;"
                                            style="background-color: #ffffff !important;" data-bv-field="citySel">
-                                    <i class="form-control-feedback" data-bv-icon-for="citySel"
-                                       style="display: none;"></i>
                                     <input class="form-control" type="hidden" id="deptid" value="">
                                     <div id="menuContent"
                                          style="display: none; position: absolute; z-index: 200;">
@@ -159,9 +124,6 @@
                                             style="width:250px !important;">
                                         </ul>
                                     </div>
-                                    <small class="help-block" data-bv-validator="notEmpty" data-bv-for="citySel"
-                                           data-bv-result="NOT_VALIDATED" style="display: none;">部门不能为空
-                                    </small>
                                 </div>
                             </div>
                             <div class="form-group">

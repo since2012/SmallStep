@@ -45,14 +45,8 @@
                                 <input class="form-control" id="simplename" name="simplename" value="${dept.simplename}"
                                        type="text"
                                        data-bv-field="simplename">
-                                <i class="form-control-feedback" data-bv-icon-for="simplename"
-                                   style="display: none;"></i>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="simplename"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">部门名称不能为空
-                                </small>
                             </div>
                         </div>
-                        <div class="hr-line-dashed"></div>
 
                         <div class="form-group has-feedback">
                             <label class="col-xs-3 control-label">部门全称</label>
@@ -60,28 +54,21 @@
                                 <input class="form-control" id="fullname" name="fullname" value="${dept.fullname}"
                                        type="text"
                                        data-bv-field="fullname">
-                                <i class="form-control-feedback" data-bv-icon-for="fullname"
-                                   style="display: none;"></i>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="fullname"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">部门全称不能为空
-                                </small>
                             </div>
                         </div>
-                        <div class="hr-line-dashed"></div>
+
                         <div class="form-group">
                             <label class="col-xs-3 control-label">备注</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="tips" name="tips" value="${dept.tips}" type="text">
                             </div>
                         </div>
-                        <div class="hr-line-dashed"></div>
                     </div>
                     <div class="col-xs-6">
                         <div class="form-group">
                             <label class="col-xs-3 control-label">排序</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="num" name="num" value="${dept.num}" type="text">
-
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -90,20 +77,17 @@
                             <div class="col-xs-9">
                                 <input class="form-control" id="pName" name="pName" value="${pName}" type="text"
                                        readonly="readonly" onclick="DeptInfo.showDeptSelectTree(); return false;"
-                                       style="background-color: #ffffff !important;" data-bv-field="pName"><i
-                                    class="form-control-feedback" data-bv-icon-for="pName" style="display: none;"></i>
+                                       style="background-color: #ffffff !important;" data-bv-field="pName">
                                 <input class="form-control" type="hidden" id="pid" value="${dept.pid}">
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="pName"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">上级名称不能为空
-                                </small>
+                                <!-- 父级部门的选择框 -->
+                                <div id="parentDeptMenu" class="menuContent"
+                                     style="display: none; position: absolute; z-index: 200;">
+                                    <ul id="parentDeptMenuTree" class="ztree tree-box" style="width: 245px !important;">
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!-- 父级部门的选择框 -->
-                <div id="parentDeptMenu" class="menuContent" style="display: none; position: absolute; z-index: 200;">
-                    <ul id="parentDeptMenuTree" class="ztree tree-box" style="width: 245px !important;">
-                    </ul>
                 </div>
                 <div class="row btn-group-m-t">
                     <div class="text-center">

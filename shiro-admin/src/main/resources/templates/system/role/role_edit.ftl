@@ -44,11 +44,7 @@
                             <label class="col-xs-3 control-label">角色名称</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="name" name="name" value="${role.name}" type="text"
-                                       data-bv-field="name"><i class="form-control-feedback" data-bv-icon-for="name"
-                                                               style="display: none;"></i>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="name"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">用户名不能为空
-                                </small>
+                                       data-bv-field="name">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -57,8 +53,7 @@
                             <div class="col-xs-9">
                                 <input class="form-control" id="pName" name="pName" value="${pName}" type="text"
                                        readonly="readonly" onclick="RoleInfo.showPNameSelectTree(); return false;"
-                                       style="background-color: #ffffff !important;" data-bv-field="pName"><i
-                                    class="form-control-feedback" data-bv-icon-for="pName" style="display: none;"></i>
+                                       style="background-color: #ffffff !important;" data-bv-field="pName">
                                 <input class="form-control" type="hidden" id="pid" value="${role.pid}">
                                 <!-- 这是父级菜单下拉框 -->
                                 <div id="pNameContent" class="menuContent"
@@ -66,9 +61,6 @@
                                     <ul id="pNameTree" class="ztree tree-box" style="width: 250px !important;">
                                     </ul>
                                 </div>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="pName"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">父级名称不能为空
-                                </small>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -94,11 +86,7 @@
                             <label class="col-xs-3 control-label">别名</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="tips" name="tips" value="${role.tips}" type="text"
-                                       data-bv-field="tips"><i class="form-control-feedback" data-bv-icon-for="tips"
-                                                               style="display: none;"></i>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="tips"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">别名不能为空
-                                </small>
+                                       data-bv-field="tips">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>

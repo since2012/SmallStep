@@ -45,11 +45,7 @@
                             <label class="col-xs-3 control-label">名称</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="name" name="name" value="${menu.name}" type="text"
-                                       data-bv-field="name"><i class="form-control-feedback" data-bv-icon-for="name"
-                                                               style="display: none;"></i>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="name"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">菜单名称不能为空
-                                </small>
+                                       data-bv-field="name">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -57,11 +53,7 @@
                             <label class="col-xs-3 control-label">菜单编号</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="code" name="code" value="${menu.code}" type="text"
-                                       data-bv-field="code"><i class="form-control-feedback" data-bv-icon-for="code"
-                                                               style="display: none;"></i>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="code"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">菜单编号不能为空
-                                </small>
+                                       data-bv-field="code">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -71,18 +63,13 @@
                                 <input class="form-control" id="pcodeName" name="pcodeName" value="${pcodeName}"
                                        type="text"
                                        readonly="readonly" onclick="MenuInfo.showMenuSelectTree(); return false;"
-                                       style="background-color: #ffffff !important;" data-bv-field="pcodeName"><i
-                                    class="form-control-feedback" data-bv-icon-for="pcodeName"
-                                    style="display: none;"></i>
+                                       style="background-color: #ffffff !important;" data-bv-field="pcodeName">
                                 <input class="form-control" type="hidden" id="pcode" value="${menu.pcode}">
                                 <div id="pcodeTreeDiv" style="display: none; position: absolute; z-index: 200;">
                                     <ul id="pcodeTree" class="ztree tree-box" style="width:244px !important;">
 
                                     </ul>
                                 </div>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="pcodeName"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">父菜单不能为空
-                                </small>
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -101,11 +88,7 @@
                             <label class="col-xs-3 control-label">请求地址</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="url" name="url" value="${menu.url}" type="text"
-                                       data-bv-field="url"><i class="form-control-feedback" data-bv-icon-for="url"
-                                                              style="display: none;"></i>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="url"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">请求地址不能为空
-                                </small>
+                                       data-bv-field="url">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -113,11 +96,7 @@
                             <label class="col-xs-3 control-label">排序</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="num" name="num" value="${menu.num}" type="text"
-                                       data-bv-field="num"><i class="form-control-feedback" data-bv-icon-for="num"
-                                                              style="display: none;"></i>
-                                <small class="help-block" data-bv-validator="notEmpty" data-bv-for="num"
-                                       data-bv-result="NOT_VALIDATED" style="display: none;">序号不能为空
-                                </small>
+                                       data-bv-field="num">
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
