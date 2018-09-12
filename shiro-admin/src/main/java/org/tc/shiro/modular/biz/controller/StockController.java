@@ -8,9 +8,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.dto.GlobalResult;
+import org.tc.mybatis.exception.GunsException;
+import org.tc.mybatis.tips.Tip;
+import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.core.dto.ExecutionResult;
 import org.tc.shiro.core.dto.Exposer;
 import org.tc.shiro.core.dto.SeckillTimeData;
@@ -19,6 +23,7 @@ import org.tc.shiro.core.shiroext.vo.ShiroUser;
 import org.tc.shiro.modular.biz.service.IStockService;
 import org.tc.shiro.po.Stock;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @Slf4j
@@ -32,13 +37,23 @@ public class StockController extends BaseController {
     private IStockService stockService;
 
     /**
-     * 秒杀列表
+     * 库存管理
      *
      * @return
      */
     @GetMapping("")
     public String index() {
         return PREFIX + "stock";
+    }
+
+    /**
+     * 秒杀列表
+     *
+     * @return
+     */
+    @GetMapping("show")
+    public String show() {
+        return PREFIX + "show";
     }
 
     /**
@@ -62,6 +77,54 @@ public class StockController extends BaseController {
         return super.warpForBT(page.getList(), page.getTotal());
     }
 
+
+    /**
+     * 新增页
+     */
+    @GetMapping("/stock_add")
+    public String addView() {
+        return PREFIX + "stock_add";
+    }
+
+    /**
+     * 添加
+     */
+    @PostMapping("/add")
+    @ResponseBody
+    public Tip add(@Valid Stock stock, BindingResult result) {
+        if (result.hasErrors()) {
+            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+        }
+        stockService.add(stock);
+        return SUCCESS_TIP;
+    }
+
+    /**
+     * 跳转到编辑页面
+     */
+    @GetMapping("/stock_edit/{stockId}")
+    public String stockEdit(@PathVariable Integer stockId, Model model) {
+        if (ToolUtil.isEmpty(stockId)) {
+            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+        }
+        Stock stock = this.stockService.selectByPK(stockId);
+        model.addAttribute("stock", stock);
+        return PREFIX + "stock_edit";
+    }
+
+    /**
+     * 修改
+     */
+    @PostMapping("/edit")
+    @ResponseBody
+    public Tip edit(@Valid Stock stock, BindingResult result) {
+        if (result.hasErrors() || stock.getId() == null) {
+            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+        }
+        stockService.edit(stock);
+        return SUCCESS_TIP;
+    }
+
     /**
      * 秒杀详情
      *
@@ -70,7 +133,7 @@ public class StockController extends BaseController {
      * @return
      */
     @GetMapping("/{stockId}/seckill")
-    public String detial(@PathVariable("stockId") Long stockId, Model model) {
+    public String seckill(@PathVariable("stockId") Long stockId, Model model) {
         if (stockId == null) {
             //重定向：丢失数据
             return REDIRECT + "/stock/list";

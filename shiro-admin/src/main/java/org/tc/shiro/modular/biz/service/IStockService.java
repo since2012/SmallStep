@@ -8,6 +8,9 @@ import org.tc.shiro.po.Stock;
 
 public interface IStockService extends IBaseService<Stock> {
 
+    public void add(Stock stock);
+    public void edit(Stock stock);
+
     /**
      * 分页查询
      *

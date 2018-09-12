@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.tc.shiro.mapper.StockMapper">
-    <resultMap id="BaseResultMap" type="org.tc.shiro.po.Stock">
+    <resultMap id="BaseResultMap" type="org.tc.gen.po.Stock">
         <!--
           WARNING - @mbg.generated
         -->
-        <id column="id" jdbcType="BIGINT" property="id"/>
-        <result column="name" jdbcType="VARCHAR" property="name"/>
-        <result column="total" jdbcType="INTEGER" property="total"/>
-        <result column="begintime" jdbcType="TIMESTAMP" property="begintime"/>
-        <result column="endtime" jdbcType="TIMESTAMP" property="endtime"/>
-        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+        <id column="id" jdbcType="BIGINT" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="primeprice" jdbcType="DECIMAL" property="primeprice" />
+        <result column="saleprice" jdbcType="DECIMAL" property="saleprice" />
+        <result column="total" jdbcType="INTEGER" property="total" />
+        <result column="begintime" jdbcType="TIMESTAMP" property="begintime" />
+        <result column="endtime" jdbcType="TIMESTAMP" property="endtime" />
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime" />
     </resultMap>
 
     <select id="list" parameterType="org.tc.shiro.po.Stock" resultType="org.tc.shiro.po.Stock">

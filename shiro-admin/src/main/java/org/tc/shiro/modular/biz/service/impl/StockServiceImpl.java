@@ -47,6 +47,17 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
     private RedisTemplateDao redisTemplateDao;
 
     @Override
+    public void add(Stock stock) {
+        stock.setCreatetime(new Date());
+        this.baseMapper.insertUseGeneratedKeys(stock);
+    }
+
+    @Override
+    public void edit(Stock stock) {
+        this.baseMapper.updateByPrimaryKey(stock);
+    }
+
+    @Override
     public PageInfo<Stock> page(Stock stock, Integer pageNo, Integer pageSize, String sort) {
 
         if (StringUtils.isBlank(stock.getName())) {

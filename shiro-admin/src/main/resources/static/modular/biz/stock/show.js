@@ -1,7 +1,7 @@
 /**
  * 日志管理初始化
  */
-var Stock = {
+var Show = {
     id: "stockTable",	//表格id
     seItem: null,		//选中的条目
     table: null,
@@ -14,7 +14,7 @@ var Stock = {
  */
 
 
-Stock.initColumn = function () {
+Show.initColumn = function () {
     return [
         {field: 'selectItem', radio: true, checkbox: false},
         {
@@ -27,23 +27,35 @@ Stock.initColumn = function () {
         {title: '名称', field: 'name', align: 'center', valign: 'middle', sortable: true},
         {title: '促销价', field: 'saleprice', align: 'center', valign: 'middle', sortable: true},
         {title: '原价', field: 'primeprice', align: 'center', valign: 'middle', sortable: true},
-        {title: '库存量', field: 'total', align: 'center', valign: 'middle', sortable: true},
+        {title: '库存', field: 'total', align: 'center', valign: 'middle', sortable: true},
         {title: '开始时间', field: 'begintime', align: 'center', valign: 'middle', sortable: true},
         {title: '结束时间', field: 'endtime', align: 'center', valign: 'middle', sortable: true},
-        {title: '创建时间', field: 'createtime', align: 'center', valign: 'middle', sortable: true}
+        {title: '创建时间', field: 'createtime', align: 'center', valign: 'middle', sortable: true},
+        {
+            title: '操作',
+            field: 'id',
+            align: 'center',
+            valign: 'middle',
+            sortable: false,
+            formatter: function (value, row, index) {
+                var result = '<a class="btn btn-info" href="/stock/' + value +
+                    '/seckill" target="_blank">立刻秒杀</a>';
+                return result;
+            }
+        }
     ];
 };
 
 /**
  * 检查是否选中
  */
-Stock.check = function () {
+Show.check = function () {
     var selected = $('#' + this.id).bootstrapTable('getSelections');
     if (selected.length == 0) {
         Feng.info("请先选中表格中的某一记录！");
         return false;
     } else {
-        Stock.seItem = selected[0];
+        Show.seItem = selected[0];
         return true;
     }
 };
@@ -55,7 +67,7 @@ Stock.check = function () {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-Stock.get = function (key) {
+Show.get = function (key) {
     return $("#" + key).val();
 };
 
@@ -65,7 +77,7 @@ Stock.get = function (key) {
  * @param key 数据的名称
  * @param val 数据的具体值
  */
-Stock.set = function (key, val) {
+Show.set = function (key, val) {
     this.queryData[key] = (typeof val == "undefined") ? $("#" + key).val() : val;
     return this;
 };
@@ -73,14 +85,14 @@ Stock.set = function (key, val) {
 /**
  * 清除数据
  */
-Stock.clearData = function () {
+Show.clearData = function () {
     this.queryData = {};
 }
 
 /**
  * 收集数据
  */
-Stock.collectData = function () {
+Show.collectData = function () {
     this.clearData();
     this.set('name');
 };
@@ -88,76 +100,14 @@ Stock.collectData = function () {
 /**
  * 查询列表
  */
-Stock.search = function () {
+Show.search = function () {
     this.collectData();
-    Stock.table.refresh({query: this.queryData});
+    Show.table.refresh({query: this.queryData});
 };
 
 //高级重置
-Stock.reset = function () {
+Show.reset = function () {
     $("form .form-group input").val("");
-};
-
-/**
- * 调用后台批量删除方法
- */
-Stock.deleteBatch = function () {
-    if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/stock/deleteBatch", function (data) {
-            Feng.success("删除成功!");
-            Stock.table.refresh();
-        }, function (data) {
-            Feng.error("删除失败!" + data.responseJSON.message + "!");
-        });
-        ajax.set("id", this.seItem.id);
-        ajax.start();
-    }
-};
-/**
- * 单条记录删除
- */
-Stock.delete = function () {
-    if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/stock/delete", function (data) {
-            Feng.success("删除成功!");
-            Stock.table.refresh();
-        }, function (data) {
-            Feng.error("删除失败!" + data.responseJSON.message + "!");
-        });
-        ajax.set("id", this.seItem.id);
-        ajax.start();
-    }
-};
-
-/**
- * 新增功能
- */
-Stock.openAddPage = function () {
-    var index = layer.open({
-        type: 2,
-        title: '新增指令',
-        area: ['800px', '320px'], //宽高
-        fix: false, //不固定
-        maxmin: true,
-        content: '/stock/stock_add'
-    });
-    this.layerIndex = index;
-};
-/**
- * 编辑
- */
-Stock.openEditPage = function () {
-    if (this.check()) {
-        var index = layer.open({
-            type: 2,
-            title: '编辑指令',
-            area: ['800px', '320px'], //宽高
-            fix: false, //不固定
-            maxmin: true,
-            content: '/stock/stock_edit/' + this.seItem.id
-        });
-        this.layerIndex = index;
-    }
 };
 
 /**
@@ -201,12 +151,12 @@ function init() {
 
 $(function () {
     init();
-    var defaultColunms = Stock.initColumn();
-    var table = new BSTable(Stock.id, "/stock/list", defaultColunms);
+    var defaultColunms = Show.initColumn();
+    var table = new BSTable(Show.id, "/stock/list", defaultColunms);
     table.setPaginationType("server");
-    Stock.table = table.init();
+    Show.table = table.init();
 
     $("#biz").attr("class", "active");
-    $("#stock").attr("class", "active");
+    $("#stock_show").attr("class", "active");
 });
 

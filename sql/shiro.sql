@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 11/09/2018 15:33:05
+ Date: 12/09/2018 20:04:37
 */
 
 SET NAMES utf8mb4;
@@ -91,7 +91,9 @@ CREATE TABLE `seckill`  (
 DROP TABLE IF EXISTS `stock`;
 CREATE TABLE `stock`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '库存ID',
-  `name` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
+  `name` varchar(60) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '商品名称',
+  `primeprice` decimal(20, 2) DEFAULT NULL COMMENT '原价',
+  `saleprice` decimal(20, 2) DEFAULT NULL COMMENT '秒杀价',
   `total` int(11) NOT NULL COMMENT '库存数量',
   `begintime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '开始时间',
   `endtime` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
@@ -105,10 +107,10 @@ CREATE TABLE `stock`  (
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
-INSERT INTO `stock` VALUES (1000, '1000元秒杀iphone6', 99, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
-INSERT INTO `stock` VALUES (1001, '800元秒杀ipad', 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
-INSERT INTO `stock` VALUES (1002, '6600元秒杀mac book pro', 100, '2020-11-26 00:00:00', '2020-12-04 00:00:00', '2020-11-26 00:00:00');
-INSERT INTO `stock` VALUES (1003, '7000元秒杀iMac', 100, '2018-07-06 00:00:00', '2018-08-31 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1000, 'iphone6', 10000.00, 1000.00, 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1001, 'ipad', 10000.00, 800.00, 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1002, 'mac book pro', 10000.00, 6600.00, 100, '2020-11-26 00:00:00', '2020-12-04 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1003, 'iMac', 10000.00, 7000.00, 100, '2018-07-06 00:00:00', '2018-08-31 00:00:00', '2020-11-26 00:00:00');
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -179,7 +181,17 @@ CREATE TABLE `sys_login_log`  (
   `message` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '具体消息',
   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '登录ip',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 145 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 160 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录记录' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_login_log
+-- ----------------------------
+INSERT INTO `sys_login_log` VALUES (154, '退出日志', 1, '2018-09-12 10:54:59', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (155, '登录日志', 1, '2018-09-12 19:50:32', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (156, '退出日志', 1, '2018-09-12 19:52:19', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (157, '登录日志', 1, '2018-09-12 19:53:12', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (158, '退出日志', 1, '2018-09-12 19:55:07', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (159, '登录日志', 1, '2018-09-12 19:55:39', '成功', '登录成功', '0:0:0:0:0:0:0:1');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -200,7 +212,7 @@ CREATE TABLE `sys_menu`  (
   `status` int(65) DEFAULT NULL COMMENT '菜单状态 :  1:启用   0:不启用',
   `tips` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 199 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -263,6 +275,7 @@ INSERT INTO `sys_menu` VALUES (195, 'biz', '业务管理', '0', '[0],', 'fa-bank
 INSERT INTO `sys_menu` VALUES (196, 'cmd', '指令管理', 'biz', '[0],[biz],', '', '/cmd', 2, 1, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (197, 'robot', '自动回复', 'biz', '[0],[biz],', '', '/robot', 2, 2, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (198, 'stock', '库存管理', 'biz', '[0],[biz],', '', '/stock', 2, 14, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (199, 'stock_show', '秒杀列表', 'biz', '[0],[biz],', '', '/stock/show', 2, 13, 1, NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for sys_relation

@@ -48,7 +48,6 @@
         <input type="hidden" id="sexValue" value="${user.sex}">
         <div class="row">
             <div class="col-xs-6 b-r">
-                <div class="hr-line-dashed"></div>
                 <div class="form-group has-feedback">
                     <label class="col-xs-3 control-label">账户</label>
                     <div class="col-xs-9">
@@ -57,7 +56,6 @@
                                data-bv-field="account">
                     </div>
                 </div>
-                <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <label class="col-xs-3 control-label">角色</label>
                     <div class="col-xs-9">
@@ -70,7 +68,6 @@
                                type="text" disabled="disabled">
                     </div>
                 </div>
-                <div class="hr-line-dashed"></div>
                 <div class="form-group">
                     <label class="col-xs-3 control-label">性别</label>
                     <div class="col-xs-9">
@@ -81,7 +78,6 @@
                     </div>
                 </div>
 
-                <div class="hr-line-dashed"></div>
                 <div class="form-group has-feedback">
                     <label class="col-xs-3 control-label">邮箱</label>
                     <div class="col-xs-9">
@@ -99,7 +95,6 @@
                                    type="text" data-bv-field="name">
                         </div>
                     </div>
-                    <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <label class="col-xs-3 control-label">出生日期</label>
                         <div class="col-xs-9">
@@ -107,7 +102,6 @@
                                    value="${user.birthday?date}" type="text" lay-key="1">
                         </div>
                     </div>
-                    <div class="hr-line-dashed"></div>
                     <div class="form-group has-feedback">
                         <label class="col-xs-3 control-label">部门</label>
                         <div class="col-xs-9">
@@ -126,7 +120,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="hr-line-dashed"></div>
                     <div class="form-group">
                         <label class="col-xs-3 control-label">电话</label>
                         <div class="col-xs-9">

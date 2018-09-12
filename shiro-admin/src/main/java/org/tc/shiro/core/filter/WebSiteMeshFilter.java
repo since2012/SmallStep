@@ -18,6 +18,7 @@ public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
                 .addDecoratorPath("/robot", "/decorator/main")
                 .addDecoratorPath("/stock", "/decorator/main")
                 .addDecoratorPath("/stock/*/seckill", "/decorator/main")
+                .addDecoratorPath("/stock/show", "/decorator/main")
                 .addDecoratorPath("/druid/*", "/decorator/main");
     }
 }
