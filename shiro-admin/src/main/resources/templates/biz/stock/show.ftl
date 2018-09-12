@@ -74,11 +74,6 @@
                     <div class="hidden-xs" id="stockTableToolbar" role="group">
                     </div>
                     <table id="stockTable" data-mobile-responsive="true" data-click-to-select="true">
-                        <thead>
-                        <tr>
-                            <th data-field="selectItem" data-checkbox="true"></th>
-                        </tr>
-                        </thead>
                     </table>
                 </div>
                 <!-- /.box-body -->

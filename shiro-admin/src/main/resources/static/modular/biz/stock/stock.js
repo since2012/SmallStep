@@ -25,12 +25,17 @@ Stock.initColumn = function () {
         },
         {title: 'ID', field: 'id', visible: false, align: 'center', valign: 'middle', sortable: false},
         {title: '名称', field: 'name', align: 'center', valign: 'middle', sortable: true},
-        {title: '促销价', field: 'saleprice', align: 'center', valign: 'middle', sortable: true},
+        {
+            title: '促销价', field: 'saleprice', align: 'center', valign: 'middle', sortable: true,
+            formatter: function (value, row, index) {
+                return '<span class="label label-warning">' + value + '</span>';
+            }
+        },
         {title: '原价', field: 'primeprice', align: 'center', valign: 'middle', sortable: true},
         {title: '库存量', field: 'total', align: 'center', valign: 'middle', sortable: true},
         {title: '开始时间', field: 'begintime', align: 'center', valign: 'middle', sortable: true},
         {title: '结束时间', field: 'endtime', align: 'center', valign: 'middle', sortable: true},
-        {title: '创建时间', field: 'createtime', align: 'center', valign: 'middle', sortable: true}
+        {title: '创建时间', field: 'createtime',visible: false, align: 'center', valign: 'middle', sortable: true}
     ];
 };
 

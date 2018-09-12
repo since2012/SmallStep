@@ -15,6 +15,9 @@ var StockInfo = {
             validators: {
                 notEmpty: {
                     message: '数量不能为空'
+                },
+                numeric: {
+                    message: '库存量只能输入数字'
                 }
             }
         },

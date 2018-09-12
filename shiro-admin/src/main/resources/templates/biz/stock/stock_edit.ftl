@@ -51,13 +51,20 @@
                                type="text" lay-key="1" value="${stock.begintime?datetime}">
                     </div>
                 </div>
+                <div class="form-group">
+                    <label class="col-xs-3 control-label">原价</label>
+                    <div class="col-xs-9">
+                        <input class="form-control" id="primeprice" name="primeprice" type="text"
+                               data-bv-field="account">
+                    </div>
+                </div>
             </div>
             <div class="col-xs-6">
                 <div id="driverInfoContent">
                     <div class="form-group has-feedback">
-                        <label class="col-xs-3 control-label">数量</label>
+                        <label class="col-xs-3 control-label">库存量</label>
                         <div class="col-xs-9">
-                            <input class="form-control" id="total" name="total" type="number"
+                            <input class="form-control" id="total" name="total" type="text"
                                    data-bv-field="name" value="${stock.total}">
                         </div>
                     </div>
@@ -66,6 +73,12 @@
                         <div class="col-xs-9">
                             <input class="form-control" id="endtime" name="endtime" type="text"
                                    lay-key="1" value="${stock.endtime?datetime}">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-3 control-label">促销价</label>
+                        <div class="col-xs-9">
+                            <input class="form-control" id="saleprice" name="saleprice" type="text">
                         </div>
                     </div>
                 </div>

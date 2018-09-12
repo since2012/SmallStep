@@ -62,9 +62,9 @@
                     <div class="col-xs-6">
                         <div id="driverInfoContent">
                             <div class="form-group has-feedback">
-                                <label class="col-xs-3 control-label">数量</label>
+                                <label class="col-xs-3 control-label">库存量</label>
                                 <div class="col-xs-9">
-                                    <input class="form-control" id="total" name="total" type="number">
+                                    <input class="form-control" id="total" name="total" type="text">
                                 </div>
                             </div>
                             <div class="form-group">
