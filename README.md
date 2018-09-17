@@ -22,6 +22,7 @@ Redis server v=3.2.100
 
 ## 主要工作
 
+> * 将项目前端模板替换AdminLTE,整合原有前端插件及工具
 > * 提取出通用的工具包tool-jar-springboot，见于我的其他项目
 > * 将持久层的框架替换为mybatis+tk.mapper+pagehelper，自定义了父接口MyMapper,service层的IBaseService和BaseServiceImpl
 > * 将一下个人项目整合其中：仿微信公众号的自动回复；秒杀业务模拟；商户发放优惠券（二维码业务场景）
