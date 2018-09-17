@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 12/09/2018 20:04:37
+ Date: 17/09/2018 13:33:17
 */
 
 SET NAMES utf8mb4;
@@ -51,14 +51,6 @@ CREATE TABLE `cmd_content`  (
 -- ----------------------------
 -- Records of cmd_content
 -- ----------------------------
-INSERT INTO `cmd_content` VALUES (26, NULL, 'AACC');
-INSERT INTO `cmd_content` VALUES (27, NULL, 'BB');
-INSERT INTO `cmd_content` VALUES (28, NULL, 'AA');
-INSERT INTO `cmd_content` VALUES (29, NULL, 'BB');
-INSERT INTO `cmd_content` VALUES (30, NULL, 'AA');
-INSERT INTO `cmd_content` VALUES (31, NULL, 'BB');
-INSERT INTO `cmd_content` VALUES (32, NULL, 'AA');
-INSERT INTO `cmd_content` VALUES (33, NULL, 'CC');
 INSERT INTO `cmd_content` VALUES (39, 16, '查看1');
 INSERT INTO `cmd_content` VALUES (40, 16, '查看2');
 INSERT INTO `cmd_content` VALUES (41, 16, '查看3');
@@ -73,6 +65,37 @@ INSERT INTO `cmd_content` VALUES (51, 24, '套餐2');
 INSERT INTO `cmd_content` VALUES (52, 24, '套餐3');
 
 -- ----------------------------
+-- Table structure for coupon
+-- ----------------------------
+DROP TABLE IF EXISTS `coupon`;
+CREATE TABLE `coupon`  (
+  `id` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '优惠券ID',
+  `sellerid` int(11) NOT NULL COMMENT '卖家ID',
+  `beginday` date DEFAULT NULL COMMENT '起始日期',
+  `endday` date DEFAULT NULL COMMENT '结束日期',
+  `receptday` datetime(0) DEFAULT NULL COMMENT '领取时间',
+  `usertel` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '领取人的电话号码',
+  `code` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '使用验证码',
+  `valid` int(11) DEFAULT NULL COMMENT '1:已使用，0：未使用',
+  `createtime` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '优惠券信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of coupon
+-- ----------------------------
+INSERT INTO `coupon` VALUES ('1d79ca95-7aed-4f45-9534-da47ef873fc5', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('23ae9815-3377-4677-9ec4-a3ef0d5abafa', 13, '2018-09-17', '2018-10-06', '2018-09-17 13:23:28', '123', '7Z4Z0', 0, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('3163f6ee-fba8-4405-9e4c-b86d8076b9ab', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('4e9cb677-2746-48e9-a3e6-bb79ae6c0d38', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('7179aacf-d99c-4388-9436-25697a25b9ee', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('793b6ba3-ef00-47cd-8f1a-059f6825d929', 13, '2018-09-17', '2018-10-06', '2018-09-17 13:12:00', '123', 'QHT7Q', 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('88ca52e2-eb02-4f1a-8c81-280b33e40cea', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('dfac0f9c-f9fe-41a6-905a-40829bc14c50', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('e3ff5186-7c1a-46b5-ab47-952e25001b42', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('fd2647e7-cd70-465b-b319-10c92056d2ae', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+
+-- ----------------------------
 -- Table structure for seckill
 -- ----------------------------
 DROP TABLE IF EXISTS `seckill`;
@@ -84,6 +107,34 @@ CREATE TABLE `seckill`  (
   PRIMARY KEY (`stockid`, `userid`) USING BTREE,
   INDEX `idx_create_time`(`createtime`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '秒杀明细表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of seckill
+-- ----------------------------
+INSERT INTO `seckill` VALUES (1005, 1, -1, '2018-09-13 16:39:36');
+
+-- ----------------------------
+-- Table structure for seller
+-- ----------------------------
+DROP TABLE IF EXISTS `seller`;
+CREATE TABLE `seller`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '商家ID',
+  `name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家名称',
+  `addr` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '商家地址',
+  `status` int(11) DEFAULT NULL COMMENT '状态：1 启用,0 禁用',
+  `createtime` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 16 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '商户信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of seller
+-- ----------------------------
+INSERT INTO `seller` VALUES (10, '蛋糕蛋挞', '长沙路', 1, '2018-08-07 13:50:38');
+INSERT INTO `seller` VALUES (11, '火锅', '河畔', 1, '2018-08-07 13:50:38');
+INSERT INTO `seller` VALUES (12, '酸菜鱼', '北京路', 1, '2018-08-07 13:50:38');
+INSERT INTO `seller` VALUES (13, '米粉米线', '宁夏路', 1, '2018-08-07 13:50:38');
+INSERT INTO `seller` VALUES (14, '翅品', '油烟街', 1, '2018-08-07 13:50:38');
+INSERT INTO `seller` VALUES (15, '烧烤', '11楼', 1, '2018-08-07 13:50:38');
 
 -- ----------------------------
 -- Table structure for stock
@@ -102,15 +153,16 @@ CREATE TABLE `stock`  (
   INDEX `idx_start_time`(`begintime`) USING BTREE,
   INDEX `idx_end_time`(`endtime`) USING BTREE,
   INDEX `idx_create_time`(`createtime`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1004 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '秒杀库存表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1006 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '秒杀库存表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
 INSERT INTO `stock` VALUES (1000, 'iphone6', 10000.00, 1000.00, 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
 INSERT INTO `stock` VALUES (1001, 'ipad', 10000.00, 800.00, 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
-INSERT INTO `stock` VALUES (1002, 'mac book pro', 10000.00, 6600.00, 100, '2020-11-26 00:00:00', '2020-12-04 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1002, 'mac book pro', 20000.23, 6600.00, 100, '2020-11-26 00:00:00', '2020-12-04 00:00:00', '2018-09-13 13:37:04');
 INSERT INTO `stock` VALUES (1003, 'iMac', 10000.00, 7000.00, 100, '2018-07-06 00:00:00', '2018-08-31 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1005, 'test', 1234.00, 1000.00, 99, '2018-09-12 16:00:00', '2018-09-22 15:45:00', '2018-09-13 16:20:28');
 
 -- ----------------------------
 -- Table structure for sys_dept
@@ -181,17 +233,7 @@ CREATE TABLE `sys_login_log`  (
   `message` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '具体消息',
   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '登录ip',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 160 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录记录' ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of sys_login_log
--- ----------------------------
-INSERT INTO `sys_login_log` VALUES (154, '退出日志', 1, '2018-09-12 10:54:59', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (155, '登录日志', 1, '2018-09-12 19:50:32', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (156, '退出日志', 1, '2018-09-12 19:52:19', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (157, '登录日志', 1, '2018-09-12 19:53:12', '成功', '登录成功', '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (158, '退出日志', 1, '2018-09-12 19:55:07', '成功', NULL, '0:0:0:0:0:0:0:1');
-INSERT INTO `sys_login_log` VALUES (159, '登录日志', 1, '2018-09-12 19:55:39', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录记录' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -212,7 +254,7 @@ CREATE TABLE `sys_menu`  (
   `status` int(65) DEFAULT NULL COMMENT '菜单状态 :  1:启用   0:不启用',
   `tips` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 200 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 202 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -271,11 +313,13 @@ INSERT INTO `sys_menu` VALUES (191, 'menuTreeByRoleId', '角色配置权限', 'm
 INSERT INTO `sys_menu` VALUES (192, 'mgr_img', '用户获取头像', 'mgr', '[0],[power],[mgr],', '', '/mgr/img/**', 3, 20, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (193, 'mgr_upload', '用户上传头像', 'mgr', '[0],[power],[mgr],', '', '/mgr/upload', 3, 21, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (194, 'system', '系统管理', '0', '[0],', 'fa-dashboard', '#', 1, 3, 1, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (195, 'biz', '业务管理', '0', '[0],', 'fa-bank', '#', 1, 12, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (195, 'biz', '业务管理', '0', '[0],', 'fa-weixin', '#', 1, 12, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (196, 'cmd', '指令管理', 'biz', '[0],[biz],', '', '/cmd', 2, 1, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (197, 'robot', '自动回复', 'biz', '[0],[biz],', '', '/robot', 2, 2, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (198, 'stock', '库存管理', 'biz', '[0],[biz],', '', '/stock', 2, 14, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (199, 'stock_show', '秒杀列表', 'biz', '[0],[biz],', '', '/stock/show', 2, 13, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (200, 'seller', '卖家管理', 'biz', '[0],[biz],', '', '/seller', 2, 5, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (201, 'coupon', '优惠券管理', 'biz', '[0],[biz],', '', '/coupon', 2, 6, 1, NULL, 1, NULL);
 
 -- ----------------------------
 -- Table structure for sys_relation
@@ -414,11 +458,9 @@ CREATE TABLE `sys_user`  (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES (1, 'f8d104e2-6719-4fe0-80a7-5d83c86be27c.jpg', 'admin', '6cd3423f077da4d9465408654b7366ef', '8pgby', 'TC', '2017-05-05 00:00:00', 1, '123@foxmail.com', '18200000000', '1', 24, 1, '2016-01-29 08:49:53', 25);
-INSERT INTO `sys_user` VALUES (2, NULL, 'test', '45abb7879f6a8268f1ef600e6038ac73', 'ssts3', 'aa', '2018-09-05 00:00:00', 2, 'abc@123.com', '123', '6', 27, 3, '2017-05-16 20:33:37', NULL);
 INSERT INTO `sys_user` VALUES (3, NULL, 'boss', '71887a5ad666a18f709e1d4e693d5a35', '1f7bf', '老板', '2017-12-04 00:00:00', 1, '', '', '1', 24, 1, '2017-12-04 22:24:02', NULL);
 INSERT INTO `sys_user` VALUES (4, NULL, 'manager', 'b53cac62e7175637d4beb3b16b2f7915', 'j3cs9', '经理', '2017-12-04 00:00:00', 1, '', '', '1', 28, 1, '2017-12-04 22:24:24', NULL);
 INSERT INTO `sys_user` VALUES (5, '', 'tan', '4772c53d942ff8a27e5a88676d7b7cb1', 'nfukw', 'TC', '2018-08-01 00:00:00', 1, 'aa@bb.com', '123', '8', 29, 1, '2018-07-22 17:23:52', NULL);
-INSERT INTO `sys_user` VALUES (6, '', 'aa', '864dfe5557f409cd2fc4981cb66d6a0f', 'esy09', 'aa', '2018-09-05 00:00:00', 1, 'aa@bb.com', '123', NULL, 24, 1, '2018-09-01 17:11:32', NULL);
 
 -- ----------------------------
 -- Procedure structure for execute_seckill
