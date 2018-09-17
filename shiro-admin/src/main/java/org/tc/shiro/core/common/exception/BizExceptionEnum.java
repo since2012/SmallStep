@@ -53,21 +53,27 @@ public enum BizExceptionEnum implements IExceptionEnum {
     /**
      * 卖家商家
      */
-    SELLER_ALREADY_EXIST(401, "该卖家已创建"),
+    SELLER_ALREADY_REG(401, "该卖家已创建"),
+    SELLER_HAS_COUPON(401, "该卖家已配置优惠券数据，不可删除"),
     NO_SELLER_DATASCOPE(401, "还未配置管理卖家范围"),
 
     /**
      * 优惠券
      */
     COUPON_NUM_ERROR(400, "优惠券数量错误"),
-    COUPON_RANGE_ERROR(400, ""),
+    COUPON_RANGE_ERROR(400, "优惠券有效期错误"),
     COUPON_RECEPTED(400, "重复领取"),
-    OTHER_RECEPTED(400, "已被他人领取"),
+    COUPON_OTHER_RECEPTED(400, "已被他人领取"),
     COUPON_NOT_ACTIVED(400, "还未被领取"),
     COUPON_CODE_ERROR(400, "验证码错误"),
     COUPON_EXPIRED(400, "该优惠券已过期"),
     COUPON_QRCODE_ERROR(400, "生成二维码出错"),
-    COUPON_CANT_DELETE(600, "不能删除被领取的数据(存档数据)"),
+    COUPON_CANT_DELETE(600, "不能删除被领取的优惠券"),
+
+    /**
+     * 秒杀
+     */
+    SECKILL_HAS_DATA(400, "已存在秒杀数据，不可删除"),
 
     /**
      * 错误的请求
@@ -76,7 +82,6 @@ public enum BizExceptionEnum implements IExceptionEnum {
     EXISTED_THE_MENU(400, "菜单编号重复，不能添加"),
     DICT_MUST_BE_NUMBER(400, "字典的值必须为数字"),
     REQUEST_NULL(400, "请求有错误：缺少必要的参数信息"),
-    NO_THIS_RECORD(400, "没有此记录"),
     SESSION_TIMEOUT(400, "会话超时"),
     SERVER_ERROR(500, "服务器异常"),
 

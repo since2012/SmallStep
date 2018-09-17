@@ -28,6 +28,7 @@
         <javaClientGenerator targetPackage="org.tc.gen.mapper" targetProject="src/main/java"
                              type="XMLMAPPER"/>
 
-        <table tableName="stock"></table>
+        <table tableName="seller"></table>
+        <table tableName="coupon"></table>
     </context>
 </generatorConfiguration>

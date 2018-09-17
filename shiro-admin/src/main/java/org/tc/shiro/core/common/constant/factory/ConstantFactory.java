@@ -12,10 +12,7 @@ import org.tc.shiro.core.common.constant.cache.Cache;
 import org.tc.shiro.core.common.constant.cache.CacheKey;
 import org.tc.shiro.core.common.constant.enums.TrebleStatus;
 import org.tc.shiro.mapper.*;
-import org.tc.shiro.po.Dept;
-import org.tc.shiro.po.Dict;
-import org.tc.shiro.po.Role;
-import org.tc.shiro.po.User;
+import org.tc.shiro.po.*;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -39,6 +36,7 @@ public class ConstantFactory implements IConstantFactory {
     private DictMapper dictMapper = SpringContextHolder.getBean(DictMapper.class);
     private UserMapper userMapper = SpringContextHolder.getBean(UserMapper.class);
     private MenuMapper menuMapper = SpringContextHolder.getBean(MenuMapper.class);
+    private SellerMapper sellerMapper = SpringContextHolder.getBean(SellerMapper.class);
     private CmdContentMapper contentMapper = SpringContextHolder.getBean(CmdContentMapper.class);
 
     public static IConstantFactory me() {
@@ -208,5 +206,18 @@ public class ConstantFactory implements IConstantFactory {
     public List<String> selectByCmdId(Integer cmdid) {
         List<String> contents = contentMapper.selectByCmdId(cmdid);
         return contents;
+    }
+
+    @Override
+    public String getSellerName(Integer sellerid) {
+        if (sellerid == null) {
+            return "--";
+        }
+        try {
+            Seller seller = sellerMapper.selectByPrimaryKey(sellerid);
+            return seller.getName();
+        } catch (EntityNotFoundException e) {
+            return "";
+        }
     }
 }

@@ -13,6 +13,14 @@ public interface SeckillMapper extends MyMapper<Seckill> {
      * @param stockid
      * @return
      */
-    Seckill selectById(@Param("stockid") long stockid, @Param("userid") long userid);
+    Seckill selectById(@Param("stockid") Long stockid, @Param("userid") long userid);
+
+    /**
+     * 是否存在
+     *
+     * @param stockid
+     * @return
+     */
+    boolean existsByStockid(@Param("stockid") Long stockid);
 
 }

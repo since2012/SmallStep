@@ -101,6 +101,8 @@ public class ShiroConfig {
         hashMap.put("/global/sessionError", "anon");
         hashMap.put("/kaptcha", "anon");
         hashMap.put("/robot", "anon");
+        hashMap.put("/coupon/reception/**", "anon");
+        hashMap.put("/coupon/mylist/**", "anon");
         hashMap.put("/logout", "logout");
 
         hashMap.put("/login", "kaptchaFilter");

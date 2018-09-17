@@ -15,8 +15,8 @@ import org.tc.mybatis.dto.GlobalResult;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.tips.Tip;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
-import org.tc.shiro.core.dto.ExecutionResult;
 import org.tc.shiro.core.dto.Exposer;
+import org.tc.shiro.core.dto.SeckillExecutionResult;
 import org.tc.shiro.core.dto.SeckillTimeData;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.core.shiroext.vo.ShiroUser;
@@ -126,6 +126,19 @@ public class StockController extends BaseController {
     }
 
     /**
+     * 删除
+     */
+    @RequestMapping("/delete")
+    @ResponseBody
+    public Tip delete(@RequestParam Long stockId) {
+        if (ToolUtil.isEmpty(stockId)) {
+            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+        }
+        this.stockService.del(stockId);
+        return SUCCESS_TIP;
+    }
+
+    /**
      * 秒杀详情
      *
      * @param stockId
@@ -177,9 +190,9 @@ public class StockController extends BaseController {
         if (ToolUtil.isEmpty(shiroUser)) {
             return GlobalResult.errorMsg("你还未登录");
         }
-        ExecutionResult executionResult = null;
-        executionResult = stockService.executeSeckill(stockId, md5);
-        return GlobalResult.ok(executionResult);
+        SeckillExecutionResult seckillExecutionResult = null;
+        seckillExecutionResult = stockService.executeSeckill(stockId, md5);
+        return GlobalResult.ok(seckillExecutionResult);
     }
 
     /**
@@ -198,7 +211,7 @@ public class StockController extends BaseController {
         if (ToolUtil.isEmpty(shiroUser)) {
             return GlobalResult.errorMsg("你还未登录");
         }
-        ExecutionResult execution = stockService.executeSeckillProcedure(stockId, md5);
+        SeckillExecutionResult execution = stockService.executeSeckillProcedure(stockId, md5);
         return GlobalResult.ok(execution);
     }
 

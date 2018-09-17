@@ -20,12 +20,18 @@
         sk.stockid, sk.userid, sk.createtime, sk.state,
         s.id "stock.id",
         s.name "stock.name",
-        s.number "stock.number",
+        s.primeprice "stock.primeprice",
+        s.saleprice "stock.saleprice",
+        s.total "stock.total",
         s.begintime "stock.begintime",
         s.endtime "stock.endtime",
         s.createtime "stock.createtime"
         FROM seckill sk
         INNER JOIN stock s ON sk.stockid=s.id
         WHERE sk.stockid=#{stockid} AND sk.userid=#{userid}
+    </select>
+
+    <select id="existsByStockid" resultType="boolean">
+        select count(*) from seckill where stockid = #{stockid} limit 1;
     </select>
 </mapper>

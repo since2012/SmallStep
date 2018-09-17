@@ -2,14 +2,29 @@ package org.tc.shiro.modular.biz.service;
 
 import com.github.pagehelper.PageInfo;
 import org.tc.mybatis.service.IBaseService;
-import org.tc.shiro.core.dto.ExecutionResult;
 import org.tc.shiro.core.dto.Exposer;
+import org.tc.shiro.core.dto.SeckillExecutionResult;
 import org.tc.shiro.po.Stock;
 
 public interface IStockService extends IBaseService<Stock> {
 
+    /**
+     * 新增
+     * @param stock
+     */
     public void add(Stock stock);
+
+    /**
+     * 修改
+     * @param stock
+     */
     public void edit(Stock stock);
+
+    /**
+     * 删除
+     * @param id
+     */
+    public void del(Long id);
 
     /**
      * 分页查询
@@ -34,7 +49,7 @@ public interface IStockService extends IBaseService<Stock> {
      * @param md5
      * @return
      */
-    ExecutionResult executeSeckill(long id, String md5);
+    SeckillExecutionResult executeSeckill(long id, String md5);
 
     /**
      * 秒杀（存储过程）
@@ -43,6 +58,6 @@ public interface IStockService extends IBaseService<Stock> {
      * @param md5
      * @return
      */
-    ExecutionResult executeSeckillProcedure(long id, String md5);
+    SeckillExecutionResult executeSeckillProcedure(long id, String md5);
 
 }

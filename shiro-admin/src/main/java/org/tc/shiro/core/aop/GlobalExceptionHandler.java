@@ -11,20 +11,14 @@ import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.tc.mybatis.dto.GlobalResult;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.tips.ErrorTip;
 import org.tc.mybatis.util.HttpKit;
-import org.tc.shiro.core.common.constant.enums.SeckillState;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
-import org.tc.shiro.core.common.exception.RepeatKillException;
-import org.tc.shiro.core.common.exception.SeckillClosedException;
-import org.tc.shiro.core.dto.ExecutionResult;
 import org.tc.shiro.core.log.LogManager;
 import org.tc.shiro.core.log.factory.LogTaskFactory;
 
@@ -49,7 +43,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(GunsException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public ErrorTip notFount(GunsException e) {
+    public ErrorTip bizError(GunsException e) {
         HttpKit.getRequest().setAttribute("tip", e.getMessage());
         log.error("业务异常:", e);
         return new ErrorTip(e.getCode(), e.getMessage());
@@ -71,9 +65,10 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AuthenticationException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String unAuth(AuthenticationException e) {
+    @ResponseBody
+    public ErrorTip unAuth(AuthenticationException e) {
         log.error("用户未登陆：", e);
-        return "/login";
+        return new ErrorTip(400, "未查询到相关数据");
     }
 
     /**
@@ -82,11 +77,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(DisabledAccountException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String accountLocked(DisabledAccountException e, Model model) {
+    @ResponseBody
+    public ErrorTip accountLocked(DisabledAccountException e) {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号被冻结", HttpKit.getIp()));
-        model.addAttribute("tips", "账号被冻结");
-        return "/login";
+        return new ErrorTip(400, "账号被冻结");
     }
 
     /**
@@ -94,11 +89,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(CredentialsException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String credentials(CredentialsException e, Model model) {
+    @ResponseBody
+    public ErrorTip credentials(CredentialsException e) {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", HttpKit.getIp()));
-        model.addAttribute("tips", "账号密码错误");
-        return "/login";
+        return new ErrorTip(400, "账号密码错误");
     }
 
     /**
@@ -106,11 +101,11 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(UnknownAccountException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    public String unknownAccount(CredentialsException e, Model model) {
+    @ResponseBody
+    public ErrorTip unknownAccount(CredentialsException e) {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", HttpKit.getIp()));
-        model.addAttribute("tips", "账号密码错误");
-        return "/login";
+        return new ErrorTip(400, "账号密码错误");
     }
 
     /**
@@ -120,20 +115,21 @@ public class GlobalExceptionHandler {
      * @return
      */
     @ExceptionHandler(KaptchaException.class)
-    public String kaptchaExceptionHandler(KaptchaException exception, Model model) {
+    @ResponseBody
+    public ErrorTip kaptchaExceptionHandler(KaptchaException exception) {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "验证码错误", HttpKit.getIp()));
-
+        String msg = null;
         if (exception instanceof KaptchaIncorrectException) {
-            model.addAttribute("tips", "验证码错误");
+            msg = "验证码错误";
         } else if (exception instanceof KaptchaNotFoundException) {
-            model.addAttribute("tips", "验证码未找到");
+            msg = "验证码未找到";
         } else if (exception instanceof KaptchaTimeoutException) {
-            model.addAttribute("tips", "验证码过期");
+            msg = "验证码过期";
         } else {
-            model.addAttribute("tips", "验证码渲染失败");
+            msg = "验证码渲染失败";
         }
-        return "/login";
+        return new ErrorTip(400, msg);
     }
 
     /**
@@ -148,25 +144,24 @@ public class GlobalExceptionHandler {
         return new ErrorTip(BizExceptionEnum.NO_PERMITION.getCode(), BizExceptionEnum.NO_PERMITION.getMessage());
     }
 
-    /**
-     * 重复秒杀异常
-     */
-    @ExceptionHandler(RepeatKillException.class)
-    @ResponseBody
-    public GlobalResult killrepeat(RepeatKillException e) {
-        log.info("重复秒杀异常:", e);
-        return GlobalResult.ok(ExecutionResult.error(SeckillState.REPEAT_KILL));
-    }
-
-    /**
-     * 秒杀结束异常
-     */
-    @ExceptionHandler(SeckillClosedException.class)
-    @ResponseBody
-    public GlobalResult killover(SeckillClosedException e) {
-        log.info("秒杀结束异常:", e);
-        return GlobalResult.ok(ExecutionResult.error(SeckillState.END));
-    }
+//    /**
+//     * 重复秒杀异常
+//     */
+//    @ExceptionHandler(RepeatKillException.class)
+//    @ResponseBody
+//    public GlobalResult killrepeat(RepeatKillException e) {
+//        log.info("重复秒杀异常:", e);
+//        return GlobalResult.ok(SeckillExecutionResult.error(SeckillState.REPEAT_KILL));
+//    }
+//    /**
+//     * 秒杀结束异常
+//     */
+//    @ExceptionHandler(SeckillClosedException.class)
+//    @ResponseBody
+//    public GlobalResult killover(SeckillClosedException e) {
+//        log.info("秒杀结束异常:", e);
+//        return GlobalResult.ok(SeckillExecutionResult.error(SeckillState.END));
+//    }
 
     /**
      * 拦截未知的运行时异常
@@ -174,7 +169,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
-    public ErrorTip notFount(RuntimeException e) {
+    public ErrorTip serverError(RuntimeException e) {
         HttpKit.getRequest().setAttribute("tip", "服务器未知运行时异常");
         log.error("运行时异常:", e);
         return new ErrorTip(BizExceptionEnum.SERVER_ERROR.getCode(), BizExceptionEnum.SERVER_ERROR.getMessage());

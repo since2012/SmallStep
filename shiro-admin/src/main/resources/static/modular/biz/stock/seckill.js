@@ -50,10 +50,9 @@ var Seckill = {
     handleSubmit: function (result) {
         if (result) {
             var killResult = result.data;
-            var state = killResult.state;
-            var stateInfo = killResult.stateInfo;
+            var message = killResult.message;
             //显示秒杀结果
-            $('#seckill-box').html('<span class="label label-success">' + stateInfo + '</span>');
+            $('#seckill-box').html('<span class="label label-success">' + message + '</span>');
         }
     },
     countDown: function (stockId, nowTime, startTime, endTime) {

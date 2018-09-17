@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
-import org.tc.shiro.cache.RedisTemplateDao;
+import org.tc.redis.cache.RedisTemplateDao;
 import org.tc.shiro.core.common.constant.IRobotConst;
 import org.tc.shiro.core.common.constant.cache.Cache;
 import org.tc.shiro.core.common.constant.cache.CacheKey;

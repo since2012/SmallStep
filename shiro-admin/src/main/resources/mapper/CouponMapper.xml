@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.tc.shiro.mapper.CouponMapper">
+    <resultMap id="BaseResultMap" type="org.tc.shiro.po.Coupon">
+        <!--
+          WARNING - @mbg.generated
+        -->
+        <id column="id" jdbcType="VARCHAR" property="id"/>
+        <result column="sellerid" jdbcType="INTEGER" property="sellerid"/>
+        <result column="beginday" jdbcType="DATE" property="beginday"/>
+        <result column="endday" jdbcType="DATE" property="endday"/>
+        <result column="receptday" jdbcType="TIMESTAMP" property="receptday"/>
+        <result column="usertel" jdbcType="VARCHAR" property="usertel"/>
+        <result column="code" jdbcType="VARCHAR" property="code"/>
+        <result column="valid" jdbcType="INTEGER" property="valid"/>
+        <result column="createtime" jdbcType="TIMESTAMP" property="createtime"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+    id, sellerid, beginday, endday, receptday, usertel, code, valid, createtime
+    </sql>
+
+    <select id="existsBySellerid" resultType="boolean">
+        SELECT COUNT(*) FROM coupon WHERE sellerid = #{sellerid} limit 1
+    </select>
+
+    <insert id="insertBatch">
+        insert into coupon (id, sellerid, beginday, endday, receptday, usertel, code, valid, createtime) values
+        <foreach item="item" collection="list" separator=",">
+            (#{item.id}, #{item.sellerid}, #{item.beginday}, #{item.endday},#{item.receptday}, #{item.usertel},
+            #{item.code}, #{item.valid}, #{item.createtime})
+        </foreach>
+    </insert>
+
+    <select id="list" resultType="org.tc.shiro.po.Coupon">
+        select
+        <include refid="Base_Column_List"/>
+        from coupon
+        <where>
+            <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(usertel)">
+                and usertel like CONCAT('%',#{usertel},'%')
+            </if>
+            <if test="valid != null">
+                and valid = #{valid}
+            </if>
+        </where>
+    </select>
+
+    <select id="selectByTelAndCode" resultType="org.tc.shiro.po.Coupon">
+        select
+        <include refid="Base_Column_List"/>
+        from coupon where usertel like CONCAT('%',#{usertel},'%') and code = #{code}
+    </select>
+
+    <select id="mylist" resultType="org.tc.shiro.po.Coupon">
+        select
+        <include refid="Base_Column_List"/>
+        from coupon where usertel like CONCAT('%',#{usertel},'%')
+        order by valid desc,endday desc
+    </select>
+
+</mapper>

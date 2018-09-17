@@ -122,7 +122,8 @@ StockInfo.close = function () {
  */
 StockInfo.collectData = function () {
     StockInfo.clearData();
-    this.set("id").set('name').set('total').set('begintime').set('endtime');
+    this.set("id").set('name').set('total').set('begintime')
+        .set('endtime').set('primeprice').set('saleprice');
 };
 
 
@@ -182,18 +183,7 @@ $(function () {
     //表单验证
     Feng.initValidator("stockInfoForm", StockInfo.validateFields);
 
-    $('#beginTime').datetimepicker({
-        language: 'zh-CN',
-        // weekStart: 1,
-        todayBtn: 1,
-        autoclose: 1,
-        todayHighlight: 1,
-        // startView: 2,
-        // forceParse: 0,
-        // showMeridian: 1
-        format: 'yyyy-mm-dd hh:ii'
-    });
-    $('#endTime').datetimepicker({
+    $('.form_datetime').datetimepicker({
         language: 'zh-CN',
         // weekStart: 1,
         todayBtn: 1,

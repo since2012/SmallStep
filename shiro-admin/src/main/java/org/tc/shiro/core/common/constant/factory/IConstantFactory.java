@@ -92,4 +92,12 @@ public interface IConstantFactory {
 
     List<String> selectByCmdId(Integer cmdid);
 
+    /**
+     * 通过卖家ID获取卖家name
+     *
+     * @param sellerid
+     * @return
+     */
+    String getSellerName(Integer sellerid);
+
 }

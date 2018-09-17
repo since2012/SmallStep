@@ -11,25 +11,25 @@ public enum SeckillState {
     INNER_ERROR(-2, "系统异常"),
     DATA_REWRITE(-3, "数据篡改");
 
-    private int state;
-    private String stateInfo;
+    private int code;
+    private String message;
 
-    SeckillState(int state, String stateInfo) {
-        this.state = state;
-        this.stateInfo = stateInfo;
+    SeckillState(int code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
-    public int getState() {
-        return state;
+    public int getCode() {
+        return code;
     }
 
-    public String getStateInfo() {
-        return stateInfo;
+    public String getMessage() {
+        return message;
     }
 
-    public static SeckillState stateOf(int state) {
+    public static SeckillState codeOf(int code) {
         for (SeckillState seckillState : values()) {
-            if (seckillState.getState() == state) {
+            if (seckillState.getCode() == code) {
                 return seckillState;
             }
         }

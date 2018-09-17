@@ -20,7 +20,7 @@ public class DeptServiceImpl extends BaseServiceImpl<DeptMapper, Dept> implement
     public void deleteCascade(Integer deptId) {
         boolean exists = baseMapper.existsWithPrimaryKey(deptId);
         if (!exists) {
-            throw new GunsException(BizExceptionEnum.NO_THIS_RECORD);
+            throw new GunsException(BizExceptionEnum.DB_RESOURCE_NULL);
         }
         baseMapper.delByPidsLike("%[" + deptId + "]%");
         baseMapper.deleteByPrimaryKey(deptId);

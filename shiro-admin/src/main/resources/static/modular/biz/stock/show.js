@@ -27,10 +27,15 @@ Show.initColumn = function () {
         {
             title: '促销价', field: 'saleprice', align: 'center', valign: 'middle', sortable: true,
             formatter: function (value, row, index) {
-                return '<span class="label label-warning">' + value + '</span>';
+                return '<span class="label label-warning">￥' + value + '</span>';
             }
         },
-        {title: '原价', field: 'primeprice', align: 'center', valign: 'middle', sortable: true},
+        {
+            title: '原价', field: 'primeprice', align: 'center', valign: 'middle', sortable: true,
+            formatter: function (value, row, index) {
+                return '<del class="label label-default">￥' + value + '</del>';
+            }
+        },
         {title: '库存', field: 'total', align: 'center', valign: 'middle', sortable: true},
         {title: '开始时间', field: 'begintime', align: 'center', valign: 'middle', sortable: true},
         {title: '结束时间', field: 'endtime', align: 'center', valign: 'middle', sortable: true},
@@ -41,8 +46,8 @@ Show.initColumn = function () {
             valign: 'middle',
             sortable: false,
             formatter: function (value, row, index) {
-                var result = '<a class="btn btn-info" href="/stock/' + value +
-                    '/seckill" target="_blank">立刻秒杀</a>';
+                var result = '<a class="btn btn-xs btn-info" href="/stock/' + value +
+                    '/seckill" target="_blank">秒杀</a>';
                 return result;
             }
         }

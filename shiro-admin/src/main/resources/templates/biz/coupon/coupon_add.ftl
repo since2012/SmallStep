@@ -23,93 +23,96 @@
     <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
+    <link rel="stylesheet" href="/static/plugins/ztree/zTreeStyle.css">
+    <script src="/static/plugins/ztree/jquery.ztree.all.min.js"></script>
+    <script src="/static/plugins/common/ztree-object.js"></script>
+
     <link rel="stylesheet" href="/static/plugins/validate/bootstrapValidator.min.css">
     <script src="/static/plugins/validate/bootstrapValidator.min.js"></script>
 
     <script src="/static/plugins/common/ajax-object.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
-    <script src="/static/modular/biz/stock/stock_info.js"></script>
+    <script src="/static/modular/biz/coupon/coupon_info.js"></script>
 </head>
 <body>
 <!-- Main content -->
 <section class="content">
     <div class="box">
-        <div class="form-horizontal bv-form" id="stockInfoForm">
+        <div class="form-horizontal bv-form" id="couponInfoForm">
             <input type="hidden" id="id" value="">
             <div class="row">
                 <div class="col-xs-6 b-r">
                     <div class="form-group has-feedback">
-                        <label class="col-xs-3 control-label">名称</label>
+                        <label class="col-xs-3 control-label">卖家</label>
                         <div class="col-xs-9">
-                            <input class="form-control" id="name" name="name" type="text">
+                            <input class="form-control" id="sellername" name="sellername" type="text"
+                                   readonly="readonly"
+                                   onclick="CouponInfo.showSellerNameSelectTree(); return false;"
+                                   style="background-color: #ffffff !important;">
+                            <input class="form-control" type="hidden" id="sellerid" value="">
+                            <!-- 父级部门的选择框 -->
+                            <div id="sellerMenu" class="menuContent"
+                                 style="display: none; position: absolute; z-index: 200;">
+                                <ul id="sellerTree" class="ztree tree-box" style="width: 245px !important;">
+                                </ul>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">开始时间</label>
+                        <label class="col-xs-3 control-label">开始日期</label>
                         <div class="col-xs-9">
-                            <div class="input-group date form_datetime" data-date=""
-                                 data-date-format="yyyy-mm-dd hh:ii" data-link-field="begintime">
+                            <div class="input-group date form_date" data-date=""
+                                 data-date-format="yyyy-mm-dd" data-link-field="beginday"
+                                 data-link-format="yyyy-mm-dd">
                                 <input class="form-control" size="16" type="text" value=""
                                        readonly>
                                 <span class="input-group-addon"><span
                                         class="glyphicon glyphicon-remove"></span></span>
-                                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                <span class="input-group-addon"><span
+                                        class="glyphicon glyphicon-calendar"></span></span>
                             </div>
-                            <input type="hidden" id="begintime" value=""/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label">原价</label>
-                        <div class="col-xs-9">
-                            <input class="form-control" id="primeprice" name="primeprice" type="text"
-                            >
+                            <input type="hidden" id="beginday" value=""/>
                         </div>
                     </div>
                 </div>
                 <div class="col-xs-6">
                     <div id="driverInfoContent">
                         <div class="form-group has-feedback">
-                            <label class="col-xs-3 control-label">库存量</label>
+                            <label class="col-xs-3 control-label">数量</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="total" name="total" type="text">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-xs-3 control-label">结束时间</label>
+                            <label class="col-xs-3 control-label">结束日期</label>
                             <div class="col-xs-9">
-                                <div class="input-group date form_datetime" data-date=""
-                                     data-date-format="yyyy-mm-dd hh:ii" data-link-field="endtime">
+                                <div class="input-group date form_date" data-date=""
+                                     data-date-format="yyyy-mm-dd" data-link-field="endday"
+                                     data-link-format="yyyy-mm-dd">
                                     <input class="form-control" size="16" type="text" value=""
                                            readonly>
                                     <span class="input-group-addon"><span
                                             class="glyphicon glyphicon-remove"></span></span>
                                     <span class="input-group-addon"><span
-                                            class="glyphicon glyphicon-th"></span></span>
+                                            class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
-                                <input type="hidden" id="endtime" value=""/>
+                                <input type="hidden" id="endday" value=""/>
                             </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-xs-3 control-label">促销价</label>
-                        <div class="col-xs-9">
-                            <input class="form-control" id="saleprice" name="saleprice" type="text">
                         </div>
                     </div>
                 </div>
             </div>
             <div class="row btn-group-m-t">
                 <div class="text-center">
-                    <button type="button" class="btn btn-info " onclick="StockInfo.addSubmit()" id="ensure">
+                    <button type="button" class="btn btn-info " onclick="CouponInfo.addSubmit()" id="ensure">
                         <i class="fa fa-check"></i>&nbsp;提交
                     </button>
-                    <button type="button" class="btn btn-danger " onclick="StockInfo.close()" id="cancel">
+                    <button type="button" class="btn btn-danger " onclick="CouponInfo.close()" id="cancel">
                         <i class="fa fa-eraser"></i>&nbsp;取消
                     </button>
                 </div>
             </div>
         </div>
-
     </div>
 </section>
 </body>

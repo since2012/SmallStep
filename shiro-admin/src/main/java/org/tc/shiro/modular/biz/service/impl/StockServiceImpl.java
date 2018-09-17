@@ -9,16 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
+import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
-import org.tc.shiro.cache.RedisTemplateDao;
+import org.tc.redis.cache.RedisTemplateDao;
 import org.tc.shiro.core.common.constant.cache.Cache;
 import org.tc.shiro.core.common.constant.cache.CacheKey;
 import org.tc.shiro.core.common.constant.enums.SeckillState;
+import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.core.common.exception.RepeatKillException;
 import org.tc.shiro.core.common.exception.SeckillClosedException;
 import org.tc.shiro.core.common.exception.SeckillException;
-import org.tc.shiro.core.dto.ExecutionResult;
 import org.tc.shiro.core.dto.Exposer;
+import org.tc.shiro.core.dto.SeckillExecutionResult;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.mapper.SeckillMapper;
 import org.tc.shiro.mapper.StockMapper;
@@ -26,6 +28,7 @@ import org.tc.shiro.modular.biz.service.IStockService;
 import org.tc.shiro.po.Seckill;
 import org.tc.shiro.po.Stock;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -48,13 +51,26 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
 
     @Override
     public void add(Stock stock) {
+        stock.getPrimeprice().setScale(2, BigDecimal.ROUND_UP);
+        stock.getSaleprice().setScale(2, BigDecimal.ROUND_UP);
         stock.setCreatetime(new Date());
         this.baseMapper.insertUseGeneratedKeys(stock);
     }
 
     @Override
     public void edit(Stock stock) {
+        stock.getPrimeprice().setScale(2, BigDecimal.ROUND_UP);
+        stock.getSaleprice().setScale(2, BigDecimal.ROUND_UP);
         this.baseMapper.updateByPrimaryKey(stock);
+    }
+
+    @Override
+    public void del(Long id) {
+        boolean result = seckillMapper.existsByStockid(id);
+        if (result) {
+            throw new GunsException(BizExceptionEnum.SECKILL_HAS_DATA);
+        }
+        baseMapper.deleteByPrimaryKey(id);
     }
 
     @Override
@@ -101,7 +117,7 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
 
     @Override
     @Transactional //开启事务
-    public ExecutionResult executeSeckill(long id, String md5) {
+    public SeckillExecutionResult executeSeckill(long id, String md5) {
         if (md5 == null || !md5.equals(getMD5(id))) {
             throw new SeckillException("stock data rewirite");
         }
@@ -126,7 +142,7 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
                     throw new SeckillClosedException("stock is closed");
                 } else {
                     Seckill seckill = seckillMapper.selectById(id, userid);
-                    return new ExecutionResult(id, SeckillState.SUCCESS, seckill);
+                    return new SeckillExecutionResult(id, SeckillState.SUCCESS, seckill);
                 }
             }
         } catch (SeckillClosedException e) {
@@ -141,9 +157,9 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
     }
 
     @Override
-    public ExecutionResult executeSeckillProcedure(long id, String md5) {
+    public SeckillExecutionResult executeSeckillProcedure(long id, String md5) {
         if (md5 == null || !md5.equals(getMD5(id))) {
-            return ExecutionResult.error(id, SeckillState.DATA_REWRITE);
+            return SeckillExecutionResult.error(id, SeckillState.DATA_REWRITE);
         }
         Date killTime = new Date();
         Map<String, Object> map = new HashMap<>();
@@ -157,13 +173,13 @@ public class StockServiceImpl extends BaseServiceImpl<StockMapper, Stock> implem
             int result = MapUtils.getInteger(map, "result", -2);
             if (result == 1) {
                 Seckill seckill = seckillMapper.selectById(id, userid);
-                return ExecutionResult.ok(id, SeckillState.SUCCESS, seckill);
+                return SeckillExecutionResult.ok(id, SeckillState.SUCCESS, seckill);
             } else {
-                return ExecutionResult.error(id, SeckillState.stateOf(result));
+                return SeckillExecutionResult.error(id, SeckillState.codeOf(result));
             }
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            return new ExecutionResult(id, SeckillState.INNER_ERROR);
+            return new SeckillExecutionResult(id, SeckillState.INNER_ERROR);
         }
     }
 }

@@ -28,14 +28,19 @@ Stock.initColumn = function () {
         {
             title: '促销价', field: 'saleprice', align: 'center', valign: 'middle', sortable: true,
             formatter: function (value, row, index) {
-                return '<span class="label label-warning">' + value + '</span>';
+                return '<span class="label label-warning">￥' + value + '</span>';
             }
         },
-        {title: '原价', field: 'primeprice', align: 'center', valign: 'middle', sortable: true},
+        {
+            title: '原价', field: 'primeprice', align: 'center', valign: 'middle', sortable: true,
+            formatter: function (value, row, index) {
+                return '<del class="label label-default">￥' + value + '</del>';
+            }
+        },
         {title: '库存量', field: 'total', align: 'center', valign: 'middle', sortable: true},
         {title: '开始时间', field: 'begintime', align: 'center', valign: 'middle', sortable: true},
         {title: '结束时间', field: 'endtime', align: 'center', valign: 'middle', sortable: true},
-        {title: '创建时间', field: 'createtime',visible: false, align: 'center', valign: 'middle', sortable: true}
+        {title: '创建时间', field: 'createtime', visible: false, align: 'center', valign: 'middle', sortable: true}
     ];
 };
 
@@ -106,18 +111,18 @@ Stock.reset = function () {
 /**
  * 调用后台批量删除方法
  */
-Stock.deleteBatch = function () {
-    if (this.check()) {
-        var ajax = new $ax(Feng.ctxPath + "/stock/deleteBatch", function (data) {
-            Feng.success("删除成功!");
-            Stock.table.refresh();
-        }, function (data) {
-            Feng.error("删除失败!" + data.responseJSON.message + "!");
-        });
-        ajax.set("id", this.seItem.id);
-        ajax.start();
-    }
-};
+// Stock.deleteBatch = function () {
+//     if (this.check()) {
+//         var ajax = new $ax(Feng.ctxPath + "/stock/deleteBatch", function (data) {
+//             Feng.success("删除成功!");
+//             Stock.table.refresh();
+//         }, function (data) {
+//             Feng.error("删除失败!" + data.responseJSON.message + "!");
+//         });
+//         ajax.set("id", this.seItem.id);
+//         ajax.start();
+//     }
+// };
 /**
  * 单条记录删除
  */
@@ -129,7 +134,7 @@ Stock.delete = function () {
         }, function (data) {
             Feng.error("删除失败!" + data.responseJSON.message + "!");
         });
-        ajax.set("id", this.seItem.id);
+        ajax.set("stockId", this.seItem.id);
         ajax.start();
     }
 };
@@ -141,7 +146,7 @@ Stock.openAddPage = function () {
     var index = layer.open({
         type: 2,
         title: '新增指令',
-        area: ['800px', '320px'], //宽高
+        area: ['760px', '400px'], //宽高
         fix: false, //不固定
         maxmin: true,
         content: '/stock/stock_add'
@@ -156,7 +161,7 @@ Stock.openEditPage = function () {
         var index = layer.open({
             type: 2,
             title: '编辑指令',
-            area: ['800px', '320px'], //宽高
+            area: ['760px', '400px'], //宽高
             fix: false, //不固定
             maxmin: true,
             content: '/stock/stock_edit/' + this.seItem.id

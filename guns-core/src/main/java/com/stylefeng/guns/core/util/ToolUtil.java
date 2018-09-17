@@ -38,7 +38,7 @@ public class ToolUtil {
      * @Date 2017/8/24 14:09
      */
     public static String getRandomString(int length) {
-        String base = "abcdefghijklmnopqrstuvwxyz0123456789";
+        String base = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
         Random random = new Random();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < length; i++) {

@@ -33,66 +33,82 @@
 <body>
 <!-- Main content -->
 <section class="content">
-    <div class="form-horizontal bv-form" id="stockProfileForm" novalidate="novalidate">
-        <input type="hidden" id="id" value="${stock.id}">
-        <div class="row">
-            <div class="col-xs-6 b-r">
-                <div class="form-group has-feedback">
-                    <label class="col-xs-3 control-label">名称</label>
-                    <div class="col-xs-9">
-                        <input class="form-control" id="name" name="name" type="text"
-                               data-bv-field="account" value="${stock.name}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">开始时间</label>
-                    <div class="col-xs-9">
-                        <input class="form-control" id="begintime" name="begintime"
-                               type="text" lay-key="1" value="${stock.begintime?datetime}">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-xs-3 control-label">原价</label>
-                    <div class="col-xs-9">
-                        <input class="form-control" id="primeprice" name="primeprice" type="text"
-                               data-bv-field="account">
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div id="driverInfoContent">
+    <div class="box">
+        <div class="form-horizontal bv-form" id="stockInfoForm">
+            <input type="hidden" id="id" value="${stock.id}">
+            <div class="row">
+                <div class="col-xs-6 b-r">
                     <div class="form-group has-feedback">
-                        <label class="col-xs-3 control-label">库存量</label>
+                        <label class="col-xs-3 control-label">名称</label>
                         <div class="col-xs-9">
-                            <input class="form-control" id="total" name="total" type="text"
-                                   data-bv-field="name" value="${stock.total}">
+                            <input class="form-control" id="name" name="name" type="text"
+                                   value="${stock.name}">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">结束时间</label>
+                        <label class="col-xs-3 control-label">开始时间</label>
                         <div class="col-xs-9">
-                            <input class="form-control" id="endtime" name="endtime" type="text"
-                                   lay-key="1" value="${stock.endtime?datetime}">
+                            <div class="input-group date form_datetime" data-date=""
+                                 data-date-format="yyyy-mm-dd hh:ii" data-link-field="begintime">
+                                <input class="form-control" size="16" type="text" value="${stock.begintime?datetime}"
+                                       readonly>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                            </div>
+                            <input type="hidden" id="begintime" value="${stock.begintime?datetime}"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-xs-3 control-label">促销价</label>
+                        <label class="col-xs-3 control-label">原价</label>
                         <div class="col-xs-9">
-                            <input class="form-control" id="saleprice" name="saleprice" type="text">
+                            <input class="form-control" id="primeprice" name="primeprice" type="text"
+                                   value="${stock.primeprice}">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div id="driverInfoContent">
+                        <div class="form-group has-feedback">
+                            <label class="col-xs-3 control-label">库存量</label>
+                            <div class="col-xs-9">
+                                <input class="form-control" id="total" name="total" type="text"
+                                       value="${stock.total}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">结束时间</label>
+                            <div class="col-xs-9">
+                                <div class="input-group date form_datetime" data-date=""
+                                     data-date-format="yyyy-mm-dd hh:ii" data-link-field="endtime">
+                                    <input class="form-control" size="16" type="text" value="${stock.endtime?datetime}"
+                                           readonly>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                                </div>
+                                <input type="hidden" id="endtime" value="${stock.endtime?datetime}"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">促销价</label>
+                            <div class="col-xs-9">
+                                <input class="form-control" id="saleprice" name="saleprice" type="text"
+                                       value="${stock.saleprice}">
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="row btn-group-m-t">
-            <div class="text-center">
-                <button type="button" class="btn btn-info " onclick="StockInfo.editSubmit()" id="ensure">
-                    <i class="fa fa-check"></i>&nbsp;提交
-                </button>
-                <button type="button" class="btn btn-danger " onclick="StockInfo.close()" id="cancel">
-                    <i class="fa fa-eraser"></i>&nbsp;取消
-                </button>
+            <div class="row btn-group-m-t">
+                <div class="text-center">
+                    <button type="button" class="btn btn-info " onclick="StockInfo.editSubmit()" id="ensure">
+                        <i class="fa fa-check"></i>&nbsp;提交
+                    </button>
+                    <button type="button" class="btn btn-danger " onclick="StockInfo.close()" id="cancel">
+                        <i class="fa fa-eraser"></i>&nbsp;取消
+                    </button>
 
+                </div>
             </div>
         </div>
     </div>
