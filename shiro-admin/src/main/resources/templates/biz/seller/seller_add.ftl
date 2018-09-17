@@ -18,8 +18,8 @@
     <!-- Bootstrap 3.3.7 -->
     <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="/static/plugins/validate/bootstrapValidator.min.css">
-    <script src="/static/plugins/validate/bootstrapValidator.min.js"></script>
+    <link rel="stylesheet" href="/static/plugins/bootstrapValidator/bootstrapValidator.min.css">
+    <script src="/static/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
 
     <script src="/static/plugins/common/ajax-object.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>

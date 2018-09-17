@@ -23,8 +23,8 @@
     <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
-    <link rel="stylesheet" href="/static/plugins/validate/bootstrapValidator.min.css">
-    <script src="/static/plugins/validate/bootstrapValidator.min.js"></script>
+    <link rel="stylesheet" href="/static/plugins/bootstrapValidator/bootstrapValidator.min.css">
+    <script src="/static/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
 
     <script src="/static/plugins/common/ajax-object.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>

@@ -16,8 +16,8 @@
     <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="/static/plugins/iCheck/square/blue.css">
-    <link rel="stylesheet" href="/static/plugins/validate/bootstrapValidator.min.css">
-    <link rel="stylesheet" href="/static/plugins/validate/zh_CN.js">
+    <link rel="stylesheet" href="/static/plugins/bootstrapValidator/bootstrapValidator.min.css">
+    <link rel="stylesheet" href="/static/plugins/bootstrapValidator/zh_CN.js">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -87,7 +87,7 @@
 <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- iCheck -->
 <script src="/static/plugins/iCheck/icheck.min.js"></script>
-<script src="/static/plugins/validate/bootstrapValidator.min.js"></script>
+<script src="/static/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
 <script src="/static/plugins/common/ajax-object.js"></script>
 <script src="/static/plugins/common/Feng.js"></script>
 <script src="/static/modular/login.js"></script>

@@ -18,8 +18,8 @@
     <!-- Bootstrap 3.3.7 -->
     <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <script type="text/javascript" src="/static/plugins/qrcode/qrcode.js"></script>
-    <script type="text/javascript" src="/static/plugins/qrcode/jquery.qrcode.js"></script>
+    <script type="text/javascript" src="/static/plugins/jqureyQrcode/qrcode.js"></script>
+    <script type="text/javascript" src="/static/plugins/jqureyQrcode/jquery.qrcode.js"></script>
     <script src="/static/modular/biz/coupon/qrcode.js"></script>
 </head>
 <body>

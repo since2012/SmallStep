@@ -7,7 +7,7 @@
     <meta http-equiv="expires" content="0">
     <meta charset="UTF-8">
 
-    <script src="/static/plugins/countdown/jquery.countdown.js"></script>
+    <script src="/static/plugins/jqueryCountdown/jquery.countdown.js"></script>
     <script src="/static/modular/biz/stock/seckill.js"></script>
 </head>
 <body>

@@ -16,8 +16,8 @@
     <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
     <script src="/static/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
-    <link rel="stylesheet" href="/static/plugins/ztree/zTreeStyle.css">
-    <script src="/static/plugins/ztree/jquery.ztree.all.min.js"></script>
+    <link rel="stylesheet" href="/static/plugins/jqueryZtree/zTreeStyle.css">
+    <script src="/static/plugins/jqueryZtree/jquery.ztree.all.min.js"></script>
 
     <script src="/static/plugins/common/ajax-object.js"></script>
 <#--弹出层-->
