@@ -7,10 +7,10 @@
     <meta http-equiv="expires" content="0">
     <meta charset="UTF-8">
 
-    <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-    <script src="/static/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="/static/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <!-- bootstrap datetimepicker -->
+    <link rel="stylesheet" href="/static/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/static/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
 <#--bootstrap table-->
     <link rel="stylesheet" href="/static/plugins/bootstrap-table/bootstrap-table.min.css">
@@ -69,15 +69,32 @@
                             <label for="beginTime" class="col-md-2 col-lg-1 control-label"
                                    style="padding-right:0px;">开始时间</label>
                             <div class="col-md-4 col-lg-5 ">
-                                <input class="form-control" type="text" id="beginTime" beginTime="name"
-                                       placeholder="开始时间">
+                                <div class="input-group date form_date" data-date=""
+                                     data-date-format="yyyy-mm-dd" data-link-field="beginTime"
+                                     data-link-format="yyyy-mm-dd">
+                                    <input class="form-control" size="16" type="text" value=""
+                                           readonly placeholder="开始时间">
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                                <input type="hidden" id="beginTime" value=""/>
                             </div>
                             <label for="endTime" class="col-md-2 col-lg-1 control-label"
                                    style="padding-right:0px">结束时间</label>
                             <div class="col-md-4 col-lg-5 ">
-                                <input class="form-control" type="text" id="endTime"
-                                       name="endTime"
-                                       placeholder="结束时间">
+                                <div class="input-group date form_date" data-date=""
+                                     data-date-format="yyyy-mm-dd" data-link-field="endTime"
+                                     data-link-format="yyyy-mm-dd">
+                                    <input class="form-control" size="16" type="text" value=""
+                                           readonly placeholder="结束时间">
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                                <input type="hidden" id="endTime" value=""/>
                             </div>
                         </div>
                     </div>

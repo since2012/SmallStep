@@ -242,6 +242,19 @@ UserInfo.chPwd = function () {
 };
 
 $(function () {
+
+    $('.form_date').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        format: 'yyyy-mm-dd'
+    });
+
     //表单验证
     Feng.initValidator("userProfileForm", UserInfo.validateFields);
     $("#sex").val($("#sexValue").val());
@@ -257,12 +270,4 @@ $(function () {
     avatarUp.setUploadBarId("progressBar");
     avatarUp.init();
 
-    //Date picker
-    $('#birthday').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-    });
-
-    $("#power").attr("class", "active");
-    $("#mgr").attr("class", "active");
 });

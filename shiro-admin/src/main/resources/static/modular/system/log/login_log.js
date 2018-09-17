@@ -67,24 +67,26 @@ LoginLog.reset = function () {
 };
 
 $(function () {
+
+    $("#mon").attr("class", "active");
+    $("#login_log").attr("class", "active");
+    $('.form_date').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        format: 'yyyy-mm-dd'
+    });
+
     init();
     var defaultColunms = LoginLog.initColumn();
     var table = new BSTable(LoginLog.id, "/login_log/list", defaultColunms);
     table.setPaginationType("server");
     LoginLog.table = table.init();
-
-    //Date picker
-    $('#beginTime').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-    })
-    $('#endTime').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-    })
-
-    $("#mon").attr("class", "active");
-    $("#login_log").attr("class", "active");
 });
 
 function init() {

@@ -6,11 +6,10 @@
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
     <meta charset="UTF-8">
-
-    <!-- bootstrap datepicker -->
-    <link rel="stylesheet" href="/static/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-    <script src="/static/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-    <script src="/static/bower_components/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+    <!-- bootstrap datetimepicker -->
+    <link rel="stylesheet" href="/static/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+    <script src="/static/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+    <script src="/static/plugins/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 
     <link rel="stylesheet" href="/static/plugins/validate/bootstrapValidator.min.css">
     <script src="/static/plugins/validate/bootstrapValidator.min.js"></script>
@@ -161,8 +160,17 @@
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">出生日期</label>
                                             <div class="col-sm-9">
-                                                <input class="form-control" id="birthday" name="birthday"
-                                                       value="${user.birthday?date}" type="text" lay-key="1">
+                                                <div class="input-group date form_date" data-date=""
+                                                     data-date-format="yyyy-mm-dd" data-link-field="birthday"
+                                                     data-link-format="yyyy-mm-dd">
+                                                    <input class="form-control" size="16" type="text"
+                                                           value="${user.birthday?date}" readonly>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-remove"></span></span>
+                                                    <span class="input-group-addon"><span
+                                                            class="glyphicon glyphicon-calendar"></span></span>
+                                                </div>
+                                                <input type="hidden" id="birthday" value="${user.birthday?date}"/>
                                             </div>
                                         </div>
                                         <div class="hr-line-dashed"></div>

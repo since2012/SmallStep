@@ -234,6 +234,19 @@ MgrUser.resetPwd = function () {
 };
 
 $(function () {
+
+    $('.form_date').datetimepicker({
+        language: 'zh-CN',
+        weekStart: 1,
+        todayBtn: 1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 2,
+        forceParse: 0,
+        format: 'yyyy-mm-dd'
+    });
+
     var defaultColunms = MgrUser.initColumn();
     var table = new BSTable("managerTable", "/mgr/list", defaultColunms);
     table.setPaginationType("client");
@@ -242,16 +255,6 @@ $(function () {
     var ztree = new $ZTree("deptTree", "/dept/tree");
     ztree.bindOnClick(MgrUser.onClickDept);
     ztree.init();
-
-    //Date picker
-    $('#beginTime').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-    })
-    $('#endTime').datepicker({
-        format: 'yyyy-mm-dd',
-        autoclose: true
-    })
 
     $("#power").attr("class", "active");
     $("#mgr").attr("class", "active");
