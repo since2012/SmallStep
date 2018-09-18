@@ -25,6 +25,6 @@ public class ShiroUser implements Serializable {
     public String avatar;
     public List<Integer> roleList; // 角色集
     public List<String> roleNames; // 角色名称集
-    public List<MenuNode> nodeList;  //左侧边栏
+    public List<MenuNode> menuList;  //左侧边栏
 
 }

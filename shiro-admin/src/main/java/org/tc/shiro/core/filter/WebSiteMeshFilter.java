@@ -3,6 +3,9 @@ package org.tc.shiro.core.filter;
 import org.sitemesh.builder.SiteMeshFilterBuilder;
 import org.sitemesh.config.ConfigurableSiteMeshFilter;
 
+/**
+ * 在此配置需要装饰的页面
+ */
 public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
 
     @Override
@@ -12,6 +15,8 @@ public class WebSiteMeshFilter extends ConfigurableSiteMeshFilter {
                 .addDecoratorPath("/menu", "/decorator/main")
                 .addDecoratorPath("/dict", "/decorator/main")
                 .addDecoratorPath("/dept", "/decorator/main")
+                .addDecoratorPath("/index", "/decorator/main")
+                .addDecoratorPath("/notice", "/decorator/main")
                 .addDecoratorPath("/login_log", "/decorator/main")
                 .addDecoratorPath("/mgr/profile", "/decorator/main")
                 .addDecoratorPath("/cmd", "/decorator/main")

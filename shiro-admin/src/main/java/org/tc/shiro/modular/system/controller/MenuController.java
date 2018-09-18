@@ -52,7 +52,8 @@ public class MenuController extends BaseController {
     @RequiresRoles(AdminConst.ADMIN_NAME)
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(@RequestParam(required = false) String name, @RequestParam(required = false) String level) {
+    public Object list(@RequestParam(required = false) String name,
+                       @RequestParam(required = false) Integer level) {
         List<Menu> list = menuService.list(name, level);
         return new MenuWarpper().warpList(list);
     }

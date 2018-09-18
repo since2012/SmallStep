@@ -46,7 +46,7 @@ public interface IMenuService extends IBaseService<Menu> {
      * @param level
      * @return
      */
-    public List<Menu> list(String name, String level);
+    public List<Menu> list(String name, Integer level);
 
     /**
      * 获取资源url通过角色id

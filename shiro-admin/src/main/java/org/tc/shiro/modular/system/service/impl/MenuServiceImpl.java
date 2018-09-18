@@ -156,13 +156,13 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
     }
 
     @Override
-    public List<Menu> list(String name, String level) {
+    public List<Menu> list(String name, Integer level) {
         Example example = new Example(Menu.class);
         Example.Criteria criteria = example.createCriteria();
         if (StringUtils.isNotBlank(name)) {
-            criteria.andLike("name", "%" + name + "%");
+            criteria.andLike("name", "%" + name.trim() + "%");
         }
-        if (StringUtils.isNotBlank(level)) {
+        if (level != null) {
             criteria.andEqualTo("levels", level);
         }
         example.setOrderByClause("levels asc,num asc");

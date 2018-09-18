@@ -192,7 +192,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">View all</a></li>
+                            <li class="footer"><a href="/">查看所有通知</a></li>
                         </ul>
                     </li>
                     <!-- Tasks: style can be found in dropdown.less -->
@@ -341,21 +341,27 @@
                 <li class="header">导航面板</li>
                 <#if titles?? && titles?size gt 0>
                     <#list titles as item>
-                    <li id="${item.code}" class="treeview">
-                        <a <#if item.url != '#'>href="${item.url}"</#if> >
-                            <i class="fa ${item.icon}"></i> <span>${item.name}</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i></span>
-                        </a>
-                        <#if item.children??>
-                        <ul class="treeview-menu">
-                            <#list item.children as child>
-                                <li id="${child.code}"><a href="${child.url}"><i
-                                        class="fa fa-circle-o"></i> ${child.name}</a></li>
-                            </#list>
-                        </ul>
+                        <#if item.children?? >
+                            <li id="${item.code}" class="treeview">
+                                <a href="${item.url}">
+                                    <i class="fa ${item.icon}"></i> <span>${item.name}</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i></span>
+                                </a>
+                                <#if item.children??>
+                                <ul class="treeview-menu">
+                                    <#list item.children as child>
+                                        <li id="${child.code}"><a href="${child.url}"><i
+                                                class="fa fa-circle-o"></i> ${child.name}</a></li>
+                                    </#list>
+                                </ul>
+                                </#if>
+                            </li>
+                        <#else>
+                        <li id="${item.code}">
+                            <a href="${item.url}"> <i class="fa ${item.icon}"></i> <span>${item.name}</span></a>
+                        </li>
                         </#if>
-                    </li>
                     </#list>
                 </#if>
             </ul>
@@ -440,7 +446,7 @@
 
                 <h3 class="control-sidebar-heading">任务进度</h3>
                 <ul class="control-sidebar-menu">
-                    <li>
+                    <li>s
                         <a href="javascript:void(0)">
                             <h4 class="control-sidebar-subheading">
                                 个性化模板设计

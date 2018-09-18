@@ -18,7 +18,7 @@ public interface IShiroService {
      *
      * @param account 账号
      */
-    User getUserByAccount(String account);
+    User getByAccount(String account);
 
     /**
      * 获取权限列表通过角色id

@@ -22,7 +22,7 @@ public class DecoratorController {
     @RequestMapping("main")
     public String defaultDecorator(Model model) {
         ShiroUser shiroUser = ShiroKit.getUser();
-        List<MenuNode> nodeList = shiroUser.getNodeList();
+        List<MenuNode> nodeList = shiroUser.getMenuList();
         model.addAttribute("titles", nodeList);
         //获取用户头像
         model.addAttribute("avatar", shiroUser.getAvatar());

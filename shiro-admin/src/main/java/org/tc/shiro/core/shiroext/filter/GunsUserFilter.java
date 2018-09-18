@@ -30,7 +30,7 @@ public class GunsUserFilter extends AccessControlFilter {
             return true;
         } else {
             Subject subject = getSubject(request, response);
-            // If principal is not null, then the getUserByAccount is known and should be allowed access.
+            // If principal is not null, then the getByAccount is known and should be allowed access.
             if (subject.getPrincipal() == null) {
                 //还未登录
                 return false;

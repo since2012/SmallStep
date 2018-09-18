@@ -66,6 +66,9 @@
         select url from sys_relation rel
         inner join sys_menu m on rel.menuid = m.id and m.status=1 where rel.roleid = #{roleId}
     </select>
+    <select id="getAPIOfAdmin" resultType="string">
+        select url from sys_menu m WHERE status=1
+    </select>
 
     <select id="getByCode" resultType="org.tc.shiro.po.Menu">
         select * from sys_menu where code = #{code}

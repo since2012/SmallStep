@@ -30,7 +30,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
             throws AuthenticationException {
         UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
-        User user = shiroService.getUserByAccount(token.getUsername());
+        User user = shiroService.getByAccount(token.getUsername());
         SimpleAuthenticationInfo info = shiroService.getSimpleInfo(user, super.getName());
         return info;
     }
@@ -45,7 +45,6 @@ public class ShiroDbRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 
         List<Integer> roleList = shiroUser.getRoleList();
-
         for (Integer roleId : roleList) {
             List<String> permissions = shiroService.getAPIByRoleId(roleId);
             if (!ToolUtil.isEmpty(permissions)) {

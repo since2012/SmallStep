@@ -32,7 +32,7 @@ public class ShiroServiceImpl implements IShiroService {
     private MenuMapper menuMapper;
 
     @Override
-    public User getUserByAccount(String account) {
+    public User getByAccount(String account) {
         User user = userMapper.selectByAccount(account);
         // 账号不存在
         if (ToolUtil.isEmpty(user)) {
@@ -47,6 +47,9 @@ public class ShiroServiceImpl implements IShiroService {
 
     @Override
     public List<String> getAPIByRoleId(Integer roleid) {
+        if (AdminConst.ADMIN_ID.equals(roleid)) {
+            return menuMapper.getAPIOfAdmin();
+        }
         return menuMapper.getAPIByRoleId(roleid);
     }
 
@@ -81,7 +84,7 @@ public class ShiroServiceImpl implements IShiroService {
         Integer[] roleArray = Convert.toIntArray(user.getRoleid());
         List<Integer> roleList = new ArrayList<Integer>();
         List<String> roleNameList = new ArrayList<String>();
-        for (int roleId : roleArray) {
+        for (Integer roleId : roleArray) {
             roleList.add(roleId);
             roleNameList.add(ConstantFactory.me().getSingleRoleName(roleId));
         }
@@ -95,7 +98,7 @@ public class ShiroServiceImpl implements IShiroService {
         }
         List<MenuNode> titles = MenuNode.buildTitle(menus);
 //        titles = ApiMenuUtils.build(titles);
-        shiroUser.setNodeList(titles);
+        shiroUser.setMenuList(titles);
 
         return shiroUser;
     }

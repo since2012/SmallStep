@@ -52,6 +52,13 @@ public interface MenuMapper extends MyMapper<Menu> {
     List<String> getAPIByRoleId(@Param("roleId") Integer roleId);
 
     /**
+     * 获取超级管理员个访问的API
+     *
+     * @return
+     */
+    List<String> getAPIOfAdmin();
+
+    /**
      * 根据角色获取菜单(侧边栏)
      *
      * @return

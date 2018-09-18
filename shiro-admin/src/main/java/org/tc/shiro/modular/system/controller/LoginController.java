@@ -6,13 +6,13 @@ import org.apache.commons.collections.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
 import org.tc.shiro.core.shiroext.vo.ShiroUser;
+import org.tc.shiro.modular.system.service.INoticeService;
+import org.tc.shiro.po.Notice;
+import org.tc.shiro.warpper.NoticeWrapper;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,11 +29,13 @@ public class LoginController extends BaseController {
 
     @Autowired
     private Kaptcha kaptcha;
+    @Autowired
+    private INoticeService noticeService;
 
     /**
      * 登录页面
      */
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String login() {
         if (ShiroKit.isAuthenticated() || ShiroKit.getUser() != null) {
             return REDIRECT + "/";
@@ -45,7 +47,7 @@ public class LoginController extends BaseController {
     /**
      * 点击登录执行的动作（登录过滤器）
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    @PostMapping("/login")
     @ResponseBody
     public Object loginVali() {
         return SUCCESS_TIP;
@@ -61,16 +63,16 @@ public class LoginController extends BaseController {
     }
 
     /**
-     * 主页
+     * 根路径
      */
     @GetMapping("/")
-    public String index(Model model) {
+    public String root(Model model) {
 
         //未登录
         ShiroUser shiroUser = ShiroKit.getUser();
         if (ToolUtil.isEmpty(shiroUser)) {
             model.addAttribute("tips", "你还没有登录");
-            return "login";
+            return REDIRECT + "login";
         }
 
         //未分配角色
@@ -78,9 +80,19 @@ public class LoginController extends BaseController {
         if (CollectionUtils.isEmpty(roleList)) {
             ShiroKit.getSubject().logout();
             model.addAttribute("tips", "该用户没有角色，无法登陆");
-            return "login";
+            return REDIRECT + "login";
         }
-        return REDIRECT + "/mgr";
+        return REDIRECT + "index";
+    }
+
+    /**
+     * 根路径
+     */
+    @GetMapping("/index")
+    public String index(Model model) {
+        List<Notice> notices = noticeService.list(null, null);
+        model.addAttribute("list", new NoticeWrapper().warpList(notices));
+        return "index";
     }
 
     /**

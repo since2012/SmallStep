@@ -145,7 +145,7 @@ public class RoleController extends BaseController {
     /**
      * 删除角色
      */
-    @RequestMapping(value = "/remove")
+    @RequestMapping(value = "/delete")
     @RequiresRoles(AdminConst.ADMIN_NAME)
     @ResponseBody
     public Tip remove(@RequestParam Integer roleId) {
