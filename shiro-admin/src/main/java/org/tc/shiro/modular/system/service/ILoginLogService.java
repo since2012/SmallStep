@@ -3,6 +3,7 @@ package org.tc.shiro.modular.system.service;
 import com.github.pagehelper.PageInfo;
 import org.tc.mybatis.service.IBaseService;
 import org.tc.shiro.po.LoginLog;
+import org.tc.shiro.vo.LoginLogCountVo;
 
 /**
  * <p>
@@ -29,4 +30,5 @@ public interface ILoginLogService extends IBaseService<LoginLog> {
     PageInfo<LoginLog> page(String logName, String message, String beginTime, String endTime,
                             Integer pageNo, Integer pageSize, String sort);
 
+    public LoginLogCountVo countByDay();
 }

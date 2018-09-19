@@ -120,11 +120,17 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.sitemesh/sitemesh -->
+
+        <!-- 页面装饰器 -->
         <dependency>
             <groupId>org.sitemesh</groupId>
             <artifactId>sitemesh</artifactId>
         </dependency>
+        <!-- Echarts工具包 -->
+        <!--<dependency>-->
+            <!--<groupId>com.github.abel533</groupId>-->
+            <!--<artifactId>ECharts</artifactId>-->
+        <!--</dependency>-->
 
         <!--测试-->
         <dependency>

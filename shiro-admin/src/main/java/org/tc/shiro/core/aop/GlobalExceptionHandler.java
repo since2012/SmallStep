@@ -1,9 +1,5 @@
 package org.tc.shiro.core.aop;
 
-import com.baomidou.kaptcha.exception.KaptchaException;
-import com.baomidou.kaptcha.exception.KaptchaIncorrectException;
-import com.baomidou.kaptcha.exception.KaptchaNotFoundException;
-import com.baomidou.kaptcha.exception.KaptchaTimeoutException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.CredentialsException;
@@ -114,23 +110,23 @@ public class GlobalExceptionHandler {
      * @param exception
      * @return
      */
-    @ExceptionHandler(KaptchaException.class)
-    @ResponseBody
-    public ErrorTip kaptchaExceptionHandler(KaptchaException exception) {
-        String username = HttpKit.getRequest().getParameter("username");
-        LogManager.me().executeLog(LogTaskFactory.loginLog(username, "验证码错误", HttpKit.getIp()));
-        String msg = null;
-        if (exception instanceof KaptchaIncorrectException) {
-            msg = "验证码错误";
-        } else if (exception instanceof KaptchaNotFoundException) {
-            msg = "验证码未找到";
-        } else if (exception instanceof KaptchaTimeoutException) {
-            msg = "验证码过期";
-        } else {
-            msg = "验证码渲染失败";
-        }
-        return new ErrorTip(400, msg);
-    }
+//    @ExceptionHandler(KaptchaException.class)
+//    @ResponseBody
+//    public ErrorTip kaptchaExceptionHandler(KaptchaException exception) {
+//        String username = HttpKit.getRequest().getParameter("username");
+//        LogManager.me().executeLog(LogTaskFactory.loginLog(username, "验证码错误", HttpKit.getIp()));
+//        String msg = null;
+//        if (exception instanceof KaptchaIncorrectException) {
+//            msg = "验证码错误";
+//        } else if (exception instanceof KaptchaNotFoundException) {
+//            msg = "验证码未找到";
+//        } else if (exception instanceof KaptchaTimeoutException) {
+//            msg = "验证码过期";
+//        } else {
+//            msg = "验证码渲染失败";
+//        }
+//        return new ErrorTip(400, msg);
+//    }
 
     /**
      * 无权访问该资源异常

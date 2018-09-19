@@ -7,8 +7,11 @@ import org.tc.mybatis.service.impl.BaseServiceImpl;
 import org.tc.shiro.mapper.LoginLogMapper;
 import org.tc.shiro.modular.system.service.ILoginLogService;
 import org.tc.shiro.po.LoginLog;
+import org.tc.shiro.vo.LoginLogCountVo;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -49,4 +52,18 @@ public class LoginLogServiceImpl extends BaseServiceImpl<LoginLogMapper, LoginLo
         return page;
     }
 
+    @Override
+    public LoginLogCountVo countByDay() {
+        List<Map<String, Object>> list = baseMapper.countByDay();
+        ArrayList<String> dateList = new ArrayList<>();
+        ArrayList<Long> numList = new ArrayList<>();
+        for (Map map : list) {
+            dateList.add((String) map.get("days"));
+            numList.add((Long) map.get("num"));
+        }
+        LoginLogCountVo vo = new LoginLogCountVo();
+        vo.setDateList(dateList);
+        vo.setNumList(numList);
+        return vo;
+    }
 }

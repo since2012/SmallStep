@@ -1,49 +1,149 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>主页</title>
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>AdminLTE 2 | 仪表盘</title>
 
-    <link rel="stylesheet" href="/static/plugins/bootstrap-table/bootstrap-table.min.css">
-    <script src="/static/plugins/bootstrap-table/bootstrap-table.min.js"></script>
-    <script src="/static/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.js"></script>
-    <script src="/static/plugins/common/bootstrap-table-object.js"></script>
+    <!-- Sparkline -->
+    <script src="/static/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
+    <script src="/static/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button);
+    </script>
 
-    <script src="/static/plugins/common/Feng.js"></script>
-    <script src="/static/plugins/common/ajax-object.js"></script>
     <script src="/static/plugins/layer/layer.js"></script>
-
+    <script src="/static/plugins/common/ajax-object.js"></script>
+    <script src="/static/plugins/common/Feng.js"></script>
+    <!-- ECharts单文件引入 -->
+    <script src="/static/plugins/echarts/echarts.js"></script>
+    <script src="/static/plugins/common/echarts-tool.js"></script>
     <script src="/static/modular/index.js"></script>
 </head>
-<body>
+<body class="hold-transition skin-blue sidebar-mini">
 <!-- Content Header (Page header) -->
 <section class="content-header">
-    <h1>主页
-        <small></small>
+    <h1>
+        仪表盘
+        <small>控制面板</small>
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
     </ol>
 </section>
+
 <!-- Main content -->
 <section class="content">
+    <!-- Info boxes -->
     <div class="row">
-        <div class="col-sm-12">
-            <#if list?? && list?size gt 0>
-                <#list list as item>
-                <div class="alert alert-warning alert-dismissable">
-                    <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
-                    <h4>${item.title}</h4>
-                    <textarea value=""></textarea>
-                    ${item.content}
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">CPU Traffic</span>
+                    <span class="info-box-number">90<small>%</small></span>
                 </div>
-                </#list>
-            </#if>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
         </div>
-    </div><!-- /.row -->
-</section><!-- /.content -->
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">注册用户</span>
+                    <span class="info-box-number">100,000+</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+
+        <!-- fix for small devices only -->
+        <div class="clearfix visible-sm-block"></div>
+
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">会员</span>
+                    <span class="info-box-number">100，000+</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+        <div class="col-md-3 col-sm-6 col-xs-12">
+            <div class="info-box">
+                <span class="info-box-icon bg-yellow"><i class="ion ion-ios-people-outline"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">今日注册</span>
+                    <span class="info-box-number">2,000</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+    <!-- Main row -->
+    <div class="row">
+        <!-- Left col -->
+        <section class="col-lg-7 connectedSortable">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <i class="ion ion-clipboard"></i>
+                    <h3 class="box-title">登录数据</h3>
+                </div>
+                <div class="box-body">
+                    <div id="login-chart" style="width: 100%;height:300px;"></div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /.Left col -->
+        <!-- right col (We are only adding the ID to make the widgets sortable)-->
+        <section class="col-lg-5 connectedSortable">
+
+        <#--浏览器echart-->
+            <div class="box box-default">
+                <div class="box-header with-border">
+                    <h3 class="box-title">浏览器使用</h3>
+
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                class="fa fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                class="fa fa-times"></i></button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div id="browser-chart" style="width: 100%;height:270px;"></div>
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer no-padding">
+
+                </div>
+                <!-- /.footer -->
+            </div>
+            <!-- /.box -->
+        </section>
+        <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+
+</section>
+<!-- /.content -->
 </body>
 </html>

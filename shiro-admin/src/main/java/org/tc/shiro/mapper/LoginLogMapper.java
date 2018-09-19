@@ -5,6 +5,7 @@ import org.tc.mybatis.dao.MyMapper;
 import org.tc.shiro.po.LoginLog;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -27,4 +28,10 @@ public interface LoginLogMapper extends MyMapper<LoginLog> {
     List<LoginLog> list(@Param("logName") String logName, @Param("message") String message,
                         @Param("beginTime") String beginTime, @Param("endTime") String endTime);
 
+    /**
+     * 统计每天登录次数
+     *
+     * @return
+     */
+    public List<Map<String, Object>> countByDay();
 }

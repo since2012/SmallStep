@@ -74,18 +74,19 @@ Login.validate = function () {
  * 提交添加用户
  */
 Login.login = function () {
-
     Login.collectData();
-
     if (!Login.validate()) {
         return;
     }
-
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/login", function (data) {
-        window.location.href = "/"
+        if (data.code == 200) {
+            window.location.href = "/"
+        } else {
+            Feng.error("登录失败!" + data.responseJSON.message + "!");
+        }
     }, function (data) {
-        Feng.error("登录失败!" + data.responseJSON.message + "!");
+        Feng.error("登录失败!验证信息错误!");
     });
     ajax.set(Login.loginData);
     ajax.start();
@@ -99,7 +100,6 @@ $(function () {
         increaseArea: '20%' /* optional */
     });
     Feng.initValidator("loginForm", Login.validateFields);
-
     $("#kaptchaimg").on('click', function () {
         $("#kaptchaimg").attr('src', '/kaptcha?' + Math.floor(Math.random() * 100)).fadeIn();
     });

@@ -202,12 +202,18 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/org.sitemesh/sitemesh -->
+            <!-- 页面装饰器 -->
             <dependency>
                 <groupId>org.sitemesh</groupId>
                 <artifactId>sitemesh</artifactId>
                 <version>3.0.1</version>
             </dependency>
+            <!-- Echarts工具包 -->
+            <!--<dependency>-->
+                <!--<groupId>com.github.abel533</groupId>-->
+                <!--<artifactId>ECharts</artifactId>-->
+                <!--<version>3.0.0.5</version>-->
+            <!--</dependency>-->
 
             <dependency>
                 <groupId>commons-collections</groupId>
@@ -225,6 +231,7 @@
                 <artifactId>commons-text</artifactId>
                 <version>${commons-text.version}</version>
             </dependency>
+
             <!--序列化相关-->
             <dependency>
                 <groupId>com.dyuproject.protostuff</groupId>

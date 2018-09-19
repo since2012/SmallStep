@@ -90,9 +90,17 @@ public class LoginController extends BaseController {
      */
     @GetMapping("/index")
     public String index(Model model) {
+        return "index";
+    }
+
+    /**
+     * 黑板
+     */
+    @GetMapping("/blackboard")
+    public String blackboard(Model model) {
         List<Notice> notices = noticeService.list(null, null);
         model.addAttribute("list", new NoticeWrapper().warpList(notices));
-        return "index";
+        return "blackboard";
     }
 
     /**

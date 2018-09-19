@@ -5,13 +5,12 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.shiro.core.common.constant.AdminConst;
 import org.tc.shiro.modular.system.service.ILoginLogService;
 import org.tc.shiro.po.LoginLog;
+import org.tc.shiro.vo.LoginLogCountVo;
 import org.tc.shiro.vo.LoginLogVo;
 import org.tc.shiro.warpper.LoginLogWarpper;
 
@@ -35,7 +34,7 @@ public class LoginLogController extends BaseController {
     /**
      * 跳转到日志管理的首页
      */
-    @RequestMapping("")
+    @GetMapping("")
     public String index() {
         return PREFIX + "login_log";
     }
@@ -43,7 +42,7 @@ public class LoginLogController extends BaseController {
     /**
      * 查询登录日志列表
      */
-    @RequestMapping("/list")
+    @PostMapping("/list")
     @RequiresRoles(AdminConst.ADMIN_NAME)
     @ResponseBody
     public Object list(@RequestParam(required = false) String logName,
@@ -67,9 +66,19 @@ public class LoginLogController extends BaseController {
     }
 
     /**
+     * echart
+     */
+    @PostMapping("/line")
+    @ResponseBody
+    public Object line() {
+        LoginLogCountVo option = loginLogService.countByDay();
+        return option;
+    }
+
+    /**
      * 清空日志
      */
-    @RequestMapping("/clear")
+    @PostMapping("/clear")
     @RequiresRoles(AdminConst.ADMIN_NAME)
     @ResponseBody
     public Object delLog() {

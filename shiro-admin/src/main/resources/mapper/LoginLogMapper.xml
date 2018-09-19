@@ -39,4 +39,7 @@
         </if>
     </select>
 
+    <select id="countByDay" resultType="map">
+        SELECT DATE_FORMAT(createtime, '%Y%m%d' ) days,count(*) num FROM sys_login_log GROUP BY days ORDER BY days
+    </select>
 </mapper>

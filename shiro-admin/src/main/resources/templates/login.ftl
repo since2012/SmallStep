@@ -16,8 +16,24 @@
     <link rel="stylesheet" href="/static/dist/css/AdminLTE.min.css">
     <!-- iCheck -->
     <link rel="stylesheet" href="/static/plugins/iCheck/square/blue.css">
+
+    <!-- jQuery 3 -->
+    <script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- iCheck -->
+    <script src="/static/plugins/iCheck/icheck.min.js"></script>
+
     <link rel="stylesheet" href="/static/plugins/bootstrapValidator/bootstrapValidator.min.css">
+    <script src="/static/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
     <link rel="stylesheet" href="/static/plugins/bootstrapValidator/zh_CN.js">
+
+<#--弹出层-->
+    <script src="/static/plugins/layer/layer.js"></script>
+
+    <script src="/static/plugins/common/ajax-object.js"></script>
+    <script src="/static/plugins/common/Feng.js"></script>
+    <script src="/static/modular/login.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -81,15 +97,5 @@
 </div>
 <!-- /.login-box -->
 
-<!-- jQuery 3 -->
-<script src="/static/bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="/static/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- iCheck -->
-<script src="/static/plugins/iCheck/icheck.min.js"></script>
-<script src="/static/plugins/bootstrapValidator/bootstrapValidator.min.js"></script>
-<script src="/static/plugins/common/ajax-object.js"></script>
-<script src="/static/plugins/common/Feng.js"></script>
-<script src="/static/modular/login.js"></script>
 </body>
 </html>

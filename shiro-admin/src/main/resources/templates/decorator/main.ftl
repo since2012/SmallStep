@@ -51,7 +51,7 @@
 
     <header class="main-header">
         <!-- Logo -->
-        <a href="../../index2.html" class="logo">
+        <a href="/index" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>A</b>LT</span>
             <!-- logo for regular state and mobile devices -->
@@ -192,7 +192,7 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="/">查看所有通知</a></li>
+                            <li class="footer"><a href="/blackboard">查看所有通知</a></li>
                         </ul>
                     </li>
                     <!-- Tasks: style can be found in dropdown.less -->
@@ -281,14 +281,14 @@
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="/mgr/img/${avatar}" class="user-image" alt="User Image">
-                            <span class="hidden-xs">TC</span>
+                            <span class="hidden-xs"><@shiro.principal property="account"/></span>
                         </a>
                         <ul class="dropdown-menu">
                             <!-- User image -->
                             <li class="user-header">
                                 <img src="/mgr/img/${avatar}" class="img-circle" alt="User Image">
                                 <p>
-                                    TC - Web 开发者
+                                    <@shiro.principal property="account"/> - Web 开发者
                                     <small>注册于2012年12月</small>
                                 </p>
                             </li>
@@ -321,7 +321,7 @@
                     <img src="/mgr/img/${avatar}" class="img-circle" alt="User Image">
                 </div>
                 <div class="pull-left info">
-                    <p>TC</p>
+                    <p><@shiro.principal property="name"/></p>
                     <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
