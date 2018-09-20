@@ -50,7 +50,7 @@ Menu.openAddPage = function () {
         area: ['750px', '400px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: Feng.ctxPath + '/menu/menu_add'
+        content: Feng.ctxPath + '/menu/add'
     });
     this.layerIndex = index;
 };
@@ -66,7 +66,7 @@ Menu.openEditPage = function () {
             area: ['750px', '400px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: Feng.ctxPath + '/menu/menu_edit/' + this.seItem.id
+            content: Feng.ctxPath + '/menu/edit/' + this.seItem.id
         });
         this.layerIndex = index;
     }

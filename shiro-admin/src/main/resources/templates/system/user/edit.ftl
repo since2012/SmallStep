@@ -41,9 +41,7 @@
 <body>
 <!-- Main content -->
 <section class="content">
-    <div class="form-horizontal bv-form" id="userProfileForm" novalidate="novalidate">
-        <button type="submit" class="bv-hidden-submit"
-                style="display: none; width: 0px; height: 0px;"></button>
+    <div class="form-horizontal" id="userProfileForm">
         <input type="hidden" id="id" value="${user.id}">
         <input type="hidden" id="sexValue" value="${user.sex}">
         <div class="row">
@@ -52,8 +50,7 @@
                     <label class="col-xs-3 control-label">账户</label>
                     <div class="col-xs-9">
                         <input class="form-control" id="account" name="account"
-                               value="${user.account}" type="text" disabled="disabled"
-                               data-bv-field="account">
+                               value="${user.account}" type="text" disabled="disabled">
                     </div>
                 </div>
                 <div class="form-group">
@@ -92,7 +89,7 @@
                         <label class="col-xs-3 control-label">姓名</label>
                         <div class="col-xs-9">
                             <input class="form-control" id="name" name="name" value="${user.name}"
-                                   type="text" data-bv-field="name">
+                                   type="text">
                         </div>
                     </div>
                     <div class="form-group">

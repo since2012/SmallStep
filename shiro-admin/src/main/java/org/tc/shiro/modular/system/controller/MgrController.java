@@ -37,10 +37,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * 系统管理员控制器
- *
- * @author fengshuonan
- * @Date 2017年1月11日 下午1:08:17
+ * 用户管理
  */
 @Controller
 @RequestMapping("/mgr")
@@ -57,7 +54,7 @@ public class MgrController extends BaseController {
     private RedisCacheDao redisCacheDao;
 
     /**
-     * 用户管理首页
+     * 首页
      */
     @GetMapping("")
     public String index() {
@@ -79,9 +76,9 @@ public class MgrController extends BaseController {
     /**
      * 跳转到查看管理员列表的页面
      */
-    @GetMapping("/user_add")
+    @GetMapping("/add")
     public String addView() {
-        return PREFIX + "user_add";
+        return PREFIX + "add";
     }
 
     /**
@@ -89,7 +86,7 @@ public class MgrController extends BaseController {
      */
     @PostMapping("/add")
     @BizLog(value = "管理员", type = BizNameType.ADD)
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip add(@Valid User user, BindingResult result) {
         if (result.hasErrors()) {
@@ -102,7 +99,7 @@ public class MgrController extends BaseController {
     /**
      * 跳转到编辑管理员页面
      */
-    @GetMapping("/user_edit/{userId}")
+    @GetMapping("/edit/{userId}")
     public String userEdit(@PathVariable Integer userId, Model model) {
         if (ToolUtil.isEmpty(userId)) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
@@ -112,7 +109,7 @@ public class MgrController extends BaseController {
         model.addAttribute("user", user);
         model.addAttribute("roleName", ConstantFactory.me().getMultiRoleName(user.getRoleid()));
         model.addAttribute("deptName", ConstantFactory.me().getDeptName(user.getDeptid()));
-        return PREFIX + "user_edit";
+        return PREFIX + "edit";
     }
 
     /**
@@ -128,7 +125,7 @@ public class MgrController extends BaseController {
         int id = user.getId();
         User oldUser = userService.selectByPK(id);
         //超级管理员
-        if (ShiroKit.hasRole(AdminConst.ADMIN_NAME)) {
+        if (ShiroKit.hasRole(AdminConst.ADMIN_ROLE_NAME)) {
             userService.edit(user, oldUser);
         } else {
             //部门不可随意扩大
@@ -163,7 +160,7 @@ public class MgrController extends BaseController {
     /**
      * 当前用户修改密码
      */
-    @PostMapping("/changePwd")
+    @PostMapping("/change_password")
     @ResponseBody
     public Object changePwd(@RequestParam String oldPwd, @RequestParam String newPwd, @RequestParam String rePwd) {
         userService.changePwd(oldPwd, newPwd, rePwd);
@@ -171,10 +168,7 @@ public class MgrController extends BaseController {
     }
 
     /**
-     * 返回头像
-     *
-     * @author stylefeng
-     * @Date 2017/5/24 23:00
+     * 返回头像（已解决无法读取后缀）
      */
     @GetMapping("/img/{pictureId}")
     public void renderPicture(HttpServletRequest request, HttpServletResponse response) {
@@ -249,7 +243,7 @@ public class MgrController extends BaseController {
      * 冻结用户
      */
     @RequestMapping("/freeze")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip freeze(@RequestParam Integer userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -267,7 +261,7 @@ public class MgrController extends BaseController {
      * 解除冻结
      */
     @RequestMapping("/unfreeze")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip unfreeze(@RequestParam Integer userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -277,25 +271,25 @@ public class MgrController extends BaseController {
         return SUCCESS_TIP;
     }
 
-    /**
-     * 查看管理员详情
-     */
-    @RequestMapping("/view/{userId}")
-    @ResponseBody
-    public User view(@PathVariable Integer userId) {
-        if (ToolUtil.isEmpty(userId)) {
-            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
-        }
-        User user = this.userService.selectByPK(userId);
-        ShiroKit.assertAuth(userId, user);
-        return user;
-    }
+//    /**
+//     * 查看管理员详情
+//     */
+//    @RequestMapping("/view/{userId}")
+//    @ResponseBody
+//    public User view(@PathVariable Integer userId) {
+//        if (ToolUtil.isEmpty(userId)) {
+//            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+//        }
+//        User user = this.userService.selectByPK(userId);
+//        ShiroKit.assertAuth(userId, user);
+//        return user;
+//    }
 
     /**
      * 重置密码
      */
     @RequestMapping("/reset")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip reset(@RequestParam Integer userId) {
         if (ToolUtil.isEmpty(userId)) {
@@ -308,7 +302,7 @@ public class MgrController extends BaseController {
     /**
      * 跳转到角色分配页面
      */
-    @RequestMapping("/role_assign/{userId}")
+    @GetMapping("/set_role/{userId}")
     public String roleAssign(@PathVariable Integer userId, Model model) {
         if (ToolUtil.isEmpty(userId)) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
@@ -322,8 +316,8 @@ public class MgrController extends BaseController {
     /**
      * 分配角色
      */
-    @RequestMapping("/setRole")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @PostMapping("/set_role")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip setRole(@RequestParam("userId") Integer userId, @RequestParam("roleIds") String roleIds) {
         if (ToolUtil.isOneEmpty(userId, roleIds)) {

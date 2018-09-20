@@ -1,7 +1,6 @@
 package org.tc.shiro.modular.system.service.impl;
 
 import com.stylefeng.guns.core.util.ToolUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.service.impl.BaseServiceImpl;
@@ -9,7 +8,6 @@ import org.tc.shiro.core.common.constant.AdminConst;
 import org.tc.shiro.core.common.constant.enums.TrebleStatus;
 import org.tc.shiro.core.common.exception.BizExceptionEnum;
 import org.tc.shiro.core.shiroext.kit.ShiroKit;
-import org.tc.shiro.mapper.DeptMapper;
 import org.tc.shiro.mapper.UserMapper;
 import org.tc.shiro.modular.system.service.IUserService;
 import org.tc.shiro.po.User;
@@ -28,13 +26,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {
 
-    @Autowired
-    private DeptMapper deptMapper;
-
-    private boolean existsByAccount(String account) {
-        return retBool(baseMapper.countByAcount(account));
-    }
-
     /**
      * 给用户配置新的密码和盐
      *
@@ -52,11 +43,13 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
     @Override
     public void add(User user) {
-        boolean exists = existsByAccount(user.getAccount());
+        boolean exists = baseMapper.existsByAccount(user.getAccount());
         if (exists) {
             throw new GunsException(BizExceptionEnum.USER_ALREADY_REG);
         }
         user = setPwd(user, user.getPassword());
+        //防止篡改数据（恶意获取权限）
+        user.setRoleid(null);
         user.setStatus(TrebleStatus.ACTIVED.getCode());
         user.setCreatetime(new Date());
         this.baseMapper.insertUseGeneratedKeys(user);
@@ -64,7 +57,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
 
 
     /**
-     * 将变更的数据复制给旧数据
+     * 将可变更的数据复制给旧数据
      *
      * @param newUser
      * @param oldUser
@@ -74,9 +67,6 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
         if (newUser == null || oldUser == null) {
             return oldUser;
         } else {
-            if (ToolUtil.isNotEmpty(newUser.getAvatar())) {
-                oldUser.setAvatar(newUser.getAvatar());
-            }
             if (ToolUtil.isNotEmpty(newUser.getName())) {
                 oldUser.setName(newUser.getName());
             }

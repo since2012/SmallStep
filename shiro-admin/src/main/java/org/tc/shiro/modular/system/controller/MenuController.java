@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.tips.Tip;
@@ -41,7 +38,7 @@ public class MenuController extends BaseController {
     /**
      * 跳转到菜单列表列表页面
      */
-    @RequestMapping("")
+    @GetMapping("")
     public String index() {
         return PREFIX + "menu";
     }
@@ -49,8 +46,8 @@ public class MenuController extends BaseController {
     /**
      * 获取菜单列表
      */
-    @RequiresRoles(AdminConst.ADMIN_NAME)
-    @RequestMapping(value = "/list")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
+    @PostMapping(value = "/list")
     @ResponseBody
     public Object list(@RequestParam(required = false) String name,
                        @RequestParam(required = false) Integer level) {
@@ -61,16 +58,16 @@ public class MenuController extends BaseController {
     /**
      * 跳转到菜单列表列表页面
      */
-    @RequestMapping(value = "/menu_add")
+    @GetMapping(value = "/add")
     public String menuAdd() {
-        return PREFIX + "menu_add";
+        return PREFIX + "add";
     }
 
     /**
      * 新增菜单
      */
-    @RequiresRoles(AdminConst.ADMIN_NAME)
-    @RequestMapping(value = "/add")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
+    @PostMapping(value = "/add")
     @ResponseBody
     public Tip add(@Valid Menu menu, BindingResult result) {
         if (result.hasErrors()) {
@@ -83,8 +80,8 @@ public class MenuController extends BaseController {
     /**
      * 菜单修改页
      */
-    @RequiresRoles(AdminConst.ADMIN_NAME)
-    @RequestMapping(value = "/menu_edit/{menuId}")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
+    @GetMapping(value = "/edit/{menuId}")
     public String menuEdit(@PathVariable Long menuId, Model model) {
         if (ToolUtil.isEmpty(menuId)) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
@@ -108,14 +105,14 @@ public class MenuController extends BaseController {
         }
         model.addAttribute("pcodeName", pcodeName);
         model.addAttribute("menu", menu);
-        return PREFIX + "menu_edit";
+        return PREFIX + "edit";
     }
 
     /**
      * 修该菜单
      */
-    @RequiresRoles(AdminConst.ADMIN_NAME)
-    @RequestMapping(value = "/edit")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
+    @PostMapping(value = "/edit")
     @ResponseBody
     public Tip edit(@Valid Menu menu, BindingResult result) {
         Long id = menu.getId();
@@ -129,8 +126,8 @@ public class MenuController extends BaseController {
     /**
      * 状态切换
      */
-    @RequiresRoles(AdminConst.ADMIN_NAME)
-    @RequestMapping(value = "/switch")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
+    @PostMapping(value = "/switch")
     @ResponseBody
     public Tip switchStatus(@RequestParam Long menuId) {
         if (ToolUtil.isEmpty(menuId)) {
@@ -144,8 +141,8 @@ public class MenuController extends BaseController {
     /**
      * 删除菜单
      */
-    @RequiresRoles(AdminConst.ADMIN_NAME)
-    @RequestMapping(value = "/delete")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
+    @PostMapping(value = "/delete")
     @ResponseBody
     public Tip remove(@RequestParam Long menuId) {
         if (ToolUtil.isEmpty(menuId)) {
@@ -156,23 +153,23 @@ public class MenuController extends BaseController {
         return SUCCESS_TIP;
     }
 
-    /**
-     * 查看菜单
-     */
-    @RequestMapping(value = "/view/{menuId}")
-    @ResponseBody
-    public Tip view(@PathVariable Long menuId) {
-        if (ToolUtil.isEmpty(menuId)) {
-            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
-        }
-        this.menuService.selectByPK(menuId);
-        return SUCCESS_TIP;
-    }
+//    /**
+//     * 查看菜单
+//     */
+//    @RequestMapping(value = "/view/{menuId}")
+//    @ResponseBody
+//    public Tip view(@PathVariable Long menuId) {
+//        if (ToolUtil.isEmpty(menuId)) {
+//            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+//        }
+//        this.menuService.selectByPK(menuId);
+//        return SUCCESS_TIP;
+//    }
 
     /**
      * 获取菜单列表(首页用，选择父级菜单用)
      */
-    @RequestMapping(value = "/tree")
+    @PostMapping(value = "/tree")
     @ResponseBody
     public List<ZTreeNode> menuTreeList() {
         List<ZTreeNode> list = this.menuService.menuTree();
@@ -183,7 +180,7 @@ public class MenuController extends BaseController {
     /**
      * 获取角色列表
      */
-    @RequestMapping(value = "/treeByRoleId/{roleId}")
+    @PostMapping(value = "/treeByRoleId/{roleId}")
     @ResponseBody
     public List<ZTreeNode> menuTreeByRoleId(@PathVariable Integer roleId) {
         List<ZTreeNode> list = menuService.getCheckedMenuTree(roleId);

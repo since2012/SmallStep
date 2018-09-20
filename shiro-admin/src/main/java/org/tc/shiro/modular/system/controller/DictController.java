@@ -56,7 +56,7 @@ public class DictController extends BaseController {
      * 获取所有字典列表
      */
     @RequestMapping(value = "/list")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object list(String name, String tips,
                        @RequestParam(required = false) Integer limit,
@@ -78,7 +78,7 @@ public class DictController extends BaseController {
      * 字典详情
      */
     @RequestMapping(value = "/detail/{dictId}")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object detail(@PathVariable("dictId") Integer dictId) {
         return dictService.selectByPK(dictId);
@@ -100,7 +100,7 @@ public class DictController extends BaseController {
      */
     @BizLog(value = "字典", type = BizNameType.ADD)
     @RequestMapping(value = "/add")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object add(String dictCode, String dictTips, String dictName, String dictValues) {
         if (ToolUtil.isOneEmpty(dictCode, dictName, dictValues)) {
@@ -113,7 +113,7 @@ public class DictController extends BaseController {
     /**
      * 跳转到修改字典
      */
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @RequestMapping("/dict_edit/{dictId}")
     public String deptUpdate(@PathVariable Integer dictId, Model model) {
         if (dictId == null) {
@@ -131,7 +131,7 @@ public class DictController extends BaseController {
      * 修改字典
      */
     @RequestMapping(value = "/update")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object update(Integer dictId, String dictCode, String dictName, String dictTips, String dictValues) {
         if (ToolUtil.isOneEmpty(dictId, dictCode, dictName, dictValues)) {
@@ -148,7 +148,7 @@ public class DictController extends BaseController {
      * 删除字典记录
      */
     @RequestMapping(value = "/delete")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object delete(@RequestParam Integer dictId) {
 

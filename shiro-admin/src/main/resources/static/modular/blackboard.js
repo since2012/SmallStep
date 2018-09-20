@@ -1,8 +1,9 @@
 /**
- * 系统管理--用户管理的单例对象
+ * 黑板通知栏
  */
 var Blackboard = {};
 
 $(function () {
+    //激活菜单
     $("#blackboard").attr("class", "active");
 });

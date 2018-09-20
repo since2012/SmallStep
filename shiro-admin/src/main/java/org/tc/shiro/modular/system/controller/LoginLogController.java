@@ -43,7 +43,7 @@ public class LoginLogController extends BaseController {
      * 查询登录日志列表
      */
     @PostMapping("/list")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object list(@RequestParam(required = false) String logName,
                        @RequestParam(required = false) String message,
@@ -79,7 +79,7 @@ public class LoginLogController extends BaseController {
      * 清空日志
      */
     @PostMapping("/clear")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object delLog() {
         loginLogService.deleteAll();

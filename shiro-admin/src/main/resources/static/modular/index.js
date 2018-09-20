@@ -118,11 +118,11 @@ AdminIndex.initBrowserChart = function () {
                     }
                 },
                 data: [
-                    {value: 335, name: 'Chrome'},
-                    {value: 310, name: 'FireFox'},
-                    {value: 234, name: 'IE'},
+                    {value: 1548, name: 'Chrome'},
+                    {value: 510, name: 'FireFox'},
+                    {value: 734, name: 'IE'},
                     {value: 135, name: 'Opera'},
-                    {value: 1548, name: 'Edge'}
+                    {value: 148, name: 'Edge'}
                 ]
             }
         ]
@@ -130,9 +130,11 @@ AdminIndex.initBrowserChart = function () {
 };
 
 $(function () {
+    //选中菜单
     $("#index").attr("class", "active");
 
     // Make the dashboard widgets sortable Using jquery UI
+    //开启控件拖拽排序功能
     $('.connectedSortable').sortable({
         placeholder: 'sort-highlight',
         connectWith: '.connectedSortable',
@@ -142,6 +144,7 @@ $(function () {
     });
     $('.connectedSortable .box-header, .connectedSortable .nav-tabs-custom').css('cursor', 'move');
 
+    //加载Echart
     AdminIndex.initLoginLogChart();
     AdminIndex.initBrowserChart();
 

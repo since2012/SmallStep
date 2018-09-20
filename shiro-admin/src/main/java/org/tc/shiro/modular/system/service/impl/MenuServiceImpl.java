@@ -186,7 +186,7 @@ public class MenuServiceImpl extends BaseServiceImpl<MenuMapper, Menu> implement
         List<Long> menuIds = this.relationMapper.menuidListByRoleId(roleId);
         List<ZTreeNode> list = null;
         if (ToolUtil.isEmpty(menuIds)) {
-            list = this.menuTree();
+            list = this.baseMapper.tree();
         } else {
             list = this.baseMapper.treeByMenuIds(menuIds);
         }

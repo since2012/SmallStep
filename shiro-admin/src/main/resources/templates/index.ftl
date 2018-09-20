@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | 仪表盘</title>
+    <title>AdminLTE 2 | 主页</title>
 
     <!-- Sparkline -->
     <script src="/static/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
@@ -25,11 +25,11 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-        仪表盘
-        <small>控制面板</small>
+        主页
+        <small>数据面板</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li class="active"><i class="fa fa-dashboard"></i> 主页</a></li>
     </ol>
 </section>
 
@@ -42,8 +42,8 @@
                 <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
 
                 <div class="info-box-content">
-                    <span class="info-box-text">CPU Traffic</span>
-                    <span class="info-box-number">90<small>%</small></span>
+                    <span class="info-box-text">内存使用</span>
+                    <span class="info-box-number">50<small>%</small></span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -73,7 +73,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">会员</span>
-                    <span class="info-box-number">100，000+</span>
+                    <span class="info-box-number">10,000+</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>
@@ -86,7 +86,7 @@
 
                 <div class="info-box-content">
                     <span class="info-box-text">今日注册</span>
-                    <span class="info-box-number">2,000</span>
+                    <span class="info-box-number">2,00</span>
                 </div>
                 <!-- /.info-box-content -->
             </div>

@@ -62,8 +62,8 @@
         </if>
         <if test="user.deptid != null and user.deptid != 0">
             and (deptid = #{user.deptid} or deptid in(
-                select id from sys_dept where pids like CONCAT('%[', #{user.deptid}, ']%')
-                )
+            select id from sys_dept where pids like CONCAT('%[', #{user.deptid}, ']%')
+            )
             )
         </if>
         <if test="@org.apache.commons.lang3.StringUtils@isNotBlank(beginTime)">
@@ -75,8 +75,8 @@
         order by createTime
     </select>
 
-    <select id="countByAcount" resultType="int">
-        select count(*) from sys_user where account = #{account}
+    <select id="existsByAccount" resultType="boolean">
+        select count(*) from sys_user where account = #{account} limit 1
     </select>
 
     <select id="selectByRoleid" resultType="org.tc.shiro.po.User">

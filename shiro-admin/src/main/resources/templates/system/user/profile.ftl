@@ -23,6 +23,7 @@
     <script src="/static/plugins/common/ztree-object.js"></script>
 
     <script src="/static/plugins/common/ajax-object.js"></script>
+    <script src="/static/plugins/layer/layer.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
     <script src="/static/modular/system/user/user_info.js"></script>
 </head>
@@ -32,14 +33,13 @@
     <h1> 个人资料 </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li><a href="#">权限管理</a></li>
         <li><a href="#">用户管理</a></li>
         <li class="active">个人资料</li>
     </ol>
 </section>
-
 <!-- Main content -->
 <section class="content">
-
     <div class="row">
         <div class="col-md-3">
             <!-- Profile Image -->
@@ -58,7 +58,7 @@
                              class="progress-bar progress-bar-info">
                         </div>
                     </div>
-                    <h3 class="profile-username text-center">TC</h3>
+                    <h3 class="profile-username text-center">${user.name}</h3>
                     <p class="text-muted text-center">软件工程师</p>
                 </div>
                 <!-- /.box-body -->
@@ -72,7 +72,6 @@
                 <!-- /.box-header -->
                 <div class="box-body">
                     <strong><i class="fa fa-book margin-r-5"></i> 教育</strong>
-
                     <p class="text-muted">
                         211 and Communicating Engineering
                     </p>
@@ -87,7 +86,8 @@
                     </p>
                     <hr>
                     <strong><i class="fa fa-file-text-o margin-r-5"></i> 说明</strong>
-                    <p>小试牛刀</p>
+                    <p>基于开源项目Guns,整合springboot + shiro + mybatis + spring-data-redis + freemarker+AdminLTE!
+                        Guns包含许多基础模块(用户管理,角色管理,部门管理,字典管理等模块),可以直接作为一个后台管理系统的脚手架! </p>
                 </div>
                 <!-- /.box-body -->
             </div>
@@ -97,28 +97,22 @@
         <div class="col-md-9">
             <div class="nav-tabs-custom">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="#settings" data-toggle="tab">设置</a></li>
-                    <li><a href="#activity" data-toggle="tab">重置密码</a></li>
+                    <li class="active"><a href="#settings" data-toggle="tab">信息更新</a></li>
+                    <li><a href="#reset_password" data-toggle="tab">密码重置</a></li>
                 </ul>
                 <div class="tab-content">
                     <div class="active tab-pane" id="settings">
-                        <form class="form-horizontal bv-form" id="userProfileForm" novalidate="novalidate">
-                            <button type="submit" class="bv-hidden-submit"
-                                    style="display: none; width: 0px; height: 0px;"></button>
-                            <input type="hidden" id="id" value="${user.id}">
+                        <form class="form-horizontal" id="userProfileForm">
+                            <input type="hidden" name="id" value="${user.id}">
                             <div class="row">
                                 <div class="col-sm-6 b-r">
-
-                                    <div class="hr-line-dashed"></div>
                                     <div class="form-group has-feedback">
                                         <label class="col-sm-3 control-label">账户</label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="account" name="account"
-                                                   value="${user.account}" type="text" disabled="disabled"
-                                                   data-bv-field="account">
+                                                   value="${user.account}" type="text" disabled="disabled">
                                         </div>
                                     </div>
-                                    <div class="hr-line-dashed"></div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">角色</label>
                                         <div class="col-sm-9">
@@ -126,7 +120,6 @@
                                                    type="text" disabled="disabled">
                                         </div>
                                     </div>
-                                    <div class="hr-line-dashed"></div>
                                     <div class="form-group">
                                         <label class="col-sm-3 control-label">性别</label>
                                         <div class="col-sm-9">
@@ -138,12 +131,11 @@
                                         </div>
                                     </div>
 
-                                    <div class="hr-line-dashed"></div>
                                     <div class="form-group has-feedback">
                                         <label class="col-sm-3 control-label">邮箱</label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="email" name="email" value="${user.email}"
-                                                   type="email" data-bv-field="email">
+                                                   type="email">
                                         </div>
                                     </div>
                                 </div>
@@ -153,10 +145,9 @@
                                             <label class="col-sm-3 control-label">姓名</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" id="name" name="name" value="${user.name}"
-                                                       type="text" data-bv-field="name">
+                                                       type="text">
                                             </div>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">出生日期</label>
                                             <div class="col-sm-9">
@@ -173,7 +164,6 @@
                                                 <input type="hidden" id="birthday" value="${user.birthday?date}"/>
                                             </div>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
                                         <div class="form-group has-feedback">
                                             <label class="col-sm-3 control-label">部门</label>
                                             <div class="col-sm-9">
@@ -192,7 +182,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="hr-line-dashed"></div>
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label">电话</label>
                                             <div class="col-sm-9">
@@ -216,32 +205,32 @@
                         </form>
                     </div>
                     <!-- /.tab-pane -->
-                    <div class="tab-pane" id="activity">
+                    <div class="tab-pane" id="reset_password">
                         <form id="pwdForm" class="form-horizontal">
                             <div class="row">
                                 <div class="form-group">
                                     <label for="oldPwd" class="col-sm-3 control-label">原密码</label>
                                     <div class="col-sm-7">
-                                        <input type="password" class="form-control" id="oldPwd" placeholder="原密码">
+                                        <input type="password" class="form-control" name="oldPwd" placeholder="原密码">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="newPwd" class="col-sm-3 control-label">新密码</label>
                                     <div class="col-sm-7">
-                                        <input type="password" class="form-control" id="newPwd"
+                                        <input type="password" class="form-control" name="newPwd"
                                                placeholder="新密码">
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="rePwd" class="col-sm-3 control-label">验证</label>
+                                    <label for="rePwd" class="col-sm-3 control-label">再次验证</label>
                                     <div class="col-sm-7">
-                                        <input type="password" class="form-control" id="rePwd" placeholder="再次新密码">
+                                        <input type="password" class="form-control" name="rePwd" placeholder="再次新密码验证">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-danger " onclick="UserInfo.chPwd()"
+                                    <button type="button" class="btn btn-danger " onclick="UserInfo.changePassword()"
                                             id="ensure">
                                         <i class="fa fa-check"></i>&nbsp;提交
                                     </button>

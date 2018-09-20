@@ -86,7 +86,7 @@ public class LoginController extends BaseController {
     }
 
     /**
-     * 根路径
+     * 主页
      */
     @GetMapping("/index")
     public String index(Model model) {
@@ -94,7 +94,7 @@ public class LoginController extends BaseController {
     }
 
     /**
-     * 黑板
+     * 黑板（通知）
      */
     @GetMapping("/blackboard")
     public String blackboard(Model model) {

@@ -28,7 +28,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-        <li><a href="#">系统管理</a></li>
+        <li><a href="#">权限管理</a></li>
         <li class="active">角色管理</li>
     </ol>
 </section>
@@ -53,11 +53,11 @@
                                        placeholder="名称">
                             </div>
                             <label for="tips" class="col-md-2 col-lg-1 control-label"
-                                   style="padding-right:0px">别名</label>
+                                   style="padding-right:0px">英文别名</label>
                             <div class="col-md-4 col-lg-5 ">
                                 <input class="form-control" type="text" id="tips"
                                        name="tips"
-                                       placeholder="别名">
+                                       placeholder="英文别名">
                             </div>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                                 添加
                             </button>
                         </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/role/edit">
+                        <@shiro.hasPermission name="/role/edit/*">
                             <button type="button" onclick="Role.openEditPage();"
                                     class="btn btn-success btn-sm no-margin-top">
                                 修改
@@ -100,10 +100,10 @@
                                 删除
                             </button>
                         </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/role/setAuthority">
+                        <@shiro.hasPermission name="/role/set_menu/*">
                             <button type="button" onclick="Role.assign();"
                                     class="btn btn-success btn-sm no-margin-top">
-                                权限配置
+                                配置权限
                             </button>
                         </@shiro.hasPermission>
                     </div>

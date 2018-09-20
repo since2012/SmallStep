@@ -16,7 +16,7 @@ public interface AdminConst {
     /**
      * 超级管理员角色的名字
      */
-    String ADMIN_NAME = "administrator";
+    String ADMIN_ROLE_NAME = "administrator";
     String SELLER_NAME = "seller";
 
     /**

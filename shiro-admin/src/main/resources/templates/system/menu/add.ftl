@@ -49,7 +49,7 @@
                         <div class="form-group has-feedback">
                             <label class="col-xs-3 control-label">菜单编号</label>
                             <div class="col-xs-9">
-                                <input class="form-control" id="code" name="code" type="text" data-bv-field="code">
+                                <input class="form-control" id="code" name="code" type="text">
                             </div>
                         </div>
                         <div class="form-group has-feedback">
@@ -57,7 +57,7 @@
                             <div class="col-xs-9">
                                 <input class="form-control" id="pcodeName" name="pcodeName" type="text"
                                        readonly="readonly" onclick="MenuInfo.showMenuSelectTree(); return false;"
-                                       style="background-color: #ffffff !important;" data-bv-field="pcodeName">
+                                       style="background-color: #ffffff !important;">
                                 <input class="form-control" type="hidden" id="pcode" value="">
                                 <div id="pcodeTreeDiv" style="display: none; position: absolute; z-index: 200;">
                                     <ul id="pcodeTree" class="ztree tree-box" style="width:244px !important;">

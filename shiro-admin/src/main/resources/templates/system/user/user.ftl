@@ -20,9 +20,7 @@
     <script src="/static/plugins/jqueryZtree/jquery.ztree.all.min.js"></script>
 
     <script src="/static/plugins/common/ajax-object.js"></script>
-<#--弹出层-->
     <script src="/static/plugins/layer/layer.js"></script>
-<#--自定义封装-->
     <script src="/static/plugins/common/bootstrap-table-object.js"></script>
     <script src="/static/plugins/common/ztree-object.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
@@ -36,34 +34,34 @@
         <small></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">系统管理</a></li>
+        <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
+        <li><a href="#">权限管理</a></li>
         <li class="active">用户管理</li>
     </ol>
 </section>
 <!-- Main content -->
 <section class="content">
     <div class="row">
+        <!--组织结构树-->
         <div class="col-lg-2">
             <div class="panel panel-default">
                 <div class="panel-heading">组织机构</div>
-                <div class="panel-body dept-tree">
+                <div class="dept-tree">
                     <ul id="deptTree" class="ztree"></ul>
                 </div>
             </div>
         </div>
+        <!--表单表格-->
         <div class="col-lg-10">
             <div class="row">
                 <div class="col-md-12 col-lg-12">
-                    <!-- Horizontal Form -->
                     <div class="box box-success">
                         <div class="box-header with-border">
                             <h3 class="box-title"><i class="fa fa-search"></i> 查询条件</h3>
                         </div>
-                        <!-- /.box-header -->
                         <!-- form start -->
-                        <form class="form-horizontal">
-                            <div class="box-body">
+                        <div class="box-body">
+                            <form class="form-horizontal">
                                 <div class="form-group">
                                     <label for="name" class="col-lg-1 control-label"
                                            style="padding-right:0px;">名称</label>
@@ -86,7 +84,7 @@
                                              data-date-format="yyyy-mm-dd" data-link-field="beginTime"
                                              data-link-format="yyyy-mm-dd">
                                             <input class="form-control" size="16" type="text" value=""
-                                                   readonly placeholder="注册开始日期">
+                                                   readonly placeholder="注册不早于">
                                             <span class="input-group-addon"><span
                                                     class="glyphicon glyphicon-remove"></span></span>
                                             <span class="input-group-addon"><span
@@ -95,7 +93,6 @@
                                         <input type="hidden" id="beginTime" value=""/>
                                     </div>
 
-
                                     <label for="endTime" class="col-lg-1 control-label"
                                            style="padding-right:0px">日期</label>
                                     <div class="col-lg-5 ">
@@ -103,7 +100,7 @@
                                              data-date-format="yyyy-mm-dd" data-link-field="endTime"
                                              data-link-format="yyyy-mm-dd">
                                             <input class="form-control" size="16" type="text" value=""
-                                                   readonly placeholder="注册结束日期">
+                                                   readonly placeholder="注册不晚于">
                                             <span class="input-group-addon"><span
                                                     class="glyphicon glyphicon-remove"></span></span>
                                             <span class="input-group-addon"><span
@@ -112,20 +109,20 @@
                                         <input type="hidden" id="endTime" value=""/>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- /.box-body -->
-                            <div class="box-footer text-center">
-                                <button type="button" onclick="MgrUser.search();"
-                                        class="btn btn-primary btn-sm no-margin-top">
-                                    <i class="fa fa-check"></i> 查询
-                                </button>
-                                <button type="button" onclick="MgrUser.reset();"
-                                        class="btn btn-default btn-sm no-margin-top">
-                                    <i class="fa fa-refresh"></i>重置
-                                </button>
-                            </div>
-                            <!-- /.box-footer -->
-                        </form>
+                            </form>
+                        </div>
+                        <!-- /.box-body -->
+                        <div class="box-footer text-center">
+                            <button type="button" onclick="UserMgr.search();"
+                                    class="btn btn-primary btn-sm no-margin-top">
+                                <i class="fa fa-check"></i> 查询
+                            </button>
+                            <button type="button" onclick="UserMgr.reset();"
+                                    class="btn btn-default btn-sm no-margin-top">
+                                <i class="fa fa-refresh"></i>重置
+                            </button>
+                        </div>
+                        <!-- /.box-footer -->
                     </div>
                     <!-- /.box -->
                 </div>
@@ -133,51 +130,53 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-success">
-                        <div class="box-body">
+                        <div class="box-header with-border">
                             <div class="hidden-xs" id="managerTableToolbar" role="group">
-                        <@shiro.hasPermission name="/mgr/add">
-                            <button type="button" onclick="MgrUser.openAddPage();"
-                                    class="btn btn-success btn-sm no-margin-top">
-                                添加
-                            </button>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/mgr/edit">
-                            <button type="button" onclick="MgrUser.openEditPage();"
-                                    class="btn btn-success btn-sm no-margin-top">
-                                修改
-                            </button>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/mgr/delete">
-                            <button type="button" onclick="MgrUser.delUser();"
-                                    class="btn btn-success btn-sm no-margin-top">
-                                删除
-                            </button>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/mgr/reset">
-                            <button type="button" onclick="MgrUser.resetPwd();"
-                                    class="btn btn-success btn-sm no-margin-top">
-                                重置密码
-                            </button>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/mgr/freeze">
-                            <button type="button" onclick="MgrUser.freezeAccount();"
-                                    class="btn btn-success btn-sm no-margin-top">
-                                冻结用户
-                            </button>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/mgr/unfreeze">
-                            <button type="button" onclick="MgrUser.unfreeze();"
-                                    class="btn btn-success btn-sm no-margin-top">
-                                解除冻结
-                            </button>
-                        </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/mgr/setRole">
-                            <button type="button" onclick="MgrUser.roleAssign();"
-                                    class="btn btn-success btn-sm no-margin-top">
-                                配置角色
-                            </button>
-                        </@shiro.hasPermission>
+                                <@shiro.hasPermission name="/mgr/add">
+                                    <button type="button" onclick="UserMgr.openAddPage();"
+                                            class="btn btn-success btn-sm no-margin-top">
+                                        添加
+                                    </button>
+                                </@shiro.hasPermission>
+                                <@shiro.hasPermission name="/mgr/edit/*">
+                                    <button type="button" onclick="UserMgr.openEditPage();"
+                                            class="btn btn-success btn-sm no-margin-top">
+                                        修改
+                                    </button>
+                                </@shiro.hasPermission>
+                                <@shiro.hasPermission name="/mgr/delete">
+                                    <button type="button" onclick="UserMgr.delUser();"
+                                            class="btn btn-success btn-sm no-margin-top">
+                                        删除
+                                    </button>
+                                </@shiro.hasPermission>
+                                <@shiro.hasPermission name="/mgr/reset">
+                                    <button type="button" onclick="UserMgr.resetPassword();"
+                                            class="btn btn-success btn-sm no-margin-top">
+                                        重置密码
+                                    </button>
+                                </@shiro.hasPermission>
+                                <@shiro.hasPermission name="/mgr/freeze">
+                                    <button type="button" onclick="UserMgr.freezeAccount();"
+                                            class="btn btn-success btn-sm no-margin-top">
+                                        冻结用户
+                                    </button>
+                                </@shiro.hasPermission>
+                                <@shiro.hasPermission name="/mgr/unfreeze">
+                                    <button type="button" onclick="UserMgr.unfreeze();"
+                                            class="btn btn-success btn-sm no-margin-top">
+                                        解除冻结
+                                    </button>
+                                </@shiro.hasPermission>
+                                <@shiro.hasPermission name="/mgr/set_role/*">
+                                    <button type="button" onclick="UserMgr.roleAssign();"
+                                            class="btn btn-success btn-sm no-margin-top">
+                                        配置角色
+                                    </button>
+                                </@shiro.hasPermission>
                             </div>
+                        </div>
+                        <div class="box-body">
                             <table id="managerTable" data-mobile-responsive="true" data-click-to-select="true">
                             </table>
                         </div>
@@ -189,7 +188,6 @@
             </div>
         </div>
     </div>
-    <!-- /.row -->
 </section><!-- /.content -->
 </body>
 </html>

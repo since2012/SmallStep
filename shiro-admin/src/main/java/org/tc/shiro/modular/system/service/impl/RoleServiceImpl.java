@@ -22,6 +22,7 @@ import org.tc.shiro.po.Role;
 import org.tc.shiro.po.User;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -63,13 +64,18 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     public void setAuthority(Integer roleId, String ids) {
         // 删除该角色所有的权限
         this.relationMapper.deleteByRoleId(roleId);
+        List<Relation> list = new ArrayList<>();
         // 添加新的权限
         for (Long id : Convert.toLongArray(true, Convert.toStrArray(",", ids))) {
+            if (id.intValue() == 0) {
+                continue;
+            }
             Relation relation = new Relation();
             relation.setRoleid(roleId);
             relation.setMenuid(id);
-            this.relationMapper.insertUseGeneratedKeys(relation);
+            list.add(relation);
         }
+        this.relationMapper.insertList(list);
     }
 
     @Override

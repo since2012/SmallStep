@@ -39,7 +39,7 @@
     </select>
 
     <select id="tree" resultType="com.stylefeng.guns.core.ztree.ZTreeNode">
-        SELECT m1.id ,m1.name as name,m1.code,
+        SELECT m1.id,m1.name,m1.code,
          (CASE WHEN (m2.id = 0 OR m2.id IS NULL) THEN 0 ELSE m2.id END ) as pid,
          (CASE WHEN (m2.id = 0 OR m2.id IS NULL) THEN 'true' ELSE 'false' END ) as open
          FROM sys_menu m1
@@ -49,7 +49,7 @@
     </select>
 
     <select id="treeByMenuIds" resultType="com.stylefeng.guns.core.ztree.ZTreeNode">
-        SELECT m1.id as id,m1.name as name,m1.code,
+        SELECT m1.id,m1.name,m1.code,
         ( CASE WHEN (m2.id = 0 OR m2.id IS NULL) THEN 0 ELSE m2.id END ) as pid,
         ( CASE WHEN (m2.id = 0 OR m2.id IS NULL) THEN 'true' ELSE 'false' END ) as open,
         ( CASE WHEN m1.id in
@@ -58,8 +58,10 @@
             #{i}
         </foreach>
         THEN 'true' ELSE 'false' END ) as checked
-        FROM sys_menu m1 LEFT join sys_menu m2 ON m2.status = 1 and m1.pcode = m2.code
-        WHERE m1.status = 1 ORDER BY m1.url
+        FROM sys_menu m1
+        LEFT join sys_menu m2 ON m2.status = 1 and m1.pcode = m2.code
+        WHERE m1.status = 1
+        order by m1.levels, m1.num
     </select>
 
     <select id="getAPIByRoleId" resultType="string">

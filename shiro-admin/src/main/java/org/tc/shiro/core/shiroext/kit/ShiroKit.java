@@ -277,7 +277,7 @@ public class ShiroKit {
         List<Integer> roleList = ShiroKit.getUser().getRoleList();
         for (Integer integer : roleList) {
             String singleRoleTip = ConstantFactory.me().getRoleEnName(integer);
-            if (singleRoleTip.equals(AdminConst.ADMIN_NAME)) {
+            if (singleRoleTip.equals(AdminConst.ADMIN_ROLE_NAME)) {
                 return true;
             }
         }

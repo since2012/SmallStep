@@ -9,7 +9,7 @@
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
-    <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/bower_components/bootstrap/dist/css/bootstrap.css">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="/static/bower_components/font-awesome/css/font-awesome.min.css">
     <!-- Ionicons -->
@@ -49,6 +49,7 @@
 <body class="hold-transition skin-green sidebar-mini">
 <div class="wrapper">
 
+<#--头部数据-->
     <header class="main-header">
         <!-- Logo -->
         <a href="/index" class="logo">
@@ -69,6 +70,7 @@
 
             <div class="navbar-custom-menu">
                 <ul class="nav navbar-nav">
+
                     <!-- Messages: style can be found in dropdown.less-->
                     <li class="dropdown messages-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -148,9 +150,10 @@
                                     </li>
                                 </ul>
                             </li>
-                            <li class="footer"><a href="#">See All Messages</a></li>
+                            <li class="footer"><a href="#">查看所有消息</a></li>
                         </ul>
                     </li>
+
                     <!-- Notifications: style can be found in dropdown.less -->
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -195,6 +198,7 @@
                             <li class="footer"><a href="/blackboard">查看所有通知</a></li>
                         </ul>
                     </li>
+
                     <!-- Tasks: style can be found in dropdown.less -->
                     <li class="dropdown tasks-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -273,10 +277,11 @@
                                 </ul>
                             </li>
                             <li class="footer">
-                                <a href="#">View all tasks</a>
+                                <a href="#">查看所有任务</a>
                             </li>
                         </ul>
                     </li>
+
                     <!-- User Account: style can be found in dropdown.less -->
                     <li class="dropdown user user-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -303,6 +308,7 @@
                             </li>
                         </ul>
                     </li>
+
                     <!-- Control Sidebar Toggle Button -->
                     <li>
                         <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
@@ -311,7 +317,8 @@
             </div>
         </nav>
     </header>
-    <!-- Left side column. contains the logo and sidebar -->
+
+    <!-- 左边板：Left side column. contains the logo and sidebar -->
     <aside class="main-sidebar">
         <!-- sidebar: style can be found in sidebar.less -->
         <section class="sidebar">
@@ -328,17 +335,19 @@
             <!-- search form -->
             <form action="#" method="get" class="sidebar-form">
                 <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="搜索...">
+                    <input type="text" name="q" class="form-control" placeholder="搜索...（TODO）">
                     <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
+                        <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i
+                                class="fa fa-search"></i>
+                        </button>
+                      </span>
                 </div>
             </form>
             <!-- /.search form -->
             <!-- sidebar menu: : style can be found in sidebar.less -->
             <ul class="sidebar-menu" data-widget="tree">
                 <li class="header">导航面板</li>
+                <#--生成菜单-->
                 <#if titles?? && titles?size gt 0>
                     <#list titles as item>
                         <#if item.children?? >
@@ -369,13 +378,13 @@
         <!-- /.sidebar -->
     </aside>
 
-    <!-- Content Wrapper. Contains page content -->
+    <!-- 内容填充区Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <sitemesh:write property='body'/>
     </div>
     <!-- /.content-wrapper -->
 
-<#--页脚-->
+    <#--页脚-->
     <footer class="main-footer">
         <strong>Copyright &copy; 2018 <a href="https://adminlte.io">TC</a>.</strong> All rights
         reserved.
@@ -384,7 +393,7 @@
         </div>
     </footer>
 
-    <!-- Control Sidebar -->
+    <!-- 控制边板Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
@@ -543,11 +552,11 @@
                     </div>
                     <!-- /.form-group -->
 
-                    <h3 class="control-sidebar-heading">Chat Settings</h3>
+                    <h3 class="control-sidebar-heading">聊天设置</h3>
 
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
-                            Show me as online
+                            显示我在线
                             <input type="checkbox" class="pull-right" checked>
                         </label>
                     </div>
@@ -555,7 +564,7 @@
 
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
-                            Turn off notifications
+                            关闭通知
                             <input type="checkbox" class="pull-right">
                         </label>
                     </div>
@@ -563,7 +572,7 @@
 
                     <div class="form-group">
                         <label class="control-sidebar-subheading">
-                            Delete chat history
+                            删除聊天历史
                             <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
                         </label>
                     </div>

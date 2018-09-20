@@ -42,19 +42,20 @@
 <section class="content">
     <div class="col-xs-12 col-md-12 col-lg-12">
         <div class="box box-success">
-            <div class="form-horizontal bv-form" id="userInfoForm" novalidate="novalidate">
-                <button type="submit" class="bv-hidden-submit" disabled="disabled"
-                        style="display: none; width: 0px; height: 0px;"></button>
-
+            <div class="form-horizontal " id="userProfileForm">
                 <input type="hidden" id="id" value="">
-
                 <div class="row">
                     <div class="col-xs-6 b-r">
                         <div class="form-group has-feedback">
                             <label class="col-xs-3 control-label">账户</label>
                             <div class="col-xs-9">
-                                <input class="form-control" id="account" name="account" type="text"
-                                       data-bv-field="account">
+                                <input class="form-control" id="account" name="account" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group has-feedback has-error">
+                            <label class="col-xs-3 control-label">密码</label>
+                            <div class="col-xs-9">
+                                <input class="form-control" id="password" name="password" type="password">
                             </div>
                         </div>
                         <div class="form-group">
@@ -66,25 +67,25 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group has-feedback has-error">
-                            <label class="col-xs-3 control-label">密码</label>
-                            <div class="col-xs-9">
-                                <input class="form-control" id="password" name="password" type="password"
-                                       data-bv-field="password">
-                            </div>
-                        </div>
                         <div class="form-group">
-                            <label class="col-xs-3 control-label">角色</label>
+                            <label class="col-xs-3 control-label">出生日期</label>
                             <div class="col-xs-9">
-                                <input class="form-control" id="roleid" name="roleid" type="text" disabled="disabled">
-
+                                <div class="input-group date form_date" data-date=""
+                                     data-date-format="yyyy-mm-dd" data-link-field="birthday"
+                                     data-link-format="yyyy-mm-dd">
+                                    <input class="form-control" size="16" type="text" value="" readonly>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-remove"></span></span>
+                                    <span class="input-group-addon"><span
+                                            class="glyphicon glyphicon-calendar"></span></span>
+                                </div>
+                                <input type="hidden" id="birthday" value=""/>
                             </div>
                         </div>
                         <div class="form-group has-feedback has-error">
                             <label class="col-xs-3 control-label">邮箱</label>
                             <div class="col-xs-9">
-                                <input class="form-control" id="email" name="email" type="email"
-                                       data-bv-field="email">
+                                <input class="form-control" id="email" name="email" type="email">
                             </div>
                         </div>
                     </div>
@@ -93,39 +94,23 @@
                             <div class="form-group has-feedback">
                                 <label class="col-xs-3 control-label">姓名</label>
                                 <div class="col-xs-9">
-                                    <input class="form-control" id="name" name="name" type="text"
-                                           data-bv-field="name">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-xs-3 control-label">出生日期</label>
-                                <div class="col-xs-9">
-                                    <div class="input-group date form_date" data-date=""
-                                         data-date-format="yyyy-mm-dd" data-link-field="birthday"
-                                         data-link-format="yyyy-mm-dd">
-                                        <input class="form-control" size="16" type="text" value=""
-                                               readonly>
-                                        <span class="input-group-addon"><span
-                                                class="glyphicon glyphicon-remove"></span></span>
-                                        <span class="input-group-addon"><span
-                                                class="glyphicon glyphicon-calendar"></span></span>
-                                    </div>
-                                    <input type="hidden" id="birthday" value=""/>
+                                    <input class="form-control" id="name" name="name" type="text">
                                 </div>
                             </div>
                             <div class="form-group has-feedback">
                                 <label class="col-xs-3 control-label">确认密码</label>
                                 <div class="col-xs-9">
                                     <input class="form-control" id="rePassword" name="rePassword" type="password"
-                                           data-bv-field="rePassword">
+                                    >
                                 </div>
                             </div>
+
                             <div class="form-group has-feedback">
                                 <label class="col-xs-3 control-label">部门</label>
                                 <div class="col-xs-9">
                                     <input class="form-control" id="citySel" name="citySel" type="text"
                                            readonly="readonly" onclick="UserInfo.showDeptSelectTree(); return false;"
-                                           style="background-color: #ffffff !important;" data-bv-field="citySel">
+                                           style="background-color: #ffffff !important;">
                                     <input class="form-control" type="hidden" id="deptid" value="">
                                     <div id="menuContent"
                                          style="display: none; position: absolute; z-index: 200;">
@@ -147,14 +132,12 @@
 
                 <div class="row btn-group-m-t">
                     <div class="text-center">
-
                         <button type="button" class="btn btn-info " onclick="UserInfo.addSubmit()" id="ensure">
                             <i class="fa fa-check"></i>&nbsp;提交
                         </button>
                         <button type="button" class="btn btn-danger " onclick="UserInfo.close()" id="cancel">
                             <i class="fa fa-eraser"></i>&nbsp;取消
                         </button>
-
                     </div>
                 </div>
             </div>

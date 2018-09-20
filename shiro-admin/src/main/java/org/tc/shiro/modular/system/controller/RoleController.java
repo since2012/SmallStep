@@ -7,10 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.tips.Tip;
@@ -28,9 +25,6 @@ import java.util.List;
 
 /**
  * 角色控制器
- *
- * @author fengshuonan
- * @Date 2017年2月12日21:59:14
  */
 @Controller
 @RequestMapping("/role")
@@ -46,7 +40,7 @@ public class RoleController extends BaseController {
     /**
      * 角色列表页
      */
-    @RequestMapping("")
+    @GetMapping("")
     public String index() {
         return PREFIX + "/role";
     }
@@ -54,7 +48,7 @@ public class RoleController extends BaseController {
     /**
      * 获取角色列表
      */
-    @RequestMapping(value = "/list")
+    @PostMapping("/list")
     @ResponseBody
     public Object list(@RequestParam(required = false) String name) {
         List<Role> list = roleService.list(name);
@@ -64,16 +58,16 @@ public class RoleController extends BaseController {
     /**
      * 角色新增页面
      */
-    @RequestMapping(value = "/role_add")
+    @GetMapping("/add")
     public String roleAdd() {
-        return PREFIX + "/role_add";
+        return PREFIX + "/add";
     }
 
     /**
      * 角色新增
      */
-    @RequestMapping(value = "/add")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @PostMapping("/add")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip add(@Valid Role role, BindingResult result) {
         if (result.hasErrors()) {
@@ -86,7 +80,7 @@ public class RoleController extends BaseController {
     /**
      * 角色修改页
      */
-    @RequestMapping(value = "/role_edit/{roleId}")
+    @GetMapping("/edit/{roleId}")
     public String roleEdit(@PathVariable Integer roleId, Model model) {
         if (ToolUtil.isEmpty(roleId)) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
@@ -95,14 +89,14 @@ public class RoleController extends BaseController {
         model.addAttribute("role", role);
         model.addAttribute("pName", ConstantFactory.me().getSingleRoleName(role.getPid()));
         model.addAttribute("deptName", ConstantFactory.me().getDeptName(role.getDeptid()));
-        return PREFIX + "/role_edit";
+        return PREFIX + "/edit";
     }
 
     /**
      * 角色修改
      */
-    @RequestMapping(value = "/edit")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @PostMapping("/edit")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip edit(@Valid Role role, BindingResult result) {
         Integer id = role.getId();
@@ -118,7 +112,7 @@ public class RoleController extends BaseController {
     /**
      * 角色分配权限页
      */
-    @RequestMapping(value = "/menu_assign/{roleId}")
+    @RequestMapping("/set_menu/{roleId}")
     public String roleAssign(@PathVariable("roleId") Integer roleId, Model model) {
         if (ToolUtil.isEmpty(roleId)) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
@@ -131,8 +125,8 @@ public class RoleController extends BaseController {
     /**
      * 配置权限
      */
-    @RequestMapping("/setAuthority")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @PostMapping("/set_menu")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip setAuthority(@RequestParam("roleId") Integer roleId, @RequestParam("ids") String ids) {
         if (ToolUtil.isOneEmpty(roleId, ids)) {
@@ -145,8 +139,8 @@ public class RoleController extends BaseController {
     /**
      * 删除角色
      */
-    @RequestMapping(value = "/delete")
-    @RequiresRoles(AdminConst.ADMIN_NAME)
+    @PostMapping("/delete")
+    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Tip remove(@RequestParam Integer roleId) {
         if (ToolUtil.isEmpty(roleId)) {
@@ -159,23 +153,23 @@ public class RoleController extends BaseController {
         return SUCCESS_TIP;
     }
 
-    /**
-     * 查看角色
-     */
-    @RequestMapping(value = "/view/{roleId}")
-    @ResponseBody
-    public Tip view(@PathVariable Integer roleId) {
-        if (ToolUtil.isEmpty(roleId)) {
-            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
-        }
-        this.roleService.selectByPK(roleId);
-        return SUCCESS_TIP;
-    }
+//    /**
+//     * 查看角色
+//     */
+//    @PostMapping("/view/{roleId}")
+//    @ResponseBody
+//    public Tip view(@PathVariable Integer roleId) {
+//        if (ToolUtil.isEmpty(roleId)) {
+//            throw new GunsException(BizExceptionEnum.REQUEST_NULL);
+//        }
+//        this.roleService.selectByPK(roleId);
+//        return SUCCESS_TIP;
+//    }
 
     /**
      * 角色node
      */
-    @RequestMapping(value = "/tree")
+    @PostMapping("/tree")
     @ResponseBody
     public List<ZTreeNode> roleTreeList() {
         List<ZTreeNode> roleTreeList = this.roleService.getRoleTree();
@@ -184,9 +178,9 @@ public class RoleController extends BaseController {
     }
 
     /**
-     * 角色node(带勾选状态)
+     * 角色树
      */
-    @RequestMapping(value = "/treeByUserId/{userId}")
+    @PostMapping("/treeByUserId/{userId}")
     @ResponseBody
     public List<ZTreeNode> roleTreeByUserId(@PathVariable Integer userId) {
         List<ZTreeNode> roleTreeList = roleService.getCheckedRoleTree(userId);

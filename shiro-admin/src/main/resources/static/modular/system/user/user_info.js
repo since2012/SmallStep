@@ -34,7 +34,7 @@ var UserInfo = {
                 identical: {
                     field: 'rePassword',
                     message: '两次密码不一致'
-                },
+                }
             }
         },
         rePassword: {
@@ -45,10 +45,32 @@ var UserInfo = {
                 identical: {
                     field: 'password',
                     message: '两次密码不一致'
-                },
+                }
             }
         }
     }
+};
+
+/**
+ * 点击部门input框时
+ *
+ * @param e
+ * @param treeId
+ * @param treeNode
+ * @returns
+ */
+UserInfo.onClickDept = function (e, treeId, treeNode) {
+    $("#citySel").attr("value", UserInfo.ztree.getSelectedVal());
+    $("#deptid").attr("value", treeNode.id);
+};
+
+/**
+ * 显示用户详情部门选择的树
+ *
+ * @returns
+ */
+UserInfo.showDeptSelectTree = function () {
+    Feng.showInputTree("citySel", "menuContent");
 };
 
 /**
@@ -105,54 +127,18 @@ UserInfo.get = function (key) {
 };
 
 /**
- * 关闭此对话框
- */
-UserInfo.close = function () {
-    parent.layer.close(window.parent.MgrUser.layerIndex);
-};
-
-/**
- * 点击部门input框时
- *
- * @param e
- * @param treeId
- * @param treeNode
- * @returns
- */
-UserInfo.onClickDept = function (e, treeId, treeNode) {
-    $("#citySel").attr("value", UserInfo.ztree.getSelectedVal());
-    $("#deptid").attr("value", treeNode.id);
-};
-
-/**
- * 显示用户详情部门选择的树
- *
- * @returns
- */
-UserInfo.showDeptSelectTree = function () {
-    Feng.showInputTree("citySel", "menuContent");
-};
-
-/**
  * 收集数据
  */
 UserInfo.collectData = function () {
     UserInfo.clearData();
-    this.set('id').set('sex').set('password').set('email')
+    this.set('id').set('account').set('sex').set('password').set('email')
         .set('name').set('birthday').set('deptid').set('phone');
 };
-
 /**
- * 验证两个密码是否一致
+ * 关闭此对话框
  */
-UserInfo.validatePwd = function () {
-    var password = this.get("password");
-    var rePassword = this.get("rePassword");
-    if (password == rePassword) {
-        return true;
-    } else {
-        return false;
-    }
+UserInfo.close = function () {
+    parent.layer.close(window.parent.UserMgr.layerIndex);
 };
 
 /**
@@ -171,15 +157,11 @@ UserInfo.addSubmit = function () {
     if (!this.validate()) {
         return;
     }
-    if (!this.validatePwd()) {
-        Feng.error("两次密码输入不一致");
-        return;
-    }
     this.collectData();
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/mgr/add", function (data) {
         Feng.success("添加成功!");
-        window.parent.MgrUser.table.refresh();
+        window.parent.UserMgr.table.refresh();
         UserInfo.close();
     }, function (data) {
         Feng.error("添加失败!" + data.responseJSON.message + "!");
@@ -199,8 +181,8 @@ UserInfo.editSubmit = function () {
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/mgr/edit", function (data) {
         Feng.success("修改成功!");
-        if (window.parent.MgrUser != undefined) {
-            window.parent.MgrUser.table.refresh();
+        if (window.parent.UserMgr != undefined) {
+            window.parent.UserMgr.table.refresh();
             UserInfo.close();
         }
     }, function (data) {
@@ -229,10 +211,26 @@ UserInfo.editProfile = function () {
 };
 
 /**
+ * 验证两个密码是否一致
+ */
+UserInfo.validatePwd = function () {
+    var password = this.get("newPwd");
+    var rePassword = this.get("rePwd");
+    if (password == rePassword) {
+        return true;
+    } else {
+        return false;
+    }
+};
+/**
  * 修改密码
  */
-UserInfo.chPwd = function () {
-    var ajax = new $ax(Feng.ctxPath + "/mgr/changePwd", function (data) {
+UserInfo.changePassword = function () {
+    if (!this.validatePwd()) {
+        Feng.error("两次密码输入不一致");
+        return;
+    }
+    var ajax = new $ax(Feng.ctxPath + "/mgr/change_password", function (data) {
         Feng.success("修改成功!");
     }, function (data) {
         Feng.error("修改失败!" + data.responseJSON.message + "!");
@@ -242,7 +240,7 @@ UserInfo.chPwd = function () {
 };
 
 $(function () {
-
+    //日期显示
     $('.form_date').datetimepicker({
         language: 'zh-CN',
         weekStart: 1,
@@ -255,15 +253,14 @@ $(function () {
         format: 'yyyy-mm-dd'
     });
 
-    //表单验证
-    Feng.initValidator("userProfileForm", UserInfo.validateFields);
-    $("#sex").val($("#sexValue").val());
-
     //部门树
     var ztree = new $ZTree("treeDemo", "/dept/tree");
     ztree.bindOnClick(UserInfo.onClickDept);
     ztree.init();
     UserInfo.ztree = ztree;
+    //表单验证
+    Feng.initValidator("userProfileForm", UserInfo.validateFields);
+    $("#sex").val($("#sexValue").val());
 
     // 初始化头像上传
     var avatarUp = new $WebUpload("avatar");

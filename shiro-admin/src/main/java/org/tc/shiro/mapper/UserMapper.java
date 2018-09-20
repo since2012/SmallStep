@@ -17,6 +17,14 @@ import java.util.List;
 public interface UserMapper extends MyMapper<User> {
 
     /**
+     * 是否存在该账户号（忽略大小写）
+     *
+     * @param account
+     * @return
+     */
+    public boolean existsByAccount(@Param("account") String account);
+
+    /**
      * 修改用户状态
      */
     int setStatus(@Param("userId") Integer userId, @Param("status") int status);
@@ -37,13 +45,6 @@ public interface UserMapper extends MyMapper<User> {
     List<User> list(@Param("dataScope") List<Integer> dataScope, @Param("user") User user,
                     @Param("beginTime") String beginTime, @Param("endTime") String endTime);
 
-    /**
-     * 是否存在该账户号（忽略大小写）
-     *
-     * @param account
-     * @return
-     */
-    public int countByAcount(@Param("account") String account);
 
     /**
      * 通过账号查找

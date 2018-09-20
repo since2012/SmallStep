@@ -9,13 +9,12 @@
 <#--bootstrap table-->
     <link rel="stylesheet" href="/static/plugins/bootstrap-treetable/bootstrap-treetable.css">
     <script src="/static/plugins/bootstrap-treetable/bootstrap-treetable.js"></script>
+
     <script src="/static/plugins/common/ajax-object.js"></script>
-<#--弹出层-->
-    <script src="/static/plugins/layer/layer.js"></script>
-<#--自定义封装-->
     <script src="/static/plugins/common/tree-table-object.js"></script>
+    <script src="/static/plugins/layer/layer.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
-<#--本页JS-->
+
     <script src="/static/modular/system/menu/menu.js"></script>
 </head>
 <body>
@@ -26,7 +25,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-        <li><a href="#">系统管理</a></li>
+        <li><a href="#">权限管理</a></li>
         <li class="active">菜单管理</li>
     </ol>
 </section>
@@ -86,7 +85,7 @@
                                 添加
                             </button>
                         </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/menu/edit">
+                        <@shiro.hasPermission name="/menu/edit/*">
                             <button type="button" onclick="Menu.openEditPage();"
                                     class="btn btn-success btn-sm no-margin-top">
                                 修改

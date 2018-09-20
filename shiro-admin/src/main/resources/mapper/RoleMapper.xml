@@ -27,7 +27,7 @@
     </select>
 
     <select id="roleTree" resultType="com.stylefeng.guns.core.ztree.ZTreeNode">
-		select id as id, pid as pid, name as name, (case when (pid=0 or pid is null) then 'true' else 'false' end) as open
+		select id, pid, name,(case when (pid=0 or pid is null) then 'true' else 'false' end) as open
              FROM sys_role
 	</select>
 
@@ -39,7 +39,7 @@
             #{i}
         </foreach>
         THEN 'true' ELSE 'false' END ) 'checked'
-        from sys_role ORDER BY pid, num ASC
+        from sys_role ORDER BY num ASC
     </select>
 
     <select id="nameList" resultType="string">
