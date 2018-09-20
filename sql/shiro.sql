@@ -11,7 +11,7 @@
  Target Server Version : 50720
  File Encoding         : 65001
 
- Date: 17/09/2018 13:33:17
+ Date: 20/09/2018 19:11:04
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,6 @@ CREATE TABLE `cmd`  (
 -- ----------------------------
 -- Records of cmd
 -- ----------------------------
-INSERT INTO `cmd` VALUES (1, '段子', '精彩段子');
 INSERT INTO `cmd` VALUES (16, '查看', '查看详情');
 INSERT INTO `cmd` VALUES (22, '测试', '命令提示');
 INSERT INTO `cmd` VALUES (24, '订购', '订购服务');
@@ -55,9 +54,6 @@ INSERT INTO `cmd_content` VALUES (39, 16, '查看1');
 INSERT INTO `cmd_content` VALUES (40, 16, '查看2');
 INSERT INTO `cmd_content` VALUES (41, 16, '查看3');
 INSERT INTO `cmd_content` VALUES (42, 16, '查看4');
-INSERT INTO `cmd_content` VALUES (43, 1, '段子1');
-INSERT INTO `cmd_content` VALUES (44, 1, '段子2');
-INSERT INTO `cmd_content` VALUES (45, 1, '段子3');
 INSERT INTO `cmd_content` VALUES (46, 22, '测试1');
 INSERT INTO `cmd_content` VALUES (47, 22, '测试2');
 INSERT INTO `cmd_content` VALUES (50, 24, '套餐1');
@@ -84,9 +80,8 @@ CREATE TABLE `coupon`  (
 -- ----------------------------
 -- Records of coupon
 -- ----------------------------
-INSERT INTO `coupon` VALUES ('1d79ca95-7aed-4f45-9534-da47ef873fc5', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
 INSERT INTO `coupon` VALUES ('23ae9815-3377-4677-9ec4-a3ef0d5abafa', 13, '2018-09-17', '2018-10-06', '2018-09-17 13:23:28', '123', '7Z4Z0', 0, '2018-09-17 11:21:34');
-INSERT INTO `coupon` VALUES ('3163f6ee-fba8-4405-9e4c-b86d8076b9ab', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
+INSERT INTO `coupon` VALUES ('3163f6ee-fba8-4405-9e4c-b86d8076b9ab', 13, '2018-09-17', '2018-10-06', '2018-09-17 13:42:56', '123', 'BJY68', 0, '2018-09-17 11:21:34');
 INSERT INTO `coupon` VALUES ('4e9cb677-2746-48e9-a3e6-bb79ae6c0d38', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
 INSERT INTO `coupon` VALUES ('7179aacf-d99c-4388-9436-25697a25b9ee', 13, '2018-09-17', '2018-10-06', NULL, NULL, NULL, 1, '2018-09-17 11:21:34');
 INSERT INTO `coupon` VALUES ('793b6ba3-ef00-47cd-8f1a-059f6825d929', 13, '2018-09-17', '2018-10-06', '2018-09-17 13:12:00', '123', 'QHT7Q', 1, '2018-09-17 11:21:34');
@@ -111,6 +106,7 @@ CREATE TABLE `seckill`  (
 -- ----------------------------
 -- Records of seckill
 -- ----------------------------
+INSERT INTO `seckill` VALUES (1000, 1, -1, '2018-09-17 13:45:44');
 INSERT INTO `seckill` VALUES (1005, 1, -1, '2018-09-13 16:39:36');
 
 -- ----------------------------
@@ -158,7 +154,7 @@ CREATE TABLE `stock`  (
 -- ----------------------------
 -- Records of stock
 -- ----------------------------
-INSERT INTO `stock` VALUES (1000, 'iphone6', 10000.00, 1000.00, 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
+INSERT INTO `stock` VALUES (1000, 'iphone6', 10000.00, 1000.00, 99, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
 INSERT INTO `stock` VALUES (1001, 'ipad', 10000.00, 800.00, 100, '2016-01-01 00:00:00', '2020-11-26 00:00:00', '2020-11-26 00:00:00');
 INSERT INTO `stock` VALUES (1002, 'mac book pro', 20000.23, 6600.00, 100, '2020-11-26 00:00:00', '2020-12-04 00:00:00', '2018-09-13 13:37:04');
 INSERT INTO `stock` VALUES (1003, 'iMac', 10000.00, 7000.00, 100, '2018-07-06 00:00:00', '2018-08-31 00:00:00', '2020-11-26 00:00:00');
@@ -178,7 +174,7 @@ CREATE TABLE `sys_dept`  (
   `tips` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '提示',
   `version` int(11) DEFAULT NULL COMMENT '版本（乐观锁保留字段）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 30 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '部门表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dept
@@ -201,7 +197,7 @@ CREATE TABLE `sys_dict`  (
   `tips` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '提示',
   `code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '值',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 88 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 94 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_dict
@@ -226,14 +222,113 @@ INSERT INTO `sys_dict` VALUES (87, 2, 85, '中级', NULL, 'mid');
 DROP TABLE IF EXISTS `sys_login_log`;
 CREATE TABLE `sys_login_log`  (
   `id` int(65) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `logname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '名称',
+  `logname` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '日志名称',
   `userid` int(65) DEFAULT NULL COMMENT '管理员id',
   `createtime` datetime(0) DEFAULT NULL COMMENT '创建时间',
-  `succeed` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '是否成功',
+  `succeed` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '是否执行成功',
   `message` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '具体消息',
   `ip` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '登录ip',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 68 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录记录' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 96 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '登录记录' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_login_log
+-- ----------------------------
+INSERT INTO `sys_login_log` VALUES (1, '登录日志', 1, '2018-08-10 10:24:06', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (2, '登录日志', 1, '2018-08-10 10:39:24', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (3, '登录日志', 1, '2018-08-10 11:12:02', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (4, '登录日志', 1, '2018-08-10 14:55:29', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (5, '登录日志', 1, '2018-08-12 18:35:12', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (6, '登录日志', 1, '2018-08-13 11:27:43', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (7, '登录日志', 1, '2018-08-13 17:58:28', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (8, '登录日志', 1, '2018-08-13 18:12:27', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (9, '登录日志', 1, '2018-08-13 18:42:14', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (10, '登录日志', 1, '2018-08-13 19:21:05', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (11, '登录日志', 1, '2018-08-20 19:17:41', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (12, '登录日志', 1, '2018-08-21 17:03:34', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (13, '退出日志', 1, '2018-08-21 17:04:13', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (14, '登录日志', 1, '2018-08-21 17:24:32', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (15, '退出日志', 1, '2018-08-21 17:24:46', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (16, '登录日志', 1, '2018-08-21 17:52:39', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (17, '登录日志', 1, '2018-08-22 13:12:13', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (18, '退出日志', 1, '2018-08-22 13:12:44', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (19, '登录日志', 1, '2018-08-31 10:07:29', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (20, '登录日志', 1, '2018-08-31 10:16:10', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (21, '登录日志', 1, '2018-08-31 10:17:21', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (22, '登录日志', 1, '2018-08-31 10:25:51', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (23, '登录日志', 1, '2018-08-31 10:30:37', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (24, '登录日志', 1, '2018-08-31 10:33:52', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (25, '登录日志', 1, '2018-08-31 10:49:18', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (26, '登录日志', 1, '2018-08-31 11:09:42', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (27, '登录日志', 1, '2018-08-31 13:10:49', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (28, '登录日志', 1, '2018-08-31 13:15:07', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (29, '登录日志', 1, '2018-08-31 13:17:47', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (30, '登录日志', 1, '2018-08-31 13:25:27', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (31, '登录日志', 1, '2018-08-31 13:31:27', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (32, '退出日志', 1, '2018-08-31 13:42:08', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (33, '登录日志', 1, '2018-08-31 14:46:00', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (34, '登录日志', 1, '2018-08-31 15:25:48', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (35, '登录日志', 1, '2018-08-31 17:04:16', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (36, '登录日志', 1, '2018-08-31 18:12:06', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (37, '登录日志', 1, '2018-09-01 09:48:27', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (38, '登录日志', 1, '2018-09-01 09:52:56', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (39, '登录日志', 1, '2018-09-01 10:18:56', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (40, '登录日志', 1, '2018-09-01 11:16:30', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (41, '登录日志', 1, '2018-09-01 11:18:38', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (42, '登录日志', 1, '2018-09-01 12:53:17', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (43, '登录日志', 1, '2018-09-01 14:57:19', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (44, '退出日志', 1, '2018-09-01 14:58:47', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (45, '登录日志', 1, '2018-09-01 14:58:53', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (46, '登录日志', 1, '2018-09-01 15:07:46', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (47, '退出日志', 1, '2018-09-01 15:28:49', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (48, '登录日志', 1, '2018-09-01 15:28:58', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (49, '登录日志', 1, '2018-09-01 15:38:14', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (50, '登录日志', 1, '2018-09-01 15:46:48', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (51, '登录日志', 1, '2018-09-01 15:59:54', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (52, '登录日志', 1, '2018-09-01 16:47:56', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (53, '登录日志', 1, '2018-09-01 16:51:19', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (54, '登录日志', 1, '2018-09-01 16:56:14', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (55, '登录日志', 1, '2018-09-01 17:06:35', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (56, '登录日志', 1, '2018-09-18 18:31:15', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (57, '登录日志', 1, '2018-09-18 18:33:04', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (58, '登录日志', 1, '2018-09-18 18:34:51', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (59, '登录日志', 1, '2018-09-18 18:37:40', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (60, '登录日志', 1, '2018-09-18 18:39:02', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (61, '登录日志', 1, '2018-09-18 18:40:24', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (62, '登录日志', 1, '2018-09-19 10:19:00', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (63, '登录日志', 1, '2018-09-19 10:26:26', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (64, '登录日志', 1, '2018-09-19 10:41:12', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (65, '登录日志', 1, '2018-09-19 10:43:07', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (66, '登录日志', 1, '2018-09-19 10:46:39', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (67, '登录日志', 1, '2018-09-19 10:58:52', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (68, '登录日志', 1, '2018-09-19 11:20:04', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (69, '登录日志', 1, '2018-09-19 12:04:33', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (70, '登录日志', 1, '2018-09-19 12:07:27', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (71, '登录日志', 1, '2018-09-19 13:06:00', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (72, '登录日志', 1, '2018-09-19 13:07:42', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (73, '登录日志', 1, '2018-09-19 13:15:45', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (74, '登录日志', 1, '2018-09-19 13:28:48', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (75, '登录日志', 1, '2018-09-19 13:37:11', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (76, '登录日志', 1, '2018-09-19 15:37:14', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (77, '登录日志', 1, '2018-09-19 15:53:17', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (78, '登录日志', 1, '2018-09-19 15:55:11', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (79, '登录日志', 1, '2018-09-19 16:00:01', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (80, '登录日志', 1, '2018-09-19 16:05:59', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (81, '登录日志', 1, '2018-09-20 11:07:00', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (82, '登录日志', 1, '2018-09-20 12:12:20', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (83, '登录日志', 1, '2018-09-20 13:28:21', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (84, '退出日志', 1, '2018-09-20 13:36:30', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (85, '登录日志', 1, '2018-09-20 13:36:37', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (86, '退出日志', 1, '2018-09-20 13:40:56', '成功', NULL, '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (87, '登录日志', 1, '2018-09-20 13:41:31', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (88, '登录日志', 1, '2018-09-20 13:47:40', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (89, '登录日志', 1, '2018-09-20 14:13:12', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (90, '登录日志', 1, '2018-09-20 14:34:34', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (91, '登录日志', 1, '2018-09-20 14:56:01', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (92, '登录日志', 1, '2018-09-20 14:57:15', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (93, '登录日志', 1, '2018-09-20 17:37:06', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (94, '登录日志', 1, '2018-09-20 17:53:04', '成功', '登录成功', '0:0:0:0:0:0:0:1');
+INSERT INTO `sys_login_log` VALUES (95, '登录日志', 1, '2018-09-20 18:14:06', '成功', '登录成功', '0:0:0:0:0:0:0:1');
 
 -- ----------------------------
 -- Table structure for sys_menu
@@ -254,7 +349,7 @@ CREATE TABLE `sys_menu`  (
   `status` int(65) DEFAULT NULL COMMENT '菜单状态 :  1:启用   0:不启用',
   `tips` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 202 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 211 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_menu
@@ -262,57 +357,49 @@ CREATE TABLE `sys_menu`  (
 INSERT INTO `sys_menu` VALUES (105, 'power', '权限管理', '0', '[0],', 'fa-user', '#', 1, 2, 1, 1, 1, NULL);
 INSERT INTO `sys_menu` VALUES (106, 'mgr', '用户管理', 'power', '[0],[power],', '', '/mgr', 2, 1, 1, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (107, 'mgr_add', '添加用户', 'mgr', '[0],[power],[mgr],', '', '/mgr/add', 3, 3, 0, 0, 1, NULL);
-INSERT INTO `sys_menu` VALUES (108, 'mgr_edit', '修改用户', 'mgr', '[0],[power],[mgr],', '', '/mgr/edit', 3, 5, 0, 0, 1, NULL);
+INSERT INTO `sys_menu` VALUES (108, 'mgr_edit', '修改用户', 'mgr', '[0],[power],[mgr],', '', '/mgr/edit/*', 3, 5, 0, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (109, 'mgr_delete', '删除用户', 'mgr', '[0],[power],[mgr],', '', '/mgr/delete', 3, 6, 0, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (110, 'mgr_reset', '重置密码', 'mgr', '[0],[power],[mgr],', '', '/mgr/reset', 3, 7, 0, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (111, 'mgr_freeze', '冻结用户', 'mgr', '[0],[power],[mgr],', '', '/mgr/freeze', 3, 8, 0, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (112, 'mgr_unfreeze', '解除冻结用户', 'mgr', '[0],[power],[mgr],', '', '/mgr/unfreeze', 3, 9, 0, 0, 1, NULL);
-INSERT INTO `sys_menu` VALUES (113, 'mgr_setRole', '分配角色', 'mgr', '[0],[power],[mgr],', '', '/mgr/setRole', 3, 11, 0, 0, 1, NULL);
+INSERT INTO `sys_menu` VALUES (113, 'mgr_set_role', '分配角色', 'mgr', '[0],[power],[mgr],', '', '/mgr/set_role/*', 3, 11, 0, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (114, 'role', '角色管理', 'power', '[0],[power],', NULL, '/role', 2, 2, 1, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (115, 'role_add', '添加角色', 'role', '[0],[power],[role],', '', '/role/add', 3, 3, 0, 0, 1, NULL);
-INSERT INTO `sys_menu` VALUES (116, 'role_edit', '修改角色', 'role', '[0],[power],[role],', '', '/role/edit', 3, 5, 0, 0, 1, NULL);
-INSERT INTO `sys_menu` VALUES (117, 'role_remove', '删除角色', 'role', '[0],[power],[role],', '', '/role/remove', 3, 6, 0, 0, 1, NULL);
-INSERT INTO `sys_menu` VALUES (118, 'role_setAuthority', '角色配置权限', 'role', '[0],[power],[role],', '', '/role/setAuthority', 3, 8, 0, 0, 1, NULL);
+INSERT INTO `sys_menu` VALUES (116, 'role_edit', '修改角色', 'role', '[0],[power],[role],', '', '/role/edit/*', 3, 5, 0, 0, 1, NULL);
+INSERT INTO `sys_menu` VALUES (117, 'role_delete', '删除角色', 'role', '[0],[power],[role],', '', '/role/delete', 3, 6, 0, 0, 1, NULL);
+INSERT INTO `sys_menu` VALUES (118, 'role_set_menu', '角色配置权限', 'role', '[0],[power],[role],', '', '/role/set_menu/*', 3, 8, 0, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (119, 'menu', '菜单管理', 'power', '[0],[power],', NULL, '/menu', 2, 4, 1, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (120, 'menu_add', '添加菜单', 'menu', '[0],[power],[menu],', '', '/menu/add', 3, 3, 0, 0, 1, NULL);
-INSERT INTO `sys_menu` VALUES (121, 'menu_edit', '修改菜单', 'menu', '[0],[power],[menu],', '', '/menu/edit', 3, 5, 0, 0, 1, NULL);
+INSERT INTO `sys_menu` VALUES (121, 'menu_edit', '修改菜单', 'menu', '[0],[power],[menu],', '', '/menu/edit/*', 3, 5, 0, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (122, 'menu_delete', '删除菜单', 'menu', '[0],[power],[menu],', '', '/menu/delete', 3, 6, 0, 0, 1, NULL);
 INSERT INTO `sys_menu` VALUES (130, 'druid', 'druid监控', 'mon', '[0],[druid],', '', '/druid', 2, 2, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (131, 'dept', '部门管理', 'system', '[0],[system],', '', '/dept', 2, 3, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (132, 'dict', '字典管理', 'system', '[0],[system],', '', '/dict', 2, 4, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (133, 'login_log', '登录日志', 'mon', '[0],[login_log],', '', '/login_log', 2, 6, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (135, 'dept_add', '添加部门', 'dept', '[0],[dept],[dept_add],', '', '/dept/add', 3, 1, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (136, 'dept_update', '修改部门', 'dept', '[0],[power],[dept],', NULL, '/dept/update', 3, 1, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (137, 'dept_delete', '删除部门', 'dept', '[0],[power],[dept],', NULL, '/dept/delete', 3, 1, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (138, 'dict_add', '添加字典', 'dict', '[0],[power],[dict],', NULL, '/dict/add', 3, 1, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (139, 'dict_update', '修改字典', 'dict', '[0],[power],[dict],', NULL, '/dict/update', 3, 1, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (140, 'dict_delete', '删除字典', 'dict', '[0],[power],[dict],', NULL, '/dict/delete', 3, 1, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (150, 'to_menu_edit', '编辑菜单页', 'menu', '[0],[power],[menu],', '', '/menu/menu_edit', 3, 4, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (136, 'dept_edit', '修改部门', 'dept', '[0],[system],[dept],', '', '/dept/edit/*', 3, 3, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (137, 'dept_delete', '删除部门', 'dept', '[0],[system],[dept],', '', '/dept/delete', 3, 5, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (138, 'dict_add', '添加字典', 'dict', '[0],[system],[dict],', '', '/dict/add', 3, 4, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (139, 'dict_edit', '修改字典', 'dict', '[0],[system],[dict],', '', '/dict/edit/*', 3, 6, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (140, 'dict_delete', '删除字典', 'dict', '[0],[system],[dict],', '', '/dict/delete', 3, 9, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (151, 'menu_list', '菜单列表', 'menu', '[0],[power],[menu],', '', '/menu/list', 3, 1, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (152, 'to_dept_update', '修改部门跳转', 'dept', '[0],[power],[dept],', '', '/dept/dept_update', 3, 4, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (153, 'dept_list', '部门列表', 'dept', '[0],[power],[dept],', '', '/dept/list', 3, 5, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (153, 'dept_list', '部门列表', 'dept', '[0],[system],[dept],', '', '/dept/list', 3, 0, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (154, 'dept_detail', '部门详情', 'dept', '[0],[power],[dept],', '', '/dept/detail', 3, 6, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (155, 'to_dict_edit', '修改菜单跳转', 'dict', '[0],[power],[dict],', '', '/dict/dict_edit', 3, 4, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (156, 'dict_list', '字典列表', 'dict', '[0],[power],[dict],', '', '/dict/list', 3, 5, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (156, 'dict_list', '字典列表', 'dict', '[0],[system],[dict],', '', '/dict/list', 3, 1, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (157, 'dict_detail', '字典详情', 'dict', '[0],[power],[dict],', '', '/dict/detail', 3, 6, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (160, 'login_log_clear', '清空登录日志', 'login_log', '[0],[login_log],[login_log_clear],', '', '/login_log/clear', 3, 1, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (161, 'login_log_list', '登录日志列表', 'login_log', '[0],[login_log],[login_log_list],', '', '/login_log/list', 3, 2, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (162, 'to_role_edit', '修改角色跳转', 'role', '[0],[power],[role],', '', '/role/role_edit', 3, 4, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (163, 'to_role_assign', '角色分配权限', 'role', '[0],[power],[role],', '', '/role/role_assign', 3, 7, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (164, 'role_list', '角色列表', 'role', '[0],[power],[role],', '', '/role/list', 3, 1, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (165, 'to_assign_role', '分配角色页面', 'mgr', '[0],[power],[mgr],', '', '/mgr/role_assign', 3, 10, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (166, 'to_user_edit', '修改用户页面', 'mgr', '[0],[power],[mgr],', '', '/mgr/user_edit', 3, 4, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (167, 'mgr_list', '用户列表', 'mgr', '[0],[power],[mgr],', '', '/mgr/list', 3, 1, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (168, 'mon', '监控管理', '0', '[0],', 'fa-laptop', '#', 1, 5, 1, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (186, 'index', '首页', '0', '[0],', '', '/', 1, 0, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (187, 'to_user_add', '新增用户页面', 'mgr', '[0],[power],[mgr],', '', '/mgr/user_add', 3, 2, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (188, 'to_menu_add', '新增菜单页', 'menu', '[0],[power],[menu],', '', '/menu/menu_add', 3, 2, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (186, 'index', '主页', '0', '[0],', 'fa-dashboard', '/', 1, 0, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (189, 'menu_switch', '菜单状态切换', 'menu', '[0],[power],[menu],', '', '/menu/switch', 3, 7, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (190, 'menu_tree', '菜单树', 'menu', '[0],[power],[menu],', '', '/menu/tree', 3, 20, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (191, 'menuTreeByRoleId', '角色配置权限', 'menu', '[0],[power],[menu],', '', '/menu/treeByRoleId/**', 3, 21, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (191, 'menu_tree_by_role_id', '角色配置权限', 'menu', '[0],[power],[menu],', '', '/menu/treeByRoleId/*', 3, 21, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (192, 'mgr_img', '用户获取头像', 'mgr', '[0],[power],[mgr],', '', '/mgr/img/**', 3, 20, 0, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (193, 'mgr_upload', '用户上传头像', 'mgr', '[0],[power],[mgr],', '', '/mgr/upload', 3, 21, 0, NULL, 1, NULL);
-INSERT INTO `sys_menu` VALUES (194, 'system', '系统管理', '0', '[0],', 'fa-dashboard', '#', 1, 3, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (194, 'system', '系统管理', '0', '[0],', 'fa-slack fa-fw', '#', 1, 3, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (195, 'biz', '业务管理', '0', '[0],', 'fa-weixin', '#', 1, 12, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (196, 'cmd', '指令管理', 'biz', '[0],[biz],', '', '/cmd', 2, 1, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (197, 'robot', '自动回复', 'biz', '[0],[biz],', '', '/robot', 2, 2, 1, NULL, 1, NULL);
@@ -320,6 +407,39 @@ INSERT INTO `sys_menu` VALUES (198, 'stock', '库存管理', 'biz', '[0],[biz],'
 INSERT INTO `sys_menu` VALUES (199, 'stock_show', '秒杀列表', 'biz', '[0],[biz],', '', '/stock/show', 2, 13, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (200, 'seller', '卖家管理', 'biz', '[0],[biz],', '', '/seller', 2, 5, 1, NULL, 1, NULL);
 INSERT INTO `sys_menu` VALUES (201, 'coupon', '优惠券管理', 'biz', '[0],[biz],', '', '/coupon', 2, 6, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (202, 'notice', '通知管理', 'system', '[0],[system],', '', '/notice', 2, 6, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (203, 'notice_add', '添加通知', 'notice', '[0],[system],[notice],', '', '/notice/add', 3, 4, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (205, 'notice_list', '通知列表', 'notice', '[0],[system],[notice],', '', '/notice/list', 3, 1, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (206, 'notice_edit', '修改通知', 'notice', '[0],[system],[notice],', '', '/notice/edit/*', 3, 6, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (207, 'notice_del', '删除通知', 'notice', '[0],[system],[notice],', '', '/notice/delete', 3, 7, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (208, 'blackboard', '通知', '0', '[0],', 'fa-bell-o', '/blackboard', 1, 1, 1, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (209, 'mgr_profile', '用户个人资料', 'mgr', '[0],[power],[mgr],', '', '/mgr/profile', 3, 4, 0, NULL, 1, NULL);
+INSERT INTO `sys_menu` VALUES (210, 'change_password', '变更密码', 'mgr', '[0],[power],[mgr],', '', '/mgr/change_password', 3, 7, 0, NULL, 1, NULL);
+
+-- ----------------------------
+-- Table structure for sys_notice
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_notice`;
+CREATE TABLE `sys_notice`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '标题',
+  `type` int(11) DEFAULT NULL COMMENT '类型',
+  `content` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '内容',
+  `createtime` datetime(0) DEFAULT NULL COMMENT '创建时间',
+  `creater` int(11) DEFAULT NULL COMMENT '创建人',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '通知表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of sys_notice
+-- ----------------------------
+INSERT INTO `sys_notice` VALUES (8, '采用Redis', NULL, '采用spring-data-redis作为缓存，并自定义了protostuff的序列化方案', '2017-05-10 19:28:57', 1);
+INSERT INTO `sys_notice` VALUES (10, '日期格式', NULL, '重新配置fastjson，修复了页面日期显示为long数值的bug', '2018-07-22 15:10:06', 1);
+INSERT INTO `sys_notice` VALUES (17, '版本升级', NULL, '将spring boot升级到2.0.3版本,并升级各个依赖包的版本！', '2018-08-13 19:22:12', 1);
+INSERT INTO `sys_notice` VALUES (18, '持久层的框架', NULL, '将持久层的框架替换为spring-boot-starter-&gt;，自定义了父接口BaseDao,service层的IBaseService和BaseServiceImpl', '2018-08-13 19:22:33', 1);
+INSERT INTO `sys_notice` VALUES (21, '重写', NULL, '结合代码自动生成功能重写了service层和DAO层代码', '2018-08-13 19:23:24', 1);
+INSERT INTO `sys_notice` VALUES (24, '功能测试', NULL, '业务管理为测试模块，仅供参考', '2018-08-13 19:31:06', 1);
+INSERT INTO `sys_notice` VALUES (25, '测试', NULL, '<p>大多数回调函数的时候springboot</p>', '2018-09-18 09:50:37', 1);
 
 -- ----------------------------
 -- Table structure for sys_relation
@@ -353,7 +473,6 @@ INSERT INTO `sys_relation` VALUES (3391, 119, 5);
 INSERT INTO `sys_relation` VALUES (3392, 120, 5);
 INSERT INTO `sys_relation` VALUES (3393, 121, 5);
 INSERT INTO `sys_relation` VALUES (3394, 122, 5);
-INSERT INTO `sys_relation` VALUES (3395, 150, 5);
 INSERT INTO `sys_relation` VALUES (3396, 151, 5);
 INSERT INTO `sys_relation` VALUES (4293, 105, 1);
 INSERT INTO `sys_relation` VALUES (4294, 106, 1);
@@ -383,9 +502,7 @@ INSERT INTO `sys_relation` VALUES (4319, 137, 1);
 INSERT INTO `sys_relation` VALUES (4320, 138, 1);
 INSERT INTO `sys_relation` VALUES (4321, 139, 1);
 INSERT INTO `sys_relation` VALUES (4322, 140, 1);
-INSERT INTO `sys_relation` VALUES (4330, 150, 1);
 INSERT INTO `sys_relation` VALUES (4331, 151, 1);
-INSERT INTO `sys_relation` VALUES (4332, 152, 1);
 INSERT INTO `sys_relation` VALUES (4333, 153, 1);
 INSERT INTO `sys_relation` VALUES (4334, 154, 1);
 INSERT INTO `sys_relation` VALUES (4335, 155, 1);
@@ -393,15 +510,9 @@ INSERT INTO `sys_relation` VALUES (4336, 156, 1);
 INSERT INTO `sys_relation` VALUES (4337, 157, 1);
 INSERT INTO `sys_relation` VALUES (4340, 160, 1);
 INSERT INTO `sys_relation` VALUES (4341, 161, 1);
-INSERT INTO `sys_relation` VALUES (4342, 162, 1);
-INSERT INTO `sys_relation` VALUES (4343, 163, 1);
 INSERT INTO `sys_relation` VALUES (4344, 164, 1);
-INSERT INTO `sys_relation` VALUES (4345, 165, 1);
-INSERT INTO `sys_relation` VALUES (4346, 166, 1);
 INSERT INTO `sys_relation` VALUES (4347, 167, 1);
 INSERT INTO `sys_relation` VALUES (4365, 186, 1);
-INSERT INTO `sys_relation` VALUES (4366, 187, 1);
-INSERT INTO `sys_relation` VALUES (4367, 188, 1);
 INSERT INTO `sys_relation` VALUES (4368, 189, 1);
 INSERT INTO `sys_relation` VALUES (4369, 0, 1);
 INSERT INTO `sys_relation` VALUES (4370, 168, 6);
@@ -422,7 +533,7 @@ CREATE TABLE `sys_role`  (
   `tips` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '英文名称',
   `version` int(11) DEFAULT NULL COMMENT '保留字段(暂时没用）',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of sys_role
@@ -430,6 +541,7 @@ CREATE TABLE `sys_role`  (
 INSERT INTO `sys_role` VALUES (1, 0, 0, '超级管理员', 24, 'administrator', 1);
 INSERT INTO `sys_role` VALUES (5, 6, 1, '临时工', 26, 'temp', NULL);
 INSERT INTO `sys_role` VALUES (6, 4, 1, '开发工程师', 25, 'dev', NULL);
+INSERT INTO `sys_role` VALUES (7, 7, 6, 'cc', 25, 'dsds', NULL);
 
 -- ----------------------------
 -- Table structure for sys_user
@@ -457,10 +569,10 @@ CREATE TABLE `sys_user`  (
 -- ----------------------------
 -- Records of sys_user
 -- ----------------------------
-INSERT INTO `sys_user` VALUES (1, 'f8d104e2-6719-4fe0-80a7-5d83c86be27c.jpg', 'admin', '6cd3423f077da4d9465408654b7366ef', '8pgby', 'TC', '2017-05-05 00:00:00', 1, '123@foxmail.com', '18200000000', '1', 24, 1, '2016-01-29 08:49:53', 25);
+INSERT INTO `sys_user` VALUES (1, 'f8d104e2-6719-4fe0-80a7-5d83c86be27c.jpg', 'admin', '6cd3423f077da4d9465408654b7366ef', '8pgby', '超级管理员', '2017-05-05 00:00:00', 1, '123@foxmail.com', '12300000000', '1', 24, 1, '2016-01-29 08:49:53', 25);
 INSERT INTO `sys_user` VALUES (3, NULL, 'boss', '71887a5ad666a18f709e1d4e693d5a35', '1f7bf', '老板', '2017-12-04 00:00:00', 1, '', '', '1', 24, 1, '2017-12-04 22:24:02', NULL);
 INSERT INTO `sys_user` VALUES (4, NULL, 'manager', 'b53cac62e7175637d4beb3b16b2f7915', 'j3cs9', '经理', '2017-12-04 00:00:00', 1, '', '', '1', 28, 1, '2017-12-04 22:24:24', NULL);
-INSERT INTO `sys_user` VALUES (5, '', 'tan', '4772c53d942ff8a27e5a88676d7b7cb1', 'nfukw', 'TC', '2018-08-01 00:00:00', 1, 'aa@bb.com', '123', '8', 29, 1, '2018-07-22 17:23:52', NULL);
+INSERT INTO `sys_user` VALUES (5, '', 'tan', '3a2a250d133c65623f05dc4bf20f19fb', 'MYKRU', 'TC', '2018-08-01 00:00:00', 1, 'aa@bb.com', '123', '6', 29, 1, '2018-07-22 17:23:52', NULL);
 
 -- ----------------------------
 -- Procedure structure for execute_seckill
