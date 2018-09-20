@@ -85,7 +85,7 @@
                                 添加
                             </button>
                         </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/dict/update">
+                        <@shiro.hasPermission name="/dict/edit/*">
                             <button type="button" onclick="Dict.openEditPage();"
                                     class="btn btn-success btn-sm no-margin-top">
                                 修改

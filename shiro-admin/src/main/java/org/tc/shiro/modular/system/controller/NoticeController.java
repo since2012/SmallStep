@@ -20,9 +20,6 @@ import java.util.List;
 
 /**
  * 通知控制器
- *
- * @author fengshuonan
- * @Date 2017-05-09 23:02:21
  */
 @Controller
 @RequestMapping("/notice")
@@ -54,9 +51,9 @@ public class NoticeController extends BaseController {
     /**
      * 跳转到添加通知
      */
-    @GetMapping("/notice_add")
+    @GetMapping("/add")
     public String noticeAdd() {
-        return PREFIX + "notice_add";
+        return PREFIX + "add";
     }
 
     /**
@@ -77,11 +74,11 @@ public class NoticeController extends BaseController {
     /**
      * 跳转到修改通知
      */
-    @GetMapping("/notice_edit/{noticeId}")
+    @GetMapping("/edit/{noticeId}")
     public String noticeUpdate(@PathVariable Integer noticeId, Model model) {
         Notice notice = this.noticeService.selectByPK(noticeId);
         model.addAttribute("notice", notice);
-        return PREFIX + "notice_edit";
+        return PREFIX + "edit";
     }
 
     /**

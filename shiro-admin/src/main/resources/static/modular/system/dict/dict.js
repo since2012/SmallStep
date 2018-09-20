@@ -82,7 +82,7 @@ Dict.openAddPage = function () {
         area: ['750px', '420px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: Feng.ctxPath + '/dict/dict_add'
+        content: Feng.ctxPath + '/dict/add'
     });
     this.layerIndex = index;
 };
@@ -98,7 +98,7 @@ Dict.openEditPage = function () {
             area: ['750px', '420px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: Feng.ctxPath + '/dict/dict_edit/' + Dict.seItem.id
+            content: Feng.ctxPath + '/dict/edit/' + Dict.seItem.id
         });
         this.layerIndex = index;
     }

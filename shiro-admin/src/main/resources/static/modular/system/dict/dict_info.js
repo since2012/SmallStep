@@ -101,7 +101,7 @@ DictInfo.addSubmit = function () {
  */
 DictInfo.editSubmit = function () {
     this.collectData();
-    var ajax = new $ax(Feng.ctxPath + "/dict/update", function (data) {
+    var ajax = new $ax(Feng.ctxPath + "/dict/edit", function (data) {
         Feng.success("修改成功!");
         window.parent.Dict.table.refresh();
         DictInfo.close();

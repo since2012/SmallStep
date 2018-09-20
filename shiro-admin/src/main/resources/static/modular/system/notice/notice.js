@@ -96,10 +96,10 @@ Notice.openAddPage = function () {
     var index = layer.open({
         type: 2,
         title: '添加通知',
-        area: ['740px', '430px'], //宽高
+        area: ['750px', '500px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: Feng.ctxPath + '/notice/notice_add'
+        content: Feng.ctxPath + '/notice/add'
     });
     this.layerIndex = index;
 };
@@ -112,10 +112,10 @@ Notice.openEditPage = function () {
         var index = layer.open({
             type: 2,
             title: '通知详情',
-            area: ['740px', '430px'], //宽高
+            area: ['750px', '500px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: Feng.ctxPath + '/notice/notice_edit/' + Notice.seItem.id
+            content: Feng.ctxPath + '/notice/edit/' + Notice.seItem.id
         });
         this.layerIndex = index;
     }

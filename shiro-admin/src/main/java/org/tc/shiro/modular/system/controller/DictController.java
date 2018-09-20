@@ -7,15 +7,10 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.redis.cache.RedisCacheDao;
-import org.tc.shiro.core.common.annotion.BizLog;
-import org.tc.shiro.core.common.annotion.BizNameType;
 import org.tc.shiro.core.common.constant.AdminConst;
 import org.tc.shiro.core.common.constant.cache.Cache;
 import org.tc.shiro.core.common.constant.cache.CacheKey;
@@ -47,7 +42,7 @@ public class DictController extends BaseController {
     /**
      * 跳转到字典管理首页
      */
-    @RequestMapping("")
+    @GetMapping("")
     public String index() {
         return PREFIX + "dict";
     }
@@ -55,7 +50,7 @@ public class DictController extends BaseController {
     /**
      * 获取所有字典列表
      */
-    @RequestMapping(value = "/list")
+    @PostMapping("/list")
     @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object list(String name, String tips,
@@ -74,22 +69,22 @@ public class DictController extends BaseController {
         return super.warpForBT(list, page.getTotal());
     }
 
-    /**
-     * 字典详情
-     */
-    @RequestMapping(value = "/detail/{dictId}")
-    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
-    @ResponseBody
-    public Object detail(@PathVariable("dictId") Integer dictId) {
-        return dictService.selectByPK(dictId);
-    }
+//    /**
+//     * 字典详情
+//     */
+//    @RequestMapping("/detail/{dictId}")
+//    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
+//    @ResponseBody
+//    public Object detail(@PathVariable("dictId") Integer dictId) {
+//        return dictService.selectByPK(dictId);
+//    }
 
     /**
      * 跳转到添加字典
      */
-    @RequestMapping("/dict_add")
+    @GetMapping("/add")
     public String deptAdd() {
-        return PREFIX + "dict_add";
+        return PREFIX + "add";
     }
 
 
@@ -98,8 +93,7 @@ public class DictController extends BaseController {
      *
      * @param dictValues 格式例如   "1:启用;2:禁用;3:冻结"
      */
-    @BizLog(value = "字典", type = BizNameType.ADD)
-    @RequestMapping(value = "/add")
+    @PostMapping("/add")
     @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object add(String dictCode, String dictTips, String dictName, String dictValues) {
@@ -113,8 +107,8 @@ public class DictController extends BaseController {
     /**
      * 跳转到修改字典
      */
-    @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
-    @RequestMapping("/dict_edit/{dictId}")
+    @GetMapping(AdminConst.ADMIN_ROLE_NAME)
+    @RequestMapping("/edit/{dictId}")
     public String deptUpdate(@PathVariable Integer dictId, Model model) {
         if (dictId == null) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
@@ -124,13 +118,13 @@ public class DictController extends BaseController {
 
         model.addAttribute("dict", dict);
         model.addAttribute("subDicts", subDicts);
-        return PREFIX + "dict_edit";
+        return PREFIX + "edit";
     }
 
     /**
      * 修改字典
      */
-    @RequestMapping(value = "/update")
+    @PostMapping("/edit")
     @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object update(Integer dictId, String dictCode, String dictName, String dictTips, String dictValues) {
@@ -147,7 +141,7 @@ public class DictController extends BaseController {
     /**
      * 删除字典记录
      */
-    @RequestMapping(value = "/delete")
+    @PostMapping("/delete")
     @RequiresRoles(AdminConst.ADMIN_ROLE_NAME)
     @ResponseBody
     public Object delete(@RequestParam Integer dictId) {

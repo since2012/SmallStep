@@ -89,7 +89,7 @@
                                 添加
                             </button>
                         </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/notice/edit">
+                        <@shiro.hasPermission name="/notice/edit/*">
                             <button type="button" onclick="Notice.openEditPage();"
                                     class="btn btn-success btn-sm no-margin-top">
                                 修改

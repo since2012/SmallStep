@@ -10,9 +10,9 @@
 <#--bootstrap table-->
     <link rel="stylesheet" href="/static/plugins/bootstrap-treetable/bootstrap-treetable.css">
     <script src="/static/plugins/bootstrap-treetable/bootstrap-treetable.js"></script>
-    <script src="/static/plugins/common/tree-table-object.js"></script>
 
     <script src="/static/plugins/common/ajax-object.js"></script>
+    <script src="/static/plugins/common/tree-table-object.js"></script>
     <script src="/static/plugins/layer/layer.js"></script>
     <script src="/static/plugins/common/Feng.js"></script>
 <#--本页JS-->
@@ -86,7 +86,7 @@
                                 添加
                             </button>
                         </@shiro.hasPermission>
-                        <@shiro.hasPermission name="/dept/update">
+                        <@shiro.hasPermission name="/dept/edit/*">
                             <button type="button" onclick="Dept.openEditPage();"
                                     class="btn btn-success btn-sm no-margin-top">
                                 修改

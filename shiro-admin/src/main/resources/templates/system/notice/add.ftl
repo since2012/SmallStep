@@ -27,37 +27,35 @@
 <body>
 <!-- Main content -->
 <section class="content">
-    <div class="col-xs-12 col-md-12 col-lg-12">
-        <div class="box box-success">
-            <div class="form-horizontal" id="noticeInfoForm">
-                <input type="hidden" id="id" value="">
-                <div class="row">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label">标题</label>
-                            <div class="col-sm-11">
-                                <input class="form-control" id="title" name="title" type="text">
-
-                            </div>
+    <div class="box box-success">
+        <div class="form-horizontal" id="noticeInfoForm">
+            <input type="hidden" id="id" value="">
+            <input type="hidden" id="contentVal" value=''>
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="form-group">
+                        <label class="col-xs-1 control-label">标题</label>
+                        <div class="col-xs-11">
+                            <input class="form-control" id="title" name="title" type="text">
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label">内容</label>
-                            <div class="col-sm-11">
-                                <div id="editor" class="editorHeight">
-                                </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-xs-1 control-label">内容</label>
+                        <div class="col-xs-11">
+                            <div id="editor" class="editorHeight">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row btn-group-m-t">
-                    <div class="text-center">
-                        <button type="button" class="btn btn-info " onclick="NoticeInfo.addSubmit()" id="ensure">
-                            <i class="fa fa-check"></i>&nbsp;提交
-                        </button>
-                        <button type="button" class="btn btn-danger " onclick="NoticeInfo.close()" id="cancel">
-                            <i class="fa fa-eraser"></i>&nbsp;取消
-                        </button>
-                    </div>
+            </div>
+            <div class="row btn-group-m-t">
+                <div class="text-center">
+                    <button type="button" class="btn btn-info " onclick="NoticeInfo.addSubmit()" id="ensure">
+                        <i class="fa fa-check"></i>&nbsp;提交
+                    </button>
+                    <button type="button" class="btn btn-danger " onclick="NoticeInfo.close()" id="cancel">
+                        <i class="fa fa-eraser"></i>&nbsp;取消
+                    </button>
                 </div>
             </div>
         </div>

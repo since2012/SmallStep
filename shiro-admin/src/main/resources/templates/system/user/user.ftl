@@ -130,7 +130,7 @@
             <div class="row">
                 <div class="col-xs-12">
                     <div class="box box-success">
-                        <div class="box-header with-border">
+                        <div class="box-body">
                             <div class="hidden-xs" id="managerTableToolbar" role="group">
                                 <@shiro.hasPermission name="/mgr/add">
                                     <button type="button" onclick="UserMgr.openAddPage();"
@@ -175,8 +175,6 @@
                                     </button>
                                 </@shiro.hasPermission>
                             </div>
-                        </div>
-                        <div class="box-body">
                             <table id="managerTable" data-mobile-responsive="true" data-click-to-select="true">
                             </table>
                         </div>

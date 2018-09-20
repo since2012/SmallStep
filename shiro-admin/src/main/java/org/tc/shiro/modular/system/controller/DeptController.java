@@ -6,15 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.tc.mybatis.controller.BaseController;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.redis.cache.RedisCacheDao;
-import org.tc.shiro.core.common.annotion.BizLog;
-import org.tc.shiro.core.common.annotion.BizNameType;
 import org.tc.shiro.core.common.constant.cache.Cache;
 import org.tc.shiro.core.common.constant.cache.CacheKey;
 import org.tc.shiro.core.common.constant.factory.ConstantFactory;
@@ -46,7 +41,7 @@ public class DeptController extends BaseController {
     /**
      * 跳转到部门管理首页
      */
-    @RequestMapping("")
+    @GetMapping("")
     public String index() {
         return PREFIX + "dept";
     }
@@ -54,7 +49,7 @@ public class DeptController extends BaseController {
     /**
      * 获取所有部门列表
      */
-    @RequestMapping(value = "/list")
+    @PostMapping("/list")
     @ResponseBody
     public Object list(String name, String tips) {
         List<Dept> list = this.deptService.list(name, tips);
@@ -62,38 +57,17 @@ public class DeptController extends BaseController {
     }
 
     /**
-     * 部门详情
-     */
-    @RequestMapping(value = "/detail/{deptId}")
-    @ResponseBody
-    public Object detail(@PathVariable("deptId") Integer deptId) {
-        return deptService.selectByPK(deptId);
-    }
-
-    /**
-     * 获取部门的tree列表
-     */
-    @RequestMapping(value = "/tree")
-    @ResponseBody
-    public List<ZTreeNode> tree() {
-        List<ZTreeNode> tree = this.deptService.tree();
-        tree.add(ZTreeNode.createRoot());
-        return tree;
-    }
-
-    /**
      * 跳转到添加部门
      */
-    @RequestMapping("/dept_add")
+    @GetMapping("/add")
     public String deptAdd() {
-        return PREFIX + "dept_add";
+        return PREFIX + "add";
     }
 
     /**
      * 新增部门
      */
-    @BizLog(value = "部门", type = BizNameType.ADD)
-    @RequestMapping(value = "/add")
+    @PostMapping("/add")
     @ResponseBody
     public Object add(@Valid Dept dept, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -108,19 +82,18 @@ public class DeptController extends BaseController {
     /**
      * 跳转到修改部门
      */
-    @RequestMapping("/dept_update/{deptId}")
+    @GetMapping("/edit/{deptId}")
     public String deptUpdate(@PathVariable Integer deptId, Model model) {
         Dept dept = deptService.selectByPK(deptId);
         model.addAttribute("dept", dept);
         model.addAttribute("pName", ConstantFactory.me().getDeptName(dept.getPid()));
-        return PREFIX + "dept_edit";
+        return PREFIX + "edit";
     }
 
     /**
      * 修改部门
      */
-    @BizLog(value = "部门", key = "id", type = BizNameType.UPDATE)
-    @RequestMapping(value = "/update")
+    @PostMapping("/update")
     @ResponseBody
     public Object update(Dept dept) {
         if (ToolUtil.isEmpty(dept) || dept.getId() == null) {
@@ -134,8 +107,7 @@ public class DeptController extends BaseController {
     /**
      * 删除部门
      */
-    @BizLog(value = "部门", key = "deptId", type = BizNameType.DELETE)
-    @RequestMapping(value = "/delete")
+    @PostMapping("/delete")
     @ResponseBody
     public Object delete(@RequestParam Integer deptId) {
         //缓存被删除的部门名称
@@ -143,6 +115,26 @@ public class DeptController extends BaseController {
         redisCacheDao.put(Cache.CRUD, CacheKey.PO_BEFORE + deptId, oldDept);
         deptService.deleteCascade(deptId);
         return SUCCESS_TIP;
+    }
+
+//    /**
+//     * 部门详情
+//     */
+//    @RequestMapping( "/detail/{deptId}")
+//    @ResponseBody
+//    public Object detail(@PathVariable("deptId") Integer deptId) {
+//        return deptService.selectByPK(deptId);
+//    }
+
+    /**
+     * 获取部门的tree列表
+     */
+    @PostMapping("/tree")
+    @ResponseBody
+    public List<ZTreeNode> tree() {
+        List<ZTreeNode> tree = this.deptService.tree();
+        tree.add(ZTreeNode.createRoot());
+        return tree;
     }
 
     /**
