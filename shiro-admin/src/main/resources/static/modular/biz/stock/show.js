@@ -150,6 +150,6 @@ $(function () {
     Show.table = table.init();
 
     $("#biz").attr("class", "active");
-    $("#stock_show").attr("class", "active");
+    $("#show").attr("class", "active");
 });
 

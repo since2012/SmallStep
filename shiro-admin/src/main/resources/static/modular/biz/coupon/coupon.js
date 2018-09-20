@@ -120,7 +120,7 @@ Coupon.openGenPage = function () {
         area: ['700px', '350px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: Feng.ctxPath + '/coupon/coupon_add'
+        content: Feng.ctxPath + '/coupon/add'
     });
     this.layerIndex = index;
 };

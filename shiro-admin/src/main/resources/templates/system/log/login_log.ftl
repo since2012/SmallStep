@@ -33,7 +33,7 @@
     </h1>
     <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> 主页</a></li>
-        <li><a href="#">系统管理</a></li>
+        <li><a href="#">监控管理</a></li>
         <li class="active">登录日志</li>
     </ol>
 </section>

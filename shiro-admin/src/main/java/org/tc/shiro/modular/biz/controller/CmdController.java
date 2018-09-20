@@ -70,9 +70,9 @@ public class CmdController extends BaseController {
      *
      * @return
      */
-    @GetMapping("/cmd_add")
+    @GetMapping("/add")
     public String cmdAdd() {
-        return PREFIX + "cmd_add";
+        return PREFIX + "add";
     }
 
     /**
@@ -95,13 +95,13 @@ public class CmdController extends BaseController {
      *
      * @return
      */
-    @GetMapping("/cmd_edit")
+    @GetMapping("/edit")
     public String cmdEdit(Integer id, Model model) {
         Cmd cmd = cmdService.selectByPK(id);
         List<String> contents = cmdContentService.selectByCmdId(id);
         model.addAttribute("cmd", cmd);
         model.addAttribute("list", contents);
-        return PREFIX + "cmd_edit";
+        return PREFIX + "edit";
     }
 
     /**

@@ -120,7 +120,7 @@ Seller.openAddPage = function () {
         area: ['600px', '320px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: Feng.ctxPath + '/seller/seller_add'
+        content: Feng.ctxPath + '/seller/add'
     });
     this.layerIndex = index;
 };
@@ -136,7 +136,7 @@ Seller.openEditPage = function () {
             area: ['600px', '320px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: Feng.ctxPath + '/seller/seller_edit/' + Seller.seItem.id
+            content: Feng.ctxPath + '/seller/edit/' + Seller.seItem.id
         });
         this.layerIndex = index;
     }

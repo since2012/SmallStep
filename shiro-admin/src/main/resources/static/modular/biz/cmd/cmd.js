@@ -147,7 +147,7 @@ Command.openAddPage = function () {
         area: ['800px', '320px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: '/cmd/cmd_add'
+        content: '/cmd/add'
     });
     this.layerIndex = index;
 };
@@ -162,7 +162,7 @@ Command.openEditPage = function () {
             area: ['800px', '320px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: '/cmd/cmd_edit?id=' + this.seItem.id
+            content: '/cmd/edit?id=' + this.seItem.id
         });
         this.layerIndex = index;
     }

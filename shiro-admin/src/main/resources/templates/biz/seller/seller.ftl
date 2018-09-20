@@ -89,7 +89,7 @@
                                 class="btn btn-warning btn-sm no-margin-top">
                             编辑
                         </button>
-                        <button type="button" onclick="Seller.switch()" class="btn btn-default btn-sm no-margin-top">
+                        <button type="button" onclick="Seller.switch()" class="btn btn-primary btn-sm no-margin-top">
                             状态切换
                         </button>
                         <button type="button" onclick="Seller.delete()" class="btn btn-default btn-sm no-margin-top">

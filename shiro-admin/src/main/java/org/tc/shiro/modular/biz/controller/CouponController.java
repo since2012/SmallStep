@@ -48,7 +48,7 @@ public class CouponController extends BaseController {
     /**
      * 获取优惠券列表
      */
-    @PostMapping(value = "/list")
+    @PostMapping("/list")
     @ResponseBody
     public Object list(Coupon coupon,
                        @RequestParam(required = false) Integer limit,
@@ -69,16 +69,16 @@ public class CouponController extends BaseController {
     /**
      * 跳转到添加优惠券
      */
-    @GetMapping("/coupon_add")
+    @GetMapping("/add")
     public String couponAdd() {
-        return PREFIX + "coupon_add";
+        return PREFIX + "add";
     }
 
 
     /**
      * 新增优惠券
      */
-    @PostMapping(value = "/add")
+    @PostMapping("/add")
     @ResponseBody
     public Object genCoupon(@Valid Coupon coupon, @RequestParam(required = false, defaultValue = "0") int total,
                             BindingResult bindingResult) {
@@ -124,7 +124,7 @@ public class CouponController extends BaseController {
     /**
      * 删除优惠券
      */
-    @PostMapping(value = "/delete")
+    @PostMapping("/delete")
     @ResponseBody
     public Object delete(@RequestParam String couponId) {
         if (couponId == null) {

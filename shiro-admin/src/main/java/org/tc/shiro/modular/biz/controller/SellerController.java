@@ -47,7 +47,7 @@ public class SellerController extends BaseController {
     /**
      * 获取卖家信息列表
      */
-    @PostMapping(value = "/list")
+    @PostMapping("/list")
     @ResponseBody
     public Object list(Seller seller,
                        @RequestParam(required = false) Integer limit,
@@ -68,15 +68,15 @@ public class SellerController extends BaseController {
     /**
      * 跳转到添加卖家信息
      */
-    @GetMapping("/seller_add")
+    @GetMapping("/add")
     public String sellerAdd() {
-        return PREFIX + "seller_add";
+        return PREFIX + "add";
     }
 
     /**
      * 新增卖家信息
      */
-    @PostMapping(value = "/add")
+    @PostMapping("/add")
     @ResponseBody
     public Object add(@Valid Seller seller, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -89,17 +89,17 @@ public class SellerController extends BaseController {
     /**
      * 跳转到修改卖家信息
      */
-    @GetMapping("/seller_edit/{sellerId}")
+    @GetMapping("/edit/{sellerId}")
     public String sellerUpdate(@PathVariable Integer sellerId, Model model) {
         Seller seller = sellerService.selectByPK(sellerId);
         model.addAttribute("seller", seller);
-        return PREFIX + "seller_edit";
+        return PREFIX + "edit";
     }
 
     /**
      * 修改卖家信息
      */
-    @PostMapping(value = "/edit")
+    @PostMapping("/edit")
     @ResponseBody
     public Object update(@Valid Seller seller, BindingResult bindingResult) {
         Integer id = seller.getId();
@@ -113,7 +113,7 @@ public class SellerController extends BaseController {
     /**
      * 删除卖家信息(假删)
      */
-    @PostMapping(value = "/delete")
+    @PostMapping("/delete")
     @ResponseBody
     public Object delete(@RequestParam Integer sellerId) {
         if (sellerId == null) {
@@ -127,7 +127,7 @@ public class SellerController extends BaseController {
     /**
      * 切换状态
      */
-    @PostMapping(value = "/switch")
+    @PostMapping("/switch")
     @ResponseBody
     public Object change(@RequestParam Integer sellerId) {
         if (sellerId == null) {
@@ -140,7 +140,7 @@ public class SellerController extends BaseController {
     /**
      * 卖家列表(查看使用)
      */
-    @RequestMapping(value = "/tree")
+    @RequestMapping("/tree")
     @ResponseBody
     public List<ZTreeNode> roleTreeListByUserId() {
         //超级管理员不受约束

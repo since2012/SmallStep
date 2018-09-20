@@ -81,9 +81,9 @@ public class StockController extends BaseController {
     /**
      * 新增页
      */
-    @GetMapping("/stock_add")
+    @GetMapping("/add")
     public String addView() {
-        return PREFIX + "stock_add";
+        return PREFIX + "add";
     }
 
     /**
@@ -102,14 +102,14 @@ public class StockController extends BaseController {
     /**
      * 跳转到编辑页面
      */
-    @GetMapping("/stock_edit/{stockId}")
+    @GetMapping("/edit/{stockId}")
     public String stockEdit(@PathVariable Integer stockId, Model model) {
         if (ToolUtil.isEmpty(stockId)) {
             throw new GunsException(BizExceptionEnum.REQUEST_NULL);
         }
         Stock stock = this.stockService.selectByPK(stockId);
         model.addAttribute("stock", stock);
-        return PREFIX + "stock_edit";
+        return PREFIX + "edit";
     }
 
     /**

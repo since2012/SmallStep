@@ -149,7 +149,7 @@ Stock.openAddPage = function () {
         area: ['760px', '400px'], //宽高
         fix: false, //不固定
         maxmin: true,
-        content: '/stock/stock_add'
+        content: '/stock/add'
     });
     this.layerIndex = index;
 };
@@ -164,7 +164,7 @@ Stock.openEditPage = function () {
             area: ['760px', '400px'], //宽高
             fix: false, //不固定
             maxmin: true,
-            content: '/stock/stock_edit/' + this.seItem.id
+            content: '/stock/edit/' + this.seItem.id
         });
         this.layerIndex = index;
     }
