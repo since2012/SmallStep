@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.tc.fastjson.exception.FastJsonException;
 import org.tc.mybatis.exception.GunsException;
 import org.tc.mybatis.tips.ErrorTip;
 import org.tc.mybatis.util.HttpKit;
@@ -102,6 +103,17 @@ public class GlobalExceptionHandler {
         String username = HttpKit.getRequest().getParameter("username");
         LogManager.me().executeLog(LogTaskFactory.loginLog(username, "账号密码错误", HttpKit.getIp()));
         return new ErrorTip(400, "账号密码错误");
+    }
+
+    /**
+     * FastJsonException
+     */
+    @ExceptionHandler(FastJsonException.class)
+    @ResponseBody
+    public ErrorTip dateFormateError(GunsException e) {
+        HttpKit.getRequest().setAttribute("tip", e.getMessage());
+        log.error("前台日期格式错误:", e);
+        return new ErrorTip(e.getCode(), e.getMessage());
     }
 
     /**
