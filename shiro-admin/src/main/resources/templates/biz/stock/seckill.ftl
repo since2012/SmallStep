@@ -30,7 +30,7 @@
             <!-- Horizontal Form -->
             <div class="box box-success">
                 <div class="box-header with-border">
-                    <h2>${stock.primeprice}秒杀${stock.name}</h2>
+                    <h2>${stock.saleprice}秒杀${stock.name}</h2>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->

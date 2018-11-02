@@ -35,7 +35,7 @@
 <section class="content">
     <div class="box">
         <div class="form-horizontal bv-form" id="stockInfoForm">
-            <input type="hidden" id="id" value="${stock.id}">
+            <input type="hidden" id="id" value="${stock.id?c}">
             <div class="row">
                 <div class="col-xs-6 b-r">
                     <div class="form-group has-feedback">
@@ -62,7 +62,7 @@
                         <label class="col-xs-3 control-label">原价</label>
                         <div class="col-xs-9">
                             <input class="form-control" id="primeprice" name="primeprice" type="text"
-                                   value="${stock.primeprice}">
+                                   value="${stock.primeprice?c}">
                         </div>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
                             <label class="col-xs-3 control-label">库存量</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="total" name="total" type="text"
-                                       value="${stock.total}">
+                                       value="${stock.total?c}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -93,7 +93,7 @@
                             <label class="col-xs-3 control-label">促销价</label>
                             <div class="col-xs-9">
                                 <input class="form-control" id="saleprice" name="saleprice" type="text"
-                                       value="${stock.saleprice}">
+                                       value="${stock.saleprice?c}">
                             </div>
                         </div>
                     </div>
@@ -107,7 +107,6 @@
                     <button type="button" class="btn btn-danger " onclick="StockInfo.close()" id="cancel">
                         <i class="fa fa-eraser"></i>&nbsp;取消
                     </button>
-
                 </div>
             </div>
         </div>
